@@ -41,29 +41,26 @@ namespace FightCore.Identity
         {
             return new ApiResource[]
             {
-                new ApiResource("fightcore-backend", "FightCore"), 
+                new ApiResource("fightcore-backend", "FightCore"),
             };
         }
 
         public static IEnumerable<Client> GetClients()
         {
-            return new Client[]
+            return new[]
             {
                 new Client
                 {
-                    ClientId = "client",
-
-                    // no interactive user, use the clientid/secret for authentication
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    // secret for authentication
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-
-                    // scopes that client has access to
-                    AllowedScopes = { "fightcore-backend" }
+                    RequireConsent = false,
+                    ClientId = "angular_spa",
+                    ClientName = "Angular SPA",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = {"openid", "fightcore-backend"},
+                    RedirectUris = {"http://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600
                 }
             };
         }
