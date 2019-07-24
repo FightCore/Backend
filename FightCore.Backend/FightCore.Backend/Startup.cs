@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bartdebever.Patterns.Services;
+using FightCore.Repositories.Fakes.Posts;
+using FightCore.Repositories.Posts;
+using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,7 +30,9 @@ namespace FightCore.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc()
+                .AddMvcCore()
+                .AddAuthorization()
+                .AddJsonFormatters()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication("Bearer")
@@ -35,7 +41,7 @@ namespace FightCore.Backend
                     options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
 
-                    options.Audience = "api1";
+                    options.Audience = "fightcore-backend";
                 });
         }
 
@@ -55,6 +61,24 @@ namespace FightCore.Backend
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private IServiceCollection ServicesAndRepositoryInjection(IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<IPostService, PostService>();
+            var parsingSuccess = bool.TryParse(Configuration["UseMocking"], out var mocking);
+            if (parsingSuccess && mocking)
+            {
+                 // Add the Mocks
+                 serviceCollection.AddScoped<IPostRepository, FakePostRepository>();
+            }
+            else
+            {
+                // Add the EF Core repositories
+                serviceCollection.AddScoped<IPostRepository, PostRepository>();
+            }
+
+            return serviceCollection;
         }
     }
 }

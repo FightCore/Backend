@@ -8,4 +8,9 @@
     <PackageReference Include="Bartdebever.Patterns" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FightCore.Models\FightCore.Models.csproj" />
+    <ProjectReference Include="..\FightCore.Repository\FightCore.Repositories.csproj" />
+  </ItemGroup>
+
 </Project>
