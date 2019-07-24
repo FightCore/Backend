@@ -16,7 +16,7 @@ namespace FightCore.Backend.Controllers
     {
         private readonly IPostService _postService;
 
-        public PostsController(IPostService postService)
+        public PostsController(IPostService postService, IMapper mapper) : base(mapper)
         {
             _postService = postService;
         }
@@ -24,9 +24,9 @@ namespace FightCore.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
-            var posts = await _postService.GetAllAsync();
+            var posts = await _postService.GetPublicPosts();
 
-            return MappedOk<PostViewModel>(posts);
+            return MappedOk<List<PostViewModel>>(posts);
         }
     }
 }

@@ -9,9 +9,15 @@ namespace FightCore.Backend.Controllers
 {
     public abstract class BaseApiController : ControllerBase
     {
+        protected readonly IMapper Mapper;
+
+        public BaseApiController(IMapper mapper)
+        {
+            Mapper = mapper;
+        }
         protected IActionResult MappedOk<TViewModel>(object model)
         {
-            var viewModels = Mapper.Map<TViewModel>(model);
+            var viewModels = this.Mapper.Map<TViewModel>(model);
 
             return Ok(viewModels);
         }
