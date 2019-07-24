@@ -38,8 +38,7 @@ namespace FightCore.Backend
                 .AddCors(options => options.AddPolicy("TestPolicy", policyBuilder =>
                     policyBuilder.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowAnyOrigin()
-                        .AllowCredentials()))
+                        .AllowAnyOrigin()))
                 .AddAuthorization()
                 .AddJsonFormatters()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
