@@ -8,6 +8,5 @@ namespace FightCore.Models
 {
     public class ApplicationUser : IdentityUser<long>, IEntity<long>
     {
-
     }
 }

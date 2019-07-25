@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Bartdebever.Patterns.Services;
+﻿using AutoMapper;
 using FightCore.Backend.Configuration.Mapping;
+using FightCore.Configuration;
 using FightCore.Data;
 using FightCore.Repositories.Fakes.Posts;
 using FightCore.Repositories.Posts;
 using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace FightCore.Backend
 {
@@ -47,14 +40,15 @@ namespace FightCore.Backend
 
             services.AddDbContext<ApplicationDbContext>(
                 options =>
-                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], 
+                    options.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection), 
                         sqlServerOptions =>
-                            sqlServerOptions.MigrationsAssembly("FightCore.Data")));
+                            sqlServerOptions.MigrationsAssembly(ConfigurationVariables.MigrationAssembly)));
 
+            // Add the Bearer authentication scheme as this is used by Identity Server.
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = Configuration["IdentityServer"];
                     options.RequireHttpsMetadata = false;
 
                     options.Audience = "fightcore-backend";
@@ -85,8 +79,8 @@ namespace FightCore.Backend
 
         private IServiceCollection ServicesAndRepositoryInjection(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IPostService, PostService>();
             serviceCollection.AddScoped<DbContext, ApplicationDbContext>();
+            serviceCollection.AddScoped<IPostService, PostService>();
 
             var parsingSuccess = bool.TryParse(Configuration["UseMocking"], out var mocking);
             if (parsingSuccess && mocking)

@@ -8,6 +8,10 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FightCore.Identity
 {
@@ -17,7 +21,14 @@ namespace FightCore.Identity
         {
             Console.Title = "IdentityServer4";
 
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args).Build();
+
+            using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                ExecuteSeed(scope.ServiceProvider);
+            }
+
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
@@ -35,6 +46,37 @@ namespace FightCore.Identity
                             .WriteTo.File(@"identityserver4_log.txt")
                             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Literate);
                     });
+        }
+
+        private static void ExecuteSeed(IServiceProvider provider)
+        {
+            var context = provider.GetRequiredService<ConfigurationDbContext>();
+            if (!context.Clients.Any())
+            {
+                foreach (var client in Config.GetClients())
+                {
+                    context.Clients.Add(client.ToEntity());
+                }
+                context.SaveChanges();
+            }
+
+            if (!context.IdentityResources.Any())
+            {
+                foreach (var resource in Config.GetIdentityResources())
+                {
+                    context.IdentityResources.Add(resource.ToEntity());
+                }
+                context.SaveChanges();
+            }
+
+            if (!context.ApiResources.Any())
+            {
+                foreach (var resource in Config.GetApis())
+                {
+                    context.ApiResources.Add(resource.ToEntity());
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

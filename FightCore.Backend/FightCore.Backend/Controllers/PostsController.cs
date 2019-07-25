@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Posts;
+using FightCore.Models.Posts;
 using FightCore.Services.Posts;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FightCore.Backend.Controllers
 {
@@ -15,10 +15,14 @@ namespace FightCore.Backend.Controllers
     public class PostsController : BaseApiController
     {
         private readonly IPostService _postService;
-
-        public PostsController(IPostService postService, IMapper mapper) : base(mapper)
+        private readonly DbContext _context;
+        public PostsController(
+            IPostService postService,
+            IMapper mapper,
+            DbContext context) : base(mapper)
         {
             _postService = postService;
+            _context = context;
         }
 
         [HttpGet]
@@ -28,5 +32,21 @@ namespace FightCore.Backend.Controllers
 
             return MappedOk<List<PostViewModel>>(posts);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreatePost(CreatePostViewModel viewModel)
+        {
+            var userId = GetUserIdFromClaims(User);
+
+            var post = Mapper.Map<Post>(viewModel);
+            post.AuthorId = userId;
+
+            await _postService.AddAsync(post);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }

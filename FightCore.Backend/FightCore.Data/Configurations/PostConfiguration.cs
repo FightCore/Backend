@@ -11,7 +11,8 @@ namespace FightCore.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.HasOne(post => post.Author).WithMany();
+            builder.HasOne(post => post.Author)
+                .WithMany().HasForeignKey(post => post.AuthorId);
         }
     }
 }

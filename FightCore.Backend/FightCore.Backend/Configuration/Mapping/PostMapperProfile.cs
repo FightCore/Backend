@@ -15,6 +15,8 @@ namespace FightCore.Backend.Configuration.Mapping
             CreateMap<Post, PostViewModel>()
                 .ForMember(viewModel => viewModel.Author, 
                     options => options.MapFrom(post => post.Author.UserName));
+
+            CreateMap<CreatePostViewModel, Post>();
         }
     }
 }

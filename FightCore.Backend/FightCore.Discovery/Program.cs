@@ -31,8 +31,8 @@ namespace FightCore.Discovery
                 ClientId = "client",
                 ClientSecret = "secret",
 
-                UserName = "alice",
-                Password = "password",
+                UserName = "Bort",
+                Password = "Welcome1!",
                 Scope = "fightcore-backend"
 
             });

@@ -13,6 +13,8 @@ namespace FightCore.Models.Posts
 
         public ApplicationUser Author { get; set; }
 
+        public long AuthorId { get; set; }
+
         public bool IsPrivate { get; set; }
     }
 }

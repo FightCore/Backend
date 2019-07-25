@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.Configuration;
 using FightCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -21,8 +22,9 @@ namespace FightCore.Backend
                 .AddJsonFile("appsettings.json")
                 .Build();
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.MigrationsAssembly("FightCore.Data"));
+            var connectionString = configuration.GetConnectionString(ConfigurationVariables.DefaultConnection);
+            builder.UseSqlServer(connectionString, sqlServerOptions =>
+                sqlServerOptions.MigrationsAssembly(ConfigurationVariables.MigrationAssembly));
             return new ApplicationDbContext(builder.Options);
         }
     }

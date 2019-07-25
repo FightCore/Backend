@@ -10,30 +10,13 @@ namespace FightCore.Identity
 {
     public static class Config
     {
-        public static List<TestUser> GetUsers()
-        {
-            return new List<TestUser>
-            {
-                new TestUser
-                {
-                    SubjectId = "1",
-                    Username = "alice",
-                    Password = "password"
-                },
-                new TestUser
-                {
-                    SubjectId = "2",
-                    Username = "bob",
-                    Password = "password"
-                }
-            };
-        }
-
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
             {
-                new IdentityResources.OpenId()
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResources.Email() 
             };
         }
 
@@ -55,7 +38,7 @@ namespace FightCore.Identity
                     ClientId = "angular_spa",
                     ClientName = "Angular SPA",
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = {"openid", "fightcore-backend"},
+                    AllowedScopes = {"openid", "profile", "fightcore-backend"},
                     RedirectUris = {"http://localhost:4200/auth-callback"},
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
