@@ -22,9 +22,23 @@ namespace FightCore.Repositories.Posts
 
         public Task<List<Post>> GetPublicPostList()
         {
-            return Queryable.Include(post => post.Author)
-                .Include(post => post.Game)
+            return IncludedQueryable
                 .Where(post => post.IsPrivate == false).ToListAsync();
         }
+
+        public override Post GetById(long id)
+        {
+            return IncludedQueryable.FirstOrDefault(post => post.Id == id);
+        }
+
+        public override Task<Post> GetByIdAsync(long id)
+        {
+            return IncludedQueryable
+                .FirstOrDefaultAsync(post => post.Id == id);
+        }
+
+        private IQueryable<Post> IncludedQueryable => Queryable
+            .Include(post => post.Author)
+            .Include(post => post.Game);
     }
 }

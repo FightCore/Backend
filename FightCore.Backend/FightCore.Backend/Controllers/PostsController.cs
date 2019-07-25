@@ -33,6 +33,14 @@ namespace FightCore.Backend.Controllers
             return MappedOk<List<PostViewModel>>(posts);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPost(long id)
+        {
+            var post = await _postService.GetByIdAsync(id);
+
+            return MappedOk<PostViewModel>(post);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreatePost(CreatePostViewModel viewModel)
