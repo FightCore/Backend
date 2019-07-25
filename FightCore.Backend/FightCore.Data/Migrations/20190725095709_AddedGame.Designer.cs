@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FightCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190725092654_AddedGame")]
+    [Migration("20190725095709_AddedGame")]
     partial class AddedGame
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,9 +98,7 @@ namespace FightCore.Data.Migrations
 
                     b.Property<string>("Body");
 
-                    b.Property<int>("GameId");
-
-                    b.Property<long?>("GameId1");
+                    b.Property<long>("GameId");
 
                     b.Property<bool>("IsPrivate");
 
@@ -110,7 +108,7 @@ namespace FightCore.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("GameId1");
+                    b.HasIndex("GameId");
 
                     b.ToTable("Posts");
                 });
@@ -383,7 +381,8 @@ namespace FightCore.Data.Migrations
 
                     b.HasOne("FightCore.Models.Game", "Game")
                         .WithMany()
-                        .HasForeignKey("GameId1");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>

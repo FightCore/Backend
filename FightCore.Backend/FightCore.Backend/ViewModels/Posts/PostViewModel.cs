@@ -16,5 +16,7 @@ namespace FightCore.Backend.ViewModels.Posts
         public string BannerUrl { get; set; }
 
         public string Author { get; set; }
+
+        public string Game { get; set; }
     }
 }

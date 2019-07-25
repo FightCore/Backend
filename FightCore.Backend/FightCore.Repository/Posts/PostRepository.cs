@@ -23,6 +23,7 @@ namespace FightCore.Repositories.Posts
         public Task<List<Post>> GetPublicPostList()
         {
             return Queryable.Include(post => post.Author)
+                .Include(post => post.Game)
                 .Where(post => post.IsPrivate == false).ToListAsync();
         }
     }

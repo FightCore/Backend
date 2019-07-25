@@ -12,5 +12,7 @@ namespace FightCore.Backend.ViewModels.Posts
         public string Title { get; set; }
 
         public bool IsPrivate { get; set; }
+
+        public int GameId { get; set; }
     }
 }

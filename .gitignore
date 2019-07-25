@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+FightCore\.Backend/FightCore\.Identity/identityserver4_log\.txt

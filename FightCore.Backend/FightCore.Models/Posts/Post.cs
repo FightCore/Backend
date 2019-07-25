@@ -19,6 +19,6 @@ namespace FightCore.Models.Posts
 
         public Game Game { get; set; }
 
-        public int GameId { get; set; }
+        public long GameId { get; set; }
     }
 }

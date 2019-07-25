@@ -3532,3 +3532,404 @@ Error Number:208,State:1,Class:16
 2019-07-25 11:36:25.786 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
 2019-07-25 11:36:25.786 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
 2019-07-25 11:36:25.972 +02:00 [DBG] Starting grant removal
+2019-07-25 11:44:10.303 +02:00 [INF] Starting IdentityServer4 version 2.5.0.0
+2019-07-25 11:44:10.393 +02:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2019-07-25 11:44:10.393 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2019-07-25 11:44:10.394 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2019-07-25 11:44:10.394 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2019-07-25 11:44:10.395 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2019-07-25 11:44:10.396 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2019-07-25 11:44:10.662 +02:00 [DBG] Starting grant removal
+2019-07-25 11:49:45.229 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:49:45.264 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 11:49:45.483 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:49:45.488 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:49:45.509 +02:00 [DBG] Login Url: /Account/Login
+2019-07-25 11:49:45.509 +02:00 [DBG] Login Return Url Parameter: ReturnUrl
+2019-07-25 11:49:45.510 +02:00 [DBG] Logout Url: /Account/Logout
+2019-07-25 11:49:45.511 +02:00 [DBG] ConsentUrl Url: /consent
+2019-07-25 11:49:45.512 +02:00 [DBG] Consent Return Url Parameter: returnUrl
+2019-07-25 11:49:45.513 +02:00 [DBG] Error Url: /home/error
+2019-07-25 11:49:45.513 +02:00 [DBG] Error Id Parameter: errorId
+2019-07-25 11:49:45.542 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:49:45.561 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:49:45.562 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:49:45.568 +02:00 [DBG] Start discovery request
+2019-07-25 11:49:46.166 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:49:46.742 +02:00 [DBG] Request path /connect/authorize matched to endpoint type Authorize
+2019-07-25 11:49:46.761 +02:00 [DBG] Endpoint enabled: Authorize, successfully created handler: IdentityServer4.Endpoints.AuthorizeEndpoint
+2019-07-25 11:49:46.762 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.AuthorizeEndpoint for /connect/authorize
+2019-07-25 11:49:46.767 +02:00 [DBG] Start authorize request
+2019-07-25 11:49:46.778 +02:00 [DBG] User in authorize request: 2
+2019-07-25 11:49:46.789 +02:00 [DBG] Start authorize request protocol validation
+2019-07-25 11:49:47.059 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 11:49:47.067 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 11:49:47.133 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 11:49:47.258 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 11:49:47.278 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 11:49:47.350 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 11:49:47.359 +02:00 [DBG] Calling into custom validator: IdentityServer4.Validation.DefaultCustomAuthorizeRequestValidator
+2019-07-25 11:49:47.372 +02:00 [DBG] ValidatedAuthorizeRequest
+{"ClientId":"angular_spa","ClientName":"Angular SPA","RedirectUri":"http://localhost:4200/auth-callback","AllowedRedirectUris":["http://localhost:4200/auth-callback"],"SubjectId":"2","ResponseType":"id_token token","ResponseMode":"fragment","GrantType":"implicit","RequestedScopes":"openid profile fightcore-backend","State":"bfd4e0439ec3418fa353f561ae4b870e","UiLocales":null,"Nonce":"9fba82081704460bb0906e2e07d89f57","AuthenticationContextReferenceClasses":null,"DisplayMode":null,"PromptMode":null,"MaxAge":null,"LoginHint":null,"SessionId":"ab59af6dcb647d2e767dee1d99ec27aa","Raw":{"client_id":"angular_spa","redirect_uri":"http://localhost:4200/auth-callback","response_type":"id_token token","scope":"openid profile fightcore-backend","state":"bfd4e0439ec3418fa353f561ae4b870e","nonce":"9fba82081704460bb0906e2e07d89f57"},"$type":"AuthorizeRequestValidationLog"}
+2019-07-25 11:49:47.404 +02:00 [DBG] Client is configured to not require consent, no consent is required
+2019-07-25 11:49:47.410 +02:00 [DBG] Creating Implicit Flow response.
+2019-07-25 11:49:47.421 +02:00 [DBG] Getting claims for access token for client: angular_spa
+2019-07-25 11:49:47.421 +02:00 [DBG] Getting claims for access token for subject: 2
+2019-07-25 11:49:47.505 +02:00 [DBG] Getting claims for identity token for subject: 2 and client: angular_spa
+2019-07-25 11:49:47.507 +02:00 [DBG] In addition to an id_token, an access_token was requested. No claims other than sub are included in the id_token. To obtain more user claims, either use the user info endpoint or set AlwaysIncludeUserClaimsInIdToken on the client configuration.
+2019-07-25 11:49:47.522 +02:00 [DBG] Authorize endpoint response
+{"SubjectId":"2","ClientId":"angular_spa","RedirectUri":"http://localhost:4200/auth-callback","State":"bfd4e0439ec3418fa353f561ae4b870e","Scope":"openid profile fightcore-backend","Error":null,"ErrorDescription":null,"$type":"AuthorizeResponseLog"}
+2019-07-25 11:49:48.407 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:49:48.411 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 11:49:48.418 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:49:48.419 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:49:48.420 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:49:48.421 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:49:48.421 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:49:48.422 +02:00 [DBG] Start discovery request
+2019-07-25 11:49:48.485 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:49:48.516 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:49:48.517 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration/jwks from origin: http://localhost:4200
+2019-07-25 11:49:48.521 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:49:48.522 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:49:48.523 +02:00 [DBG] Request path /.well-known/openid-configuration/jwks matched to endpoint type Discovery
+2019-07-25 11:49:48.524 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryKeyEndpoint
+2019-07-25 11:49:48.525 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryKeyEndpoint for /.well-known/openid-configuration/jwks
+2019-07-25 11:49:48.532 +02:00 [DBG] Start key discovery request
+2019-07-25 11:49:48.566 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:49:48.615 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:49:48.617 +02:00 [DBG] CORS request made for path: /connect/userinfo from origin: http://localhost:4200
+2019-07-25 11:49:48.624 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:49:48.629 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:49:48.630 +02:00 [DBG] Request path /connect/userinfo matched to endpoint type Userinfo
+2019-07-25 11:49:48.633 +02:00 [DBG] Endpoint enabled: Userinfo, successfully created handler: IdentityServer4.Endpoints.UserInfoEndpoint
+2019-07-25 11:49:48.635 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.UserInfoEndpoint for /connect/userinfo
+2019-07-25 11:49:48.643 +02:00 [DBG] Start userinfo request
+2019-07-25 11:49:48.648 +02:00 [DBG] Bearer token found in header
+2019-07-25 11:49:48.706 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 11:49:48.706 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 11:49:48.731 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 11:49:48.731 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 11:49:48.740 +02:00 [DBG] Calling into custom token validator: IdentityServer4.Validation.DefaultCustomTokenValidator
+2019-07-25 11:49:48.743 +02:00 [DBG] Token validation success
+{"ClientId":null,"ClientName":null,"ValidateLifetime":true,"AccessTokenType":"Jwt","ExpectedScope":"openid","TokenHandle":null,"JwtId":null,"Claims":{"nbf":1564048187,"exp":1564051787,"iss":"http://localhost:5000","aud":["http://localhost:5000/resources","fightcore-backend"],"client_id":"angular_spa","sub":"2","auth_time":1563988917,"idp":"local","scope":["openid","profile","fightcore-backend"],"amr":"pwd"},"$type":"TokenValidationLog"}
+2019-07-25 11:49:48.755 +02:00 [DBG] Creating userinfo response
+2019-07-25 11:49:48.758 +02:00 [DBG] Scopes in access token: openid profile fightcore-backend
+2019-07-25 11:49:48.761 +02:00 [DBG] Scopes in access token: openid profile fightcore-backend
+2019-07-25 11:49:48.772 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 11:49:48.773 +02:00 [DBG] Requested claim types: sub name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+2019-07-25 11:49:48.774 +02:00 [DBG] Scopes in access token: openid profile fightcore-backend
+2019-07-25 11:49:48.776 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 11:49:48.783 +02:00 [INF] Profile service returned the following claim types: sub preferred_username name
+2019-07-25 11:49:48.784 +02:00 [DBG] End userinfo request
+2019-07-25 11:49:48.795 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 11:49:48.816 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 11:49:48.828 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 11:49:48.831 +02:00 [DBG] Rendering check session result
+2019-07-25 11:49:49.104 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:49:49.108 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:49:49.109 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:49:49.110 +02:00 [DBG] Start discovery request
+2019-07-25 11:49:49.129 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:49:49.235 +02:00 [DBG] Request path /.well-known/openid-configuration/jwks matched to endpoint type Discovery
+2019-07-25 11:49:49.237 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryKeyEndpoint
+2019-07-25 11:49:49.238 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryKeyEndpoint for /.well-known/openid-configuration/jwks
+2019-07-25 11:49:49.240 +02:00 [DBG] Start key discovery request
+2019-07-25 11:52:55.064 +02:00 [INF] Starting IdentityServer4 version 2.5.0.0
+2019-07-25 11:52:55.121 +02:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2019-07-25 11:52:55.122 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2019-07-25 11:52:55.122 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2019-07-25 11:52:55.122 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2019-07-25 11:52:55.122 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2019-07-25 11:52:55.122 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2019-07-25 11:52:55.244 +02:00 [DBG] Starting grant removal
+2019-07-25 11:53:09.021 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:53:09.273 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 11:53:09.569 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:53:09.574 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:53:09.594 +02:00 [DBG] Login Url: /Account/Login
+2019-07-25 11:53:09.594 +02:00 [DBG] Login Return Url Parameter: ReturnUrl
+2019-07-25 11:53:09.597 +02:00 [DBG] Logout Url: /Account/Logout
+2019-07-25 11:53:09.598 +02:00 [DBG] ConsentUrl Url: /consent
+2019-07-25 11:53:09.598 +02:00 [DBG] Consent Return Url Parameter: returnUrl
+2019-07-25 11:53:09.599 +02:00 [DBG] Error Url: /home/error
+2019-07-25 11:53:09.600 +02:00 [DBG] Error Id Parameter: errorId
+2019-07-25 11:53:09.636 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:53:09.662 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:53:09.663 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:53:09.669 +02:00 [DBG] Start discovery request
+2019-07-25 11:53:09.743 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:53:09.750 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:53:09.755 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:53:09.760 +02:00 [DBG] Start discovery request
+2019-07-25 11:53:10.387 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:53:10.387 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:53:10.484 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 11:53:10.490 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 11:53:10.495 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 11:53:10.496 +02:00 [DBG] Rendering check session result
+2019-07-25 11:53:10.726 +02:00 [DBG] Request path /.well-known/openid-configuration/jwks matched to endpoint type Discovery
+2019-07-25 11:53:10.729 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryKeyEndpoint
+2019-07-25 11:53:10.730 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryKeyEndpoint for /.well-known/openid-configuration/jwks
+2019-07-25 11:53:10.736 +02:00 [DBG] Start key discovery request
+2019-07-25 11:53:22.263 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:53:22.266 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 11:53:22.271 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:53:22.272 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:53:22.272 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:53:22.273 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:53:22.277 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:53:22.278 +02:00 [DBG] Start discovery request
+2019-07-25 11:53:22.281 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:53:22.320 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 11:53:22.345 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 11:53:22.354 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 11:53:22.359 +02:00 [DBG] Rendering check session result
+2019-07-25 11:53:37.119 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:53:37.121 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 11:53:37.127 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:53:37.128 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:53:37.128 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:53:37.132 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:53:37.133 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:53:37.134 +02:00 [DBG] Start discovery request
+2019-07-25 11:53:37.142 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:53:37.177 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 11:53:37.181 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 11:53:37.183 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 11:53:37.184 +02:00 [DBG] Rendering check session result
+2019-07-25 11:54:14.587 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 11:54:14.591 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 11:54:14.606 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 11:54:14.615 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 11:54:14.618 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 11:54:14.621 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 11:54:14.622 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 11:54:14.625 +02:00 [DBG] Start discovery request
+2019-07-25 11:54:14.643 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 11:54:14.731 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 11:54:14.734 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 11:54:14.736 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 11:54:14.738 +02:00 [DBG] Rendering check session result
+2019-07-25 11:59:53.592 +02:00 [INF] Starting IdentityServer4 version 2.5.0.0
+2019-07-25 11:59:53.666 +02:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2019-07-25 11:59:53.666 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2019-07-25 11:59:53.667 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2019-07-25 11:59:53.667 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2019-07-25 11:59:53.667 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2019-07-25 11:59:53.667 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2019-07-25 11:59:53.804 +02:00 [DBG] Starting grant removal
+2019-07-25 12:00:02.207 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:02.315 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:00:02.600 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:02.606 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:02.634 +02:00 [DBG] Login Url: /Account/Login
+2019-07-25 12:00:02.634 +02:00 [DBG] Login Return Url Parameter: ReturnUrl
+2019-07-25 12:00:02.635 +02:00 [DBG] Logout Url: /Account/Logout
+2019-07-25 12:00:02.636 +02:00 [DBG] ConsentUrl Url: /consent
+2019-07-25 12:00:02.636 +02:00 [DBG] Consent Return Url Parameter: returnUrl
+2019-07-25 12:00:02.637 +02:00 [DBG] Error Url: /home/error
+2019-07-25 12:00:02.637 +02:00 [DBG] Error Id Parameter: errorId
+2019-07-25 12:00:02.677 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:00:02.705 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:00:02.710 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:00:02.716 +02:00 [DBG] Start discovery request
+2019-07-25 12:00:02.825 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:00:02.835 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:00:02.843 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:00:02.851 +02:00 [DBG] Start discovery request
+2019-07-25 12:00:03.500 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:00:03.500 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:00:03.604 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 12:00:03.615 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 12:00:03.617 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 12:00:03.621 +02:00 [DBG] Rendering check session result
+2019-07-25 12:00:03.799 +02:00 [DBG] Request path /.well-known/openid-configuration/jwks matched to endpoint type Discovery
+2019-07-25 12:00:03.802 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryKeyEndpoint
+2019-07-25 12:00:03.803 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryKeyEndpoint for /.well-known/openid-configuration/jwks
+2019-07-25 12:00:03.812 +02:00 [DBG] Start key discovery request
+2019-07-25 12:00:15.658 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:15.660 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:00:15.664 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:15.664 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:15.665 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:00:15.666 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:00:15.667 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:00:15.668 +02:00 [DBG] Start discovery request
+2019-07-25 12:00:15.675 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:00:15.678 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:15.679 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:00:15.683 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:15.684 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:15.685 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:00:15.686 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:00:15.687 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:00:15.688 +02:00 [DBG] Start discovery request
+2019-07-25 12:00:15.693 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:00:15.747 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 12:00:15.761 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 12:00:15.790 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 12:00:15.794 +02:00 [DBG] Rendering check session result
+2019-07-25 12:00:15.842 +02:00 [DBG] Request path /connect/authorize matched to endpoint type Authorize
+2019-07-25 12:00:15.870 +02:00 [DBG] Endpoint enabled: Authorize, successfully created handler: IdentityServer4.Endpoints.AuthorizeEndpoint
+2019-07-25 12:00:15.873 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.AuthorizeEndpoint for /connect/authorize
+2019-07-25 12:00:15.880 +02:00 [DBG] Start authorize request
+2019-07-25 12:00:15.894 +02:00 [DBG] User in authorize request: 2
+2019-07-25 12:00:15.904 +02:00 [DBG] Start authorize request protocol validation
+2019-07-25 12:00:16.494 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:16.503 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:16.589 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:16.750 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:16.762 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:16.766 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:16.775 +02:00 [DBG] Calling into custom validator: IdentityServer4.Validation.DefaultCustomAuthorizeRequestValidator
+2019-07-25 12:00:16.789 +02:00 [DBG] ValidatedAuthorizeRequest
+{"ClientId":"angular_spa","ClientName":"Angular SPA","RedirectUri":"http://localhost:4200/auth-callback","AllowedRedirectUris":["http://localhost:4200/auth-callback"],"SubjectId":"2","ResponseType":"id_token token","ResponseMode":"fragment","GrantType":"implicit","RequestedScopes":"openid profile fightcore-backend","State":"da4196cc931342198aececdff2c77ab9","UiLocales":null,"Nonce":"7bd6e2c2021545edb6c1cb838bd36170","AuthenticationContextReferenceClasses":null,"DisplayMode":null,"PromptMode":null,"MaxAge":null,"LoginHint":null,"SessionId":"ab59af6dcb647d2e767dee1d99ec27aa","Raw":{"client_id":"angular_spa","redirect_uri":"http://localhost:4200/auth-callback","response_type":"id_token token","scope":"openid profile fightcore-backend","state":"da4196cc931342198aececdff2c77ab9","nonce":"7bd6e2c2021545edb6c1cb838bd36170"},"$type":"AuthorizeRequestValidationLog"}
+2019-07-25 12:00:17.139 +02:00 [WRN] No user found matching subject Id: 2
+2019-07-25 12:00:17.145 +02:00 [INF] Showing login: User is not active
+2019-07-25 12:00:17.340 +02:00 [DBG] Start authorize request protocol validation
+2019-07-25 12:00:17.344 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:17.345 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:17.347 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:17.351 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:17.353 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:17.356 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:17.357 +02:00 [DBG] Calling into custom validator: IdentityServer4.Validation.DefaultCustomAuthorizeRequestValidator
+2019-07-25 12:00:17.363 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:17.363 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:19.367 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:19.370 +02:00 [DBG] CORS request made for path: /Account/Login from origin: null but was ignored because path was not for an allowed IdentityServer CORS endpoint
+2019-07-25 12:00:19.422 +02:00 [DBG] Start authorize request protocol validation
+2019-07-25 12:00:19.426 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:19.427 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:19.429 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:19.433 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:19.435 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:19.437 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:19.439 +02:00 [DBG] Calling into custom validator: IdentityServer4.Validation.DefaultCustomAuthorizeRequestValidator
+2019-07-25 12:00:19.679 +02:00 [DBG] Augmenting SignInContext
+2019-07-25 12:00:19.683 +02:00 [DBG] Adding idp claim with value: local
+2019-07-25 12:00:19.683 +02:00 [DBG] Adding amr claim with value: pwd
+2019-07-25 12:00:19.684 +02:00 [DBG] Adding auth_time claim with value: 1564048819
+2019-07-25 12:00:19.699 +02:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2019-07-25 12:00:19.714 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:19.715 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:19.734 +02:00 [DBG] Request path /connect/authorize/callback matched to endpoint type Authorize
+2019-07-25 12:00:19.741 +02:00 [DBG] Endpoint enabled: Authorize, successfully created handler: IdentityServer4.Endpoints.AuthorizeCallbackEndpoint
+2019-07-25 12:00:19.742 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.AuthorizeCallbackEndpoint for /connect/authorize/callback
+2019-07-25 12:00:19.760 +02:00 [DBG] Start authorize callback request
+2019-07-25 12:00:19.768 +02:00 [DBG] User in authorize request: 3
+2019-07-25 12:00:19.769 +02:00 [DBG] Start authorize request protocol validation
+2019-07-25 12:00:19.774 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:19.775 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:19.777 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:19.791 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:19.796 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:19.799 +02:00 [DBG] Found ["fightcore-backend"] API scopes in database
+2019-07-25 12:00:19.800 +02:00 [DBG] Calling into custom validator: IdentityServer4.Validation.DefaultCustomAuthorizeRequestValidator
+2019-07-25 12:00:19.801 +02:00 [DBG] ValidatedAuthorizeRequest
+{"ClientId":"angular_spa","ClientName":"Angular SPA","RedirectUri":"http://localhost:4200/auth-callback","AllowedRedirectUris":["http://localhost:4200/auth-callback"],"SubjectId":"3","ResponseType":"id_token token","ResponseMode":"fragment","GrantType":"implicit","RequestedScopes":"openid profile fightcore-backend","State":"da4196cc931342198aececdff2c77ab9","UiLocales":null,"Nonce":"7bd6e2c2021545edb6c1cb838bd36170","AuthenticationContextReferenceClasses":null,"DisplayMode":null,"PromptMode":null,"MaxAge":null,"LoginHint":null,"SessionId":"4afa9260139d00dfbc83e1b3c1bbfa75","Raw":{"client_id":"angular_spa","redirect_uri":"http://localhost:4200/auth-callback","response_type":"id_token token","scope":"openid profile fightcore-backend","state":"da4196cc931342198aececdff2c77ab9","nonce":"7bd6e2c2021545edb6c1cb838bd36170"},"$type":"AuthorizeRequestValidationLog"}
+2019-07-25 12:00:19.828 +02:00 [DBG] Client is configured to not require consent, no consent is required
+2019-07-25 12:00:19.838 +02:00 [DBG] Creating Implicit Flow response.
+2019-07-25 12:00:19.851 +02:00 [DBG] Getting claims for access token for client: angular_spa
+2019-07-25 12:00:19.851 +02:00 [DBG] Getting claims for access token for subject: 3
+2019-07-25 12:00:19.962 +02:00 [DBG] Getting claims for identity token for subject: 3 and client: angular_spa
+2019-07-25 12:00:19.971 +02:00 [DBG] In addition to an id_token, an access_token was requested. No claims other than sub are included in the id_token. To obtain more user claims, either use the user info endpoint or set AlwaysIncludeUserClaimsInIdToken on the client configuration.
+2019-07-25 12:00:19.987 +02:00 [DBG] Authorize endpoint response
+{"SubjectId":"3","ClientId":"angular_spa","RedirectUri":"http://localhost:4200/auth-callback","State":"da4196cc931342198aececdff2c77ab9","Scope":"openid profile fightcore-backend","Error":null,"ErrorDescription":null,"$type":"AuthorizeResponseLog"}
+2019-07-25 12:00:20.017 +02:00 [DBG] Augmenting SignInContext
+2019-07-25 12:00:20.020 +02:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2019-07-25 12:00:21.674 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:21.677 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:00:21.682 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:21.683 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:21.684 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:00:21.686 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:00:21.686 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:00:21.687 +02:00 [DBG] Start discovery request
+2019-07-25 12:00:21.701 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:00:21.705 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:21.706 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:00:21.708 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:21.709 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:21.710 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:00:21.711 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:00:21.712 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:00:21.712 +02:00 [DBG] Start discovery request
+2019-07-25 12:00:21.722 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:00:21.821 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:21.824 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration/jwks from origin: http://localhost:4200
+2019-07-25 12:00:21.844 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 12:00:21.846 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:21.849 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 12:00:21.850 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:21.851 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 12:00:21.852 +02:00 [DBG] Request path /.well-known/openid-configuration/jwks matched to endpoint type Discovery
+2019-07-25 12:00:21.853 +02:00 [DBG] Rendering check session result
+2019-07-25 12:00:21.854 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryKeyEndpoint
+2019-07-25 12:00:21.858 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryKeyEndpoint for /.well-known/openid-configuration/jwks
+2019-07-25 12:00:21.859 +02:00 [DBG] Start key discovery request
+2019-07-25 12:00:21.906 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:21.933 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:00:21.935 +02:00 [DBG] CORS request made for path: /connect/userinfo from origin: http://localhost:4200
+2019-07-25 12:00:21.937 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:00:21.939 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:00:21.939 +02:00 [DBG] Request path /connect/userinfo matched to endpoint type Userinfo
+2019-07-25 12:00:21.942 +02:00 [DBG] Endpoint enabled: Userinfo, successfully created handler: IdentityServer4.Endpoints.UserInfoEndpoint
+2019-07-25 12:00:21.942 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.UserInfoEndpoint for /connect/userinfo
+2019-07-25 12:00:21.951 +02:00 [DBG] Start userinfo request
+2019-07-25 12:00:21.957 +02:00 [DBG] Bearer token found in header
+2019-07-25 12:00:21.982 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:21.982 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:21.989 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:21.990 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:22.004 +02:00 [DBG] Calling into custom token validator: IdentityServer4.Validation.DefaultCustomTokenValidator
+2019-07-25 12:00:22.008 +02:00 [DBG] Token validation success
+{"ClientId":null,"ClientName":null,"ValidateLifetime":true,"AccessTokenType":"Jwt","ExpectedScope":"openid","TokenHandle":null,"JwtId":null,"Claims":{"nbf":1564048819,"exp":1564052419,"iss":"http://localhost:5000","aud":["http://localhost:5000/resources","fightcore-backend"],"client_id":"angular_spa","sub":"3","auth_time":1564048819,"idp":"local","scope":["openid","profile","fightcore-backend"],"amr":"pwd"},"$type":"TokenValidationLog"}
+2019-07-25 12:00:22.033 +02:00 [DBG] Creating userinfo response
+2019-07-25 12:00:22.039 +02:00 [DBG] Scopes in access token: openid profile fightcore-backend
+2019-07-25 12:00:22.044 +02:00 [DBG] Scopes in access token: openid profile fightcore-backend
+2019-07-25 12:00:22.053 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:22.054 +02:00 [DBG] Requested claim types: sub name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+2019-07-25 12:00:22.056 +02:00 [DBG] Scopes in access token: openid profile fightcore-backend
+2019-07-25 12:00:22.060 +02:00 [DBG] Found ["openid","profile"] identity scopes in database
+2019-07-25 12:00:22.069 +02:00 [INF] Profile service returned the following claim types: sub preferred_username name
+2019-07-25 12:00:22.070 +02:00 [DBG] End userinfo request
+2019-07-25 12:00:22.444 +02:00 [DBG] Request path /connect/authorize matched to endpoint type Authorize
+2019-07-25 12:00:22.450 +02:00 [DBG] Endpoint enabled: Authorize, successfully created handler: IdentityServer4.Endpoints.AuthorizeEndpoint
+2019-07-25 12:00:22.455 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.AuthorizeEndpoint for /connect/authorize
+2019-07-25 12:00:22.457 +02:00 [DBG] Start authorize request
+2019-07-25 12:00:22.460 +02:00 [DBG] User in authorize request: 3
+2019-07-25 12:00:22.461 +02:00 [DBG] Start authorize request protocol validation
+2019-07-25 12:00:22.521 +02:00 [DBG] angular_spa found in database: true
+2019-07-25 12:00:22.524 +02:00 [DBG] client configuration validation for client angular_spa succeeded.
+2019-07-25 12:00:22.526 +02:00 [ERR] Invalid redirect_uri: http://localhost:4200/silent-refresh.html
+{"ClientId":"angular_spa","ClientName":"Angular SPA","RedirectUri":null,"AllowedRedirectUris":["http://localhost:4200/auth-callback"],"SubjectId":"3","ResponseType":null,"ResponseMode":null,"GrantType":null,"RequestedScopes":"","State":null,"UiLocales":null,"Nonce":null,"AuthenticationContextReferenceClasses":null,"DisplayMode":null,"PromptMode":null,"MaxAge":null,"LoginHint":null,"SessionId":null,"Raw":{"client_id":"angular_spa","redirect_uri":"http://localhost:4200/silent-refresh.html","response_type":"id_token","scope":"openid","state":"8ea83791da0d4248be138c26ef2241f8","nonce":"4224f007659143aca7d5577a2f98e53e","prompt":"none"},"$type":"AuthorizeRequestValidationLog"}
+2019-07-25 12:00:22.536 +02:00 [ERR] Request validation failed
+2019-07-25 12:00:22.538 +02:00 [INF] {"ClientId":"angular_spa","ClientName":"Angular SPA","RedirectUri":null,"AllowedRedirectUris":["http://localhost:4200/auth-callback"],"SubjectId":"3","ResponseType":null,"ResponseMode":null,"GrantType":null,"RequestedScopes":"","State":null,"UiLocales":null,"Nonce":null,"AuthenticationContextReferenceClasses":null,"DisplayMode":null,"PromptMode":null,"MaxAge":null,"LoginHint":null,"SessionId":null,"Raw":{"client_id":"angular_spa","redirect_uri":"http://localhost:4200/silent-refresh.html","response_type":"id_token","scope":"openid","state":"8ea83791da0d4248be138c26ef2241f8","nonce":"4224f007659143aca7d5577a2f98e53e","prompt":"none"},"$type":"AuthorizeRequestValidationLog"}
+2019-07-25 12:02:20.913 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:02:20.919 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:02:20.936 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:02:20.942 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:02:20.942 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:02:20.944 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:02:20.945 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:02:20.947 +02:00 [DBG] Start discovery request
+2019-07-25 12:02:20.978 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:02:21.051 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 12:02:21.054 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 12:02:21.056 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 12:02:21.057 +02:00 [DBG] Rendering check session result
+2019-07-25 12:03:18.441 +02:00 [WRN] The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the policy by listing individual origins if credentials needs to be supported.
+2019-07-25 12:03:18.453 +02:00 [DBG] CORS request made for path: /.well-known/openid-configuration from origin: http://localhost:4200
+2019-07-25 12:03:18.460 +02:00 [DBG] Origin http://localhost:4200 is allowed: true
+2019-07-25 12:03:18.461 +02:00 [DBG] CorsPolicyService allowed origin: http://localhost:4200
+2019-07-25 12:03:18.461 +02:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2019-07-25 12:03:18.462 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2019-07-25 12:03:18.463 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2019-07-25 12:03:18.464 +02:00 [DBG] Start discovery request
+2019-07-25 12:03:18.506 +02:00 [DBG] Found ["openid","profile","email","fightcore-backend"] as all scopes in database
+2019-07-25 12:03:18.601 +02:00 [DBG] Request path /connect/checksession matched to endpoint type Checksession
+2019-07-25 12:03:18.606 +02:00 [DBG] Endpoint enabled: Checksession, successfully created handler: IdentityServer4.Endpoints.CheckSessionEndpoint
+2019-07-25 12:03:18.609 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.CheckSessionEndpoint for /connect/checksession
+2019-07-25 12:03:18.613 +02:00 [DBG] Rendering check session result

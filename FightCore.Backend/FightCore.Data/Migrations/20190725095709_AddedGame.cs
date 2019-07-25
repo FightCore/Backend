@@ -18,16 +18,11 @@ namespace FightCore.Data.Migrations
                 oldClrType: typeof(long),
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<long>(
                 name: "GameId",
                 table: "Posts",
                 nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<long>(
-                name: "GameId1",
-                table: "Posts",
-                nullable: true);
+                defaultValue: 0L);
 
             migrationBuilder.CreateTable(
                 name: "Game",
@@ -44,9 +39,9 @@ namespace FightCore.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_GameId1",
+                name: "IX_Posts_GameId",
                 table: "Posts",
-                column: "GameId1");
+                column: "GameId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Posts_AspNetUsers_AuthorId",
@@ -57,12 +52,12 @@ namespace FightCore.Data.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Posts_Game_GameId1",
+                name: "FK_Posts_Game_GameId",
                 table: "Posts",
-                column: "GameId1",
+                column: "GameId",
                 principalTable: "Game",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -72,22 +67,18 @@ namespace FightCore.Data.Migrations
                 table: "Posts");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Posts_Game_GameId1",
+                name: "FK_Posts_Game_GameId",
                 table: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Game");
 
             migrationBuilder.DropIndex(
-                name: "IX_Posts_GameId1",
+                name: "IX_Posts_GameId",
                 table: "Posts");
 
             migrationBuilder.DropColumn(
                 name: "GameId",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "GameId1",
                 table: "Posts");
 
             migrationBuilder.AlterColumn<long>(
