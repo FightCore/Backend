@@ -13,6 +13,9 @@ namespace FightCore.Data.Configurations
         {
             builder.HasOne(post => post.Author)
                 .WithMany().HasForeignKey(post => post.AuthorId);
+
+            builder.HasOne(post => post.Game)
+                .WithMany().HasForeignKey(post => post.GameId);
         }
     }
 }

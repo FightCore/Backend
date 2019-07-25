@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
+using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
+using FightCore.Backend.Configuration.Seeds;
 using FightCore.Configuration;
 using FightCore.Data;
-using FightCore.Repositories.Fakes.Posts;
-using FightCore.Repositories.Posts;
-using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +35,7 @@ namespace FightCore.Backend
                 .AddJsonFormatters()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAutoMapper(typeof(PostMapperProfile));
+            services.AddAutoMapper(typeof(PostMapperProfile), typeof(GameMapperProfile));
 
             services.AddDbContext<ApplicationDbContext>(
                 options =>
@@ -54,7 +53,16 @@ namespace FightCore.Backend
                     options.Audience = "fightcore-backend";
                 });
 
-            services = ServicesAndRepositoryInjection(services);
+            services.AddPatterns(Configuration);
+
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
+
+            using (var context = new ApplicationDbContext(optionsBuilder.Options))
+            {
+                BackendSeed.ExecuteSeed(context);
+            }
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,26 +83,6 @@ namespace FightCore.Backend
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
-
-        private IServiceCollection ServicesAndRepositoryInjection(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddScoped<DbContext, ApplicationDbContext>();
-            serviceCollection.AddScoped<IPostService, PostService>();
-
-            var parsingSuccess = bool.TryParse(Configuration["UseMocking"], out var mocking);
-            if (parsingSuccess && mocking)
-            {
-                 // Add the Mocks
-                 serviceCollection.AddScoped<IPostRepository, FakePostRepository>();
-            }
-            else
-            {
-                // Add the EF Core repositories
-                serviceCollection.AddScoped<IPostRepository, PostRepository>();
-            }
-
-            return serviceCollection;
         }
     }
 }

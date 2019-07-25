@@ -16,5 +16,9 @@ namespace FightCore.Models.Posts
         public long AuthorId { get; set; }
 
         public bool IsPrivate { get; set; }
+
+        public Game Game { get; set; }
+
+        public int GameId { get; set; }
     }
 }

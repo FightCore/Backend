@@ -3508,3 +3508,27 @@ Error Number:208,State:1,Class:16
 2019-07-25 00:47:35.655 +02:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryKeyEndpoint
 2019-07-25 00:47:35.662 +02:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryKeyEndpoint for /.well-known/openid-configuration/jwks
 2019-07-25 00:47:35.666 +02:00 [DBG] Start key discovery request
+2019-07-25 11:32:33.974 +02:00 [INF] Starting IdentityServer4 version 2.5.0.0
+2019-07-25 11:32:34.035 +02:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2019-07-25 11:32:34.035 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2019-07-25 11:32:34.036 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2019-07-25 11:32:34.036 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2019-07-25 11:32:34.036 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2019-07-25 11:32:34.036 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2019-07-25 11:32:34.201 +02:00 [DBG] Starting grant removal
+2019-07-25 11:34:49.522 +02:00 [INF] Starting IdentityServer4 version 2.5.0.0
+2019-07-25 11:34:49.596 +02:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2019-07-25 11:34:49.597 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2019-07-25 11:34:49.598 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2019-07-25 11:34:49.598 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2019-07-25 11:34:49.598 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2019-07-25 11:34:49.598 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2019-07-25 11:34:49.771 +02:00 [DBG] Starting grant removal
+2019-07-25 11:36:25.692 +02:00 [INF] Starting IdentityServer4 version 2.5.0.0
+2019-07-25 11:36:25.784 +02:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2019-07-25 11:36:25.785 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2019-07-25 11:36:25.785 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2019-07-25 11:36:25.785 +02:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2019-07-25 11:36:25.786 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2019-07-25 11:36:25.786 +02:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2019-07-25 11:36:25.972 +02:00 [DBG] Starting grant removal

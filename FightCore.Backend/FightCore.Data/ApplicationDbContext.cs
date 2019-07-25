@@ -29,5 +29,7 @@ namespace FightCore.Data
 
         public DbSet<Post> Posts { get; set; }
 
+        public DbSet<Game> Game { get; set; }
+
     }
 }
