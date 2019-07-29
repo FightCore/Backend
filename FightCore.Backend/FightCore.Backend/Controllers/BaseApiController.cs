@@ -42,7 +42,7 @@ namespace FightCore.Backend.Controllers
         /// The claims from the user parsed from the JWT.
         /// </param>
         /// <returns>The id of the user or throws an exception if not parsed.</returns>
-        protected long GetUserIdFromClaims(ClaimsPrincipal claimsPrincipal)
+        protected long? GetUserIdFromClaims(ClaimsPrincipal claimsPrincipal)
         {
             // Finds the id of the user in it's subject claim.
             // Note that this is stored in ClaimTypes.NameIdentifier.
@@ -50,6 +50,11 @@ namespace FightCore.Backend.Controllers
             // default way that ASP.NET Core handles JWT (Microsoft standard)
             var subject = claimsPrincipal.FindFirst(claim =>
                 claim.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
+
+            if (subject == null)
+            {
+                return null;
+            }
 
             return Convert.ToInt64(subject);
         }

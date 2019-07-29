@@ -21,6 +21,7 @@ namespace FightCore.Backend.Configuration
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<ILikeService, LikeService>();
 
             var parsingSuccess = bool.TryParse(configuration["UseMocking"], out var mocking);
             if (parsingSuccess && mocking)
@@ -28,12 +29,14 @@ namespace FightCore.Backend.Configuration
                 // Add the Mocks
                 services.AddScoped<IPostRepository, FakePostRepository>();
                 services.AddScoped<IGameRepository, FakeGameRepository>();
+                services.AddScoped<ILikeRepository, FakeLikeRepository>();
             }
             else
             {
                 // Add the EF Core repositories
                 services.AddScoped<IPostRepository, PostRepository>();
                 services.AddScoped<IGameRepository, GameRepository>();
+                services.AddScoped<ILikeRepository, LikeRepository>();
             }
 
             return services;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FightCore.Data.Configurations;
 using FightCore.Models;
 using FightCore.Models.Posts;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,8 @@ namespace FightCore.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new PostConfiguration());
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
 
             builder.UseOpenIddict();
 

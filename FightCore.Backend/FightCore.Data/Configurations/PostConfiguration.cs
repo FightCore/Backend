@@ -16,6 +16,10 @@ namespace FightCore.Data.Configurations
 
             builder.HasOne(post => post.Game)
                 .WithMany().HasForeignKey(post => post.GameId);
+
+            builder.HasMany(post => post.Likes)
+                .WithOne(like => like.Post)
+                .HasForeignKey(like => like.PostId);
         }
     }
 }
