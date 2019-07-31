@@ -46,5 +46,10 @@ namespace FightCore.Backend.ViewModels.Posts
         /// If the current user has liked the post.
         /// </summary>
         public bool Liked { get; set; }
+
+        /// <summary>
+        /// The id of the game.
+        /// </summary>
+        public long GameId { get; set; }
     }
 }

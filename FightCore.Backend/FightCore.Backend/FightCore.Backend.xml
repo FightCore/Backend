@@ -211,5 +211,10 @@
             If the current user has liked the post.
             </summary>
         </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.GameId">
+            <summary>
+            The id of the game.
+            </summary>
+        </member>
     </members>
 </doc>

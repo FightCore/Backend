@@ -10,5 +10,7 @@ namespace FightCore.Models
         public string Name { get; set; }
 
         public string Abbreviation { get; set; }
+
+        public string BannerUrl { get; set; }
     }
 }
