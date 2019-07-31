@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FightCore.Backend</name>
+    </assembly>
+    <members>
+        <member name="T:FightCore.Backend.ContextFactory">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.ContextFactory.CreateDbContext(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.BaseApiController.MappedOk``1(System.Object)">
+            <summary>
+            Maps a model to a ViewModel using <see cref="F:FightCore.Backend.Controllers.BaseApiController.Mapper"/>.
+            Wraps this in the default Ok(...) result.
+            </summary>
+            <typeparam name="TViewModel">
+            The type of the ViewModel to be mapped to.
+            </typeparam>
+            <param name="model">
+            The model which should be mapped.
+            </param>
+            <returns>The mapped <paramref name="model"/> in an 200 result.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.BaseApiController.GetUserIdFromClaims(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Gets the currently logged in user's Id based on the given <paramref name="claimsPrincipal"/>.
+            </summary>
+            <param name="claimsPrincipal">
+            The claims from the user parsed from the JWT.
+            </param>
+            <returns>The id of the user or throws an exception if not parsed.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.GetAllGames">
+             <summary>
+             Get all games
+             </summary>
+             <remarks>
+             Gets all games known in the FightCore API.
+            
+             Some of these games might not be in use yet or be deprecated.
+             </remarks>
+             <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.GetPosts">
+             <summary>
+             Gets all public posts.
+             </summary>
+             <remarks>
+             If the user is logged in, it will also receive which posts have been liked
+             and the private posts from that user.
+            
+             THIS METHOD WILL BE REMOVED FOR A PAGINATED RESULT.
+             </remarks>
+             <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.GetPost(System.Int64)">
+            <summary>
+            Get a single post based on it's <paramref name="id"/>.
+            </summary>
+            <remarks>
+            Post needs to be public or belong to the user.
+            </remarks>
+            <param name="id">
+            The id of the post to be searched for.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.CreatePost(FightCore.Backend.ViewModels.Posts.CreatePostViewModel)">
+            <summary>
+            Creates a new post.
+            </summary>
+            <remarks>
+            Creates a new post for the given body and the provided user.
+            </remarks>
+            <param name="viewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.LikePost(System.Int64)">
+             <summary>
+             Like post.
+             </summary>
+             <remarks>
+             Likes the post for the given <paramref name="id"/> with the user
+             derived from the token.
+            
+             If the post is already liked, the like will be removed.
+             </remarks>
+             <param name="id">
+             The id of the post that is intended to be liked
+             </param>
+             <returns>
+             </returns>
+        </member>
+    </members>
+</doc>

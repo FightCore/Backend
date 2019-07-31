@@ -7,6 +7,7 @@ using FightCore.Backend.ViewModels;
 using FightCore.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
 {
@@ -21,7 +22,17 @@ namespace FightCore.Backend.Controllers
             _gameService = gameService;
         }
 
+        /// <summary>
+        /// Get all games
+        /// </summary>
+        /// <remarks>
+        /// Gets all games known in the FightCore API.
+        ///
+        /// Some of these games might not be in use yet or be deprecated.
+        /// </remarks>
+        /// <returns></returns>
         [HttpGet]
+        [SwaggerResponse(200, "All of the games in the system", typeof(List<GameViewModel>))]
         public async Task<IActionResult> GetAllGames()
         {
             var games = await _gameService.GetAllAsync();

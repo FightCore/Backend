@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.IO;
+using AutoMapper;
 using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
 using FightCore.Backend.Configuration.Seeds;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace FightCore.Backend
 {
@@ -33,7 +36,15 @@ namespace FightCore.Backend
                         .AllowAnyOrigin()))
                 .AddAuthorization()
                 .AddJsonFormatters()
+                .AddApiExplorer()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(configuration =>
+            {
+                configuration.SwaggerDoc("v1", new OpenApiInfo {Title = "FightCore API", Version = "v1"});
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "FightCore.Backend.xml");
+                configuration.IncludeXmlComments(filePath);
+            });
 
             services.AddAutoMapper(typeof(PostMapperProfile), typeof(GameMapperProfile));
 
@@ -83,6 +94,11 @@ namespace FightCore.Backend
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseStaticFiles();
+
+            app.UseSwagger();
+            app.UseReDoc(configuration=>
+                configuration.RoutePrefix = "swagger");
         }
     }
 }

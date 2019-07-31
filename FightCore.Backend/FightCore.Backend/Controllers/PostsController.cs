@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Posts;
@@ -8,6 +9,7 @@ using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
 {
@@ -30,6 +32,17 @@ namespace FightCore.Backend.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Gets all public posts.
+        /// </summary>
+        /// <remarks>
+        /// If the user is logged in, it will also receive which posts have been liked
+        /// and the private posts from that user.
+        ///
+        /// THIS METHOD WILL BE REMOVED FOR A PAGINATED RESULT.
+        /// </remarks>
+        /// <returns></returns>
+        [SwaggerResponse(200, "A list of post objects", typeof(List<PostViewModel>))]
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
@@ -50,7 +63,19 @@ namespace FightCore.Backend.Controllers
             return MappedOk<List<PostViewModel>>(posts);
         }
 
+        /// <summary>
+        /// Get a single post based on it's <paramref name="id"/>.
+        /// </summary>
+        /// <remarks>
+        /// Post needs to be public or belong to the user.
+        /// </remarks>
+        /// <param name="id">
+        /// The id of the post to be searched for.
+        /// </param>
+        /// <returns></returns>
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "The post object.", typeof(PostViewModel))]
+        [SwaggerResponse(404, "The post is not found.")]
         public async Task<IActionResult> GetPost(long id)
         {
             var post = await _postService.GetByIdAsync(id);
@@ -63,8 +88,18 @@ namespace FightCore.Backend.Controllers
             return MappedOk<PostViewModel>(post);
         }
 
+        /// <summary>
+        /// Creates a new post.
+        /// </summary>
+        /// <remarks>
+        /// Creates a new post for the given body and the provided user.
+        /// </remarks>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
+        [SwaggerResponse(401, "There is no logged in user or the token is invalid..")]
+        [SwaggerResponse(200, "The post was successfully created.")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel viewModel)
         {
             var userId = GetUserIdFromClaims(User);
@@ -83,8 +118,25 @@ namespace FightCore.Backend.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Like post.
+        /// </summary>
+        /// <remarks>
+        /// Likes the post for the given <paramref name="id"/> with the user
+        /// derived from the token.
+        ///
+        /// If the post is already liked, the like will be removed.
+        /// </remarks>
+        /// <param name="id">
+        /// The id of the post that is intended to be liked
+        /// </param>
+        /// <returns>
+        /// </returns>
         [HttpPost("{id}")]
         [Authorize]
+        [SwaggerResponse(200, "The post was (un)liked successfully.")]
+        [SwaggerResponse(404, "The post is not found.")]
+        [SwaggerResponse(401, "There is no logged in user or the token is invalid..")]
         public async Task<IActionResult> LikePost(long id)
         {
             var userId = GetUserIdFromClaims(User);
