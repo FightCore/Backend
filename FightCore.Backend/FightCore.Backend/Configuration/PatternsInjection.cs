@@ -13,8 +13,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FightCore.Backend.Configuration
 {
+    /// <summary>
+    /// Static class to add the patterns services to the dependency injection.
+    /// </summary>
     public static class PatternsInjection
     {
+        /// <summary>
+        /// Adds the required dependencies for patterns and all repositories
+        /// and services to the <paramref name="services"/>.
+        /// </summary>
+        /// <param name="services">The service collection to build off.</param>
+        /// <param name="configuration">The configuration to read the variables from.</param>
+        /// <returns></returns>
         public static IServiceCollection AddPatterns(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<DbContext, ApplicationDbContext>();

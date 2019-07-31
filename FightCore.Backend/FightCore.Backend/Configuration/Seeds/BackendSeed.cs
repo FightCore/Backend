@@ -20,38 +20,38 @@ namespace FightCore.Backend.Configuration.Seeds
             }
         }
 
-        private static List<Game> GetGames()
+        private static IEnumerable<Game> GetGames()
         {
             return new List<Game>()
             {
                 new Game()
                 {
-                    Abbreviation = "SSB",
+                    Abbreviation = "Smash 64",
                     Name = "Super Smash Bros."
                 },
                 new Game()
                 {
-                    Abbreviation = "SSBM",
+                    Abbreviation = "Melee",
                     Name = "Super Smash Bros. Melee"
                 },
                 new Game()
                 {
-                    Abbreviation = "SSBB",
+                    Abbreviation = "Brawl",
                     Name = "Super Smash Bros. Brawl"
                 },
                 new Game()
                 {
-                    Abbreviation = "SSB3DS",
+                    Abbreviation = "Smash 3DS",
                     Name = "Super Smash Bros. For 3DS"
                 },
                 new Game()
                 {
-                    Abbreviation = "SSBWiiU",
+                    Abbreviation = "Smash Wii U",
                     Name = "Super Smash Bros. For Wii U"
                 },
                 new Game()
                 {
-                    Abbreviation = "SSBU",
+                    Abbreviation = "Ultimate",
                     Name = "Super Smash Bros. Ultimate"
                 }
             };

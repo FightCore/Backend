@@ -11,6 +11,9 @@ namespace FightCore.Backend.Controllers
     /// <inheritdoc />
     public abstract class BaseApiController : ControllerBase
     {
+        /// <summary>
+        /// The AutoMapper to be used to map objects to ViewModels.
+        /// </summary>
         protected readonly IMapper Mapper;
 
         /// <inheritdoc />

@@ -115,5 +115,27 @@
              <returns>
              </returns>
         </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Body">
+            <summary>
+            The Markdown body of the post to be made.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Title">
+            <summary>
+            The title of the post to be made.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.IsPrivate">
+            <summary>
+            A value indicating if the post is private or not.
+            This is true for a private post.
+            This is false for a public post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.GameId">
+            <summary>
+            The id of the game to be linked to this post.
+            </summary>
+        </member>
     </members>
 </doc>
