@@ -89,6 +89,12 @@ namespace FightCore.Backend.Controllers
                 return NotFound();
             }
 
+            var userId = GetUserIdFromClaims(User);
+            if (userId.HasValue && post.Likes.Any(like => like.UserId == userId))
+            {
+                post.Liked = true;
+            }
+
             return MappedOk<PostViewModel>(post);
         }
 
@@ -103,23 +109,23 @@ namespace FightCore.Backend.Controllers
         [HttpPost]
         [Authorize]
         [SwaggerResponse(401, "There is no logged in user or the token is invalid..")]
-        [SwaggerResponse(200, "The post was successfully created.")]
+        [SwaggerResponse(201, "The post was successfully created.")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel viewModel)
         {
             var userId = GetUserIdFromClaims(User);
 
             if (userId == null)
-            {
+            {   
                 return Unauthorized();
             }
 
             var post = Mapper.Map<Post>(viewModel);
             post.AuthorId = userId.Value;
 
-            await _postService.AddAsync(post);
+            post = await _postService.AddAsync(post);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtRoute(new { id = post.Id }, null);
         }
 
         /// <summary>

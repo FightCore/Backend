@@ -4,6 +4,20 @@
         <name>FightCore.Backend</name>
     </assembly>
     <members>
+        <member name="T:FightCore.Backend.Configuration.PatternsInjection">
+            <summary>
+            Static class to add the patterns services to the dependency injection.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.PatternsInjection.AddPatterns(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adds the required dependencies for patterns and all repositories
+            and services to the <paramref name="services"/>.
+            </summary>
+            <param name="services">The service collection to build off.</param>
+            <param name="configuration">The configuration to read the variables from.</param>
+            <returns></returns>
+        </member>
         <member name="T:FightCore.Backend.ContextFactory">
             <inheritdoc />
         </member>
@@ -12,6 +26,11 @@
         </member>
         <member name="T:FightCore.Backend.Controllers.BaseApiController">
             <inheritdoc />
+        </member>
+        <member name="F:FightCore.Backend.Controllers.BaseApiController.Mapper">
+            <summary>
+            The AutoMapper to be used to map objects to ViewModels.
+            </summary>
         </member>
         <member name="M:FightCore.Backend.Controllers.BaseApiController.#ctor(AutoMapper.IMapper)">
             <inheritdoc />
@@ -115,6 +134,21 @@
              <returns>
              </returns>
         </member>
+        <member name="P:FightCore.Backend.ViewModels.GameViewModel.Id">
+            <summary>
+            The id of the game object.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.GameViewModel.Name">
+            <summary>
+            The name of the game.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.GameViewModel.Abbreviation">
+            <summary>
+            The abbreviation of the game's name.
+            </summary>
+        </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Body">
             <summary>
             The Markdown body of the post to be made.
@@ -135,6 +169,46 @@
         <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.GameId">
             <summary>
             The id of the game to be linked to this post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Id">
+            <summary>
+            The id of the post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Title">
+            <summary>
+            The title of the post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Body">
+            <summary>
+            The unparsed, unfiltered markdown body of the post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.BannerUrl">
+            <summary>
+            The banner url that corresponds to the selected game.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Author">
+            <summary>
+            The author's name who wrote the post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Game">
+            <summary>
+            The name of the game that the post is linked to.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Likes">
+            <summary>
+            The amount of likes the post has.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Liked">
+            <summary>
+            If the current user has liked the post.
             </summary>
         </member>
     </members>
