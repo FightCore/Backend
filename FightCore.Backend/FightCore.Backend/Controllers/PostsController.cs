@@ -13,6 +13,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
 {
+    /// <summary>
+    /// Endpoints for CRUD actions for the Post object.
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class PostsController : BaseApiController
@@ -21,6 +24,7 @@ namespace FightCore.Backend.Controllers
         private readonly ILikeService _likeService;
         private readonly DbContext _context;
 
+        /// <inheritdoc />
         public PostsController(
             IPostService postService,
             ILikeService likeService,

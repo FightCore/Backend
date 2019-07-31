@@ -10,6 +10,12 @@
         <member name="M:FightCore.Backend.ContextFactory.CreateDbContext(System.String[])">
             <inheritdoc />
         </member>
+        <member name="T:FightCore.Backend.Controllers.BaseApiController">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.BaseApiController.#ctor(AutoMapper.IMapper)">
+            <inheritdoc />
+        </member>
         <member name="M:FightCore.Backend.Controllers.BaseApiController.MappedOk``1(System.Object)">
             <summary>
             Maps a model to a ViewModel using <see cref="F:FightCore.Backend.Controllers.BaseApiController.Mapper"/>.
@@ -32,6 +38,14 @@
             </param>
             <returns>The id of the user or throws an exception if not parsed.</returns>
         </member>
+        <member name="T:FightCore.Backend.Controllers.GamesController">
+            <summary>
+            An endpoint to get information about games.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,AutoMapper.IMapper)">
+            <inheritdoc />
+        </member>
         <member name="M:FightCore.Backend.Controllers.GamesController.GetAllGames">
              <summary>
              Get all games
@@ -42,6 +56,14 @@
              Some of these games might not be in use yet or be deprecated.
              </remarks>
              <returns></returns>
+        </member>
+        <member name="T:FightCore.Backend.Controllers.PostsController">
+            <summary>
+            Endpoints for CRUD actions for the Post object.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.#ctor(FightCore.Services.Posts.IPostService,FightCore.Services.Posts.ILikeService,AutoMapper.IMapper,Microsoft.EntityFrameworkCore.DbContext)">
+            <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.PostsController.GetPosts">
              <summary>

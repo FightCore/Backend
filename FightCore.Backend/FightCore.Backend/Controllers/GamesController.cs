@@ -11,12 +11,16 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
 {
+    /// <summary>
+    /// An endpoint to get information about games.
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class GamesController : BaseApiController
     {
         private readonly IGameService _gameService;
 
+        /// <inheritdoc />
         public GamesController(IGameService gameService, IMapper mapper) : base(mapper)
         {
             _gameService = gameService;

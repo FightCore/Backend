@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FightCore.Backend.Controllers
 {
+    /// <inheritdoc />
     public abstract class BaseApiController : ControllerBase
     {
         protected readonly IMapper Mapper;
 
-        public BaseApiController(IMapper mapper)
+        /// <inheritdoc />
+        protected BaseApiController(IMapper mapper)
         {
             Mapper = mapper;
         }
