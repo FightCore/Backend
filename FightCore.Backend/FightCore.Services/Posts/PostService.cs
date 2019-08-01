@@ -10,7 +10,9 @@ namespace FightCore.Services.Posts
 {
     public interface IPostService : IService<Post, long, IPostRepository>
     {
-        Task<List<Post>> GetPublicPosts(long? userId = null);
+        Task<List<Post>> GetPublicPostsAsync(long? userId = null);
+
+        Task<Post> GetPublicByIdAsync(long id, long userId);
     }
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
@@ -19,9 +21,14 @@ namespace FightCore.Services.Posts
         {
         }
 
-        public Task<List<Post>> GetPublicPosts(long? userId = null)
+        public Task<List<Post>> GetPublicPostsAsync(long? userId = null)
         {
-            return Repository.GetPublicPostList(userId ?? 0);
+            return Repository.GetPublicPostListAsync(userId ?? 0);
+        }
+
+        public Task<Post> GetPublicByIdAsync(long id, long userId)
+        {
+            return Repository.GetPublicByIdAsync(id, userId);
         }
     }
 }

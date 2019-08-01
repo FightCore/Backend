@@ -46,7 +46,7 @@ namespace FightCore.Backend
                 configuration.IncludeXmlComments(filePath);
             });
 
-            services.AddAutoMapper(typeof(PostMapperProfile), typeof(GameMapperProfile));
+            services.AddAutoMapper(typeof(PostMapperProfile), typeof(GameMapperProfile), typeof(UserMapperProfile));
 
             services.AddDbContext<ApplicationDbContext>(
                 options =>

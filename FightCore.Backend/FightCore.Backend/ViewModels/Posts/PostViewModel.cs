@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.Backend.ViewModels.User;
 
 namespace FightCore.Backend.ViewModels.Posts
 {
@@ -30,7 +31,7 @@ namespace FightCore.Backend.ViewModels.Posts
         /// <summary>
         /// The author's name who wrote the post.
         /// </summary>
-        public string Author { get; set; }
+        public UserViewModel Author { get; set; }
 
         /// <summary>
         /// The name of the game that the post is linked to.
@@ -51,5 +52,7 @@ namespace FightCore.Backend.ViewModels.Posts
         /// The id of the game.
         /// </summary>
         public long GameId { get; set; }
+
+        public bool IsPrivate { get; set; }
     }
 }

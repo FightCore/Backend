@@ -52,7 +52,7 @@ namespace FightCore.Backend.Controllers
         {
             var userId = GetUserIdFromClaims(User);
 
-            var posts = await _postService.GetPublicPosts(userId);
+            var posts = await _postService.GetPublicPostsAsync(userId);
             if (userId.HasValue)
             {
                 posts.ForEach(post =>
@@ -82,14 +82,15 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(404, "The post is not found.")]
         public async Task<IActionResult> GetPost(long id)
         {
-            var post = await _postService.GetByIdAsync(id);
+            var userId = GetUserIdFromClaims(User);
+
+            var post = await _postService.GetPublicByIdAsync(id, userId ?? 0);
 
             if (post == null)
             {
                 return NotFound();
             }
 
-            var userId = GetUserIdFromClaims(User);
             if (userId.HasValue && post.Likes.Any(like => like.UserId == userId))
             {
                 post.Liked = true;
@@ -126,6 +127,35 @@ namespace FightCore.Backend.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtRoute(new { id = post.Id }, null);
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> UpdatePost(UpdatePostViewModel viewModel)
+        {
+            var userId = GetUserIdFromClaims(User);
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var post = await _postService.GetByIdAsync(viewModel.Id);
+
+            if (post.AuthorId != userId)
+            {
+                return Forbid();
+            }
+
+            post.Title = viewModel.Title;
+            post.Body = viewModel.Body;
+            post.GameId = viewModel.GameId;
+            post.IsPrivate = viewModel.IsPrivate;
+
+            _postService.Update(post);
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         /// <summary>

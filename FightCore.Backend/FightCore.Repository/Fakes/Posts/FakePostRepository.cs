@@ -18,9 +18,14 @@ namespace FightCore.Repositories.Fakes.Posts
                 .RuleFor(post => post.Title, faker => faker.Lorem.Sentence());
         }
 
-        public Task<List<Post>> GetPublicPostList(long userId)
+        public Task<List<Post>> GetPublicPostListAsync(long userId)
         {
             return GetAllAsync();
+        }
+
+        public Task<Post> GetPublicByIdAsync(long id, long userId)
+        {
+            return GetByIdAsync(id);
         }
     }
 }
