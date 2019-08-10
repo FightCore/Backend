@@ -5,8 +5,10 @@ using FightCore.Backend.Configuration.Mapping;
 using FightCore.Backend.Configuration.Seeds;
 using FightCore.Configuration;
 using FightCore.Data;
+using FightCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,8 @@ namespace FightCore.Backend
                 .AddApiExplorer()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddIdentity<ApplicationUser, IdentityRole<long>>().AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddSwaggerGen(configuration =>
             {
                 configuration.SwaggerDoc("v1", new OpenApiInfo {Title = "FightCore API", Version = "v1"});
@@ -63,6 +67,7 @@ namespace FightCore.Backend
 
                     options.Audience = "fightcore-backend";
                 });
+
 
             services.AddPatterns(Configuration);
 
@@ -90,9 +95,9 @@ namespace FightCore.Backend
             }
 
             app.UseCors("TestPolicy");
-
             app.UseAuthentication();
             app.UseHttpsRedirection();
+
             app.UseMvc();
             app.UseStaticFiles();
 

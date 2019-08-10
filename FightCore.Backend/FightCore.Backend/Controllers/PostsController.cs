@@ -158,6 +158,24 @@ namespace FightCore.Backend.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeletePost(long id)
+        {
+            var userId = GetUserIdFromClaims(User);
+            var post = await _postService.GetByIdAsync(id);
+
+            if (post.AuthorId == userId)
+            {
+                return Unauthorized();
+            }
+
+            _postService.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         /// <summary>
         /// Like post.
         /// </summary>

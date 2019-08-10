@@ -1,0 +1,12 @@
+https://localhost:5001/accounts/4
+
+###
+
+POST https://localhost:5001/accounts/ HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "Test",
+    "email": "Test@Test.com",
+    "password": "Welcome1!"
+}

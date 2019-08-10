@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FightCore.Data;
+using FightCore.Models;
 using FightCore.Repositories.Fakes.Posts;
 using FightCore.Repositories.Posts;
+using FightCore.Repositories.Users;
 using FightCore.Services;
 using FightCore.Services.Posts;
+using FightCore.Services.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,10 +32,10 @@ namespace FightCore.Backend.Configuration
         public static IServiceCollection AddPatterns(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<DbContext, ApplicationDbContext>();
-
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<ILikeService, LikeService>();
+            services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
             var parsingSuccess = bool.TryParse(configuration["UseMocking"], out var mocking);
             if (parsingSuccess && mocking)
@@ -47,6 +51,7 @@ namespace FightCore.Backend.Configuration
                 services.AddScoped<IPostRepository, PostRepository>();
                 services.AddScoped<IGameRepository, GameRepository>();
                 services.AddScoped<ILikeRepository, LikeRepository>();
+                services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             }
 
             return services;
