@@ -29,8 +29,7 @@ namespace FightCore.Identity
                 .AddCors(options => options.AddPolicy("TestPolicy", policyBuilder =>
                         policyBuilder.AllowAnyHeader()
                             .AllowAnyMethod()
-                            .AllowAnyOrigin()
-                            .AllowCredentials()))
+                            .AllowAnyOrigin()))
                 .AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
 

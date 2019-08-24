@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using AutoMapper;
 using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
@@ -36,7 +37,6 @@ namespace FightCore.Backend
                     policyBuilder.AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowAnyOrigin()))
-                .AddAuthorization()
                 .AddJsonFormatters()
                 .AddApiExplorer()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -73,10 +73,11 @@ namespace FightCore.Backend
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
-
+            
             using (var context = new ApplicationDbContext(optionsBuilder.Options))
             {
-                BackendSeed.ExecuteSeed(context);
+                var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
+                BackendSeed.ExecuteSeed(context, userManager);
             }
 
         }

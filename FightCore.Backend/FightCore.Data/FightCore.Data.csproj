@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190725092654_AddedGame.cs" />
     <Compile Remove="Migrations\20190725092654_AddedGame.Designer.cs" />
+    <Compile Remove="Migrations\20190810103546_Seed.cs" />
+    <Compile Remove="Migrations\20190810103546_Seed.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FightCore.Configuration\FightCore.Configuration.csproj" />
     <ProjectReference Include="..\FightCore.Models\FightCore.Models.csproj" />
   </ItemGroup>
 
