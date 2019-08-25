@@ -35,8 +35,8 @@ namespace FightCore.Identity
                 new Client
                 {
                     RequireConsent = false,
-                    ClientId = "angular_spa",
-                    ClientName = "Angular SPA",
+                    ClientId = "fightcore_dev",
+                    ClientName = "FightCore Development",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = {"openid", "profile", "fightcore-backend"},
                     RedirectUris = {"http://localhost:4200/auth-callback"},

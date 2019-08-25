@@ -10,14 +10,16 @@ namespace FightCore.Configuration.Seeds
     {
         public static IEnumerable<ApplicationUser> GetSeedUsers()
         {
+            const string userName1 = "TestUser";
+            const string userName2 = "TestUser2";
             const string email = "test@FightCore.gg";
             const string email2 = "test2@FightCore.gg";
             return new List<ApplicationUser>()
             {
                 new ApplicationUser
                 {
-                    UserName = email,
-                    NormalizedUserName = email.ToUpper(),
+                    UserName = userName1,
+                    NormalizedUserName = userName1.ToUpper(),
                     Email = email,
                     NormalizedEmail = email.ToUpper(),
                     EmailConfirmed = true,
@@ -25,8 +27,8 @@ namespace FightCore.Configuration.Seeds
 
                 new ApplicationUser
                 {
-                    UserName = "test2",
-                    NormalizedUserName = "TEST2",
+                    UserName = userName2,
+                    NormalizedUserName = userName2,
                     Email = email2,
                     NormalizedEmail = email2.ToUpper(),
                     EmailConfirmed = true,
