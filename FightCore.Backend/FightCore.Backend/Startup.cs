@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using FightCore.Backend.Configuration;
@@ -7,6 +8,8 @@ using FightCore.Backend.Configuration.Seeds;
 using FightCore.Configuration;
 using FightCore.Data;
 using FightCore.Models;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -57,10 +61,16 @@ namespace FightCore.Backend
                     options.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection), 
                         sqlServerOptions =>
                             sqlServerOptions.MigrationsAssembly(ConfigurationVariables.MigrationAssembly)));
-
+            
             // Add the Bearer authentication scheme as this is used by Identity Server.
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+            services.AddAuthentication(options =>
+                {
+                    // For some bizarre reason, if this isn't added, it doesn't work on Linux but does work on Windows.
+                    // Please don't remove this line or it's another 7 hours of sadness.
+                    options.DefaultAuthenticateScheme = "Bearer";
+                    options.DefaultChallengeScheme = "oidc";
+                })
+                .AddJwtBearer(options =>
                 {
                     options.Authority = Configuration["IdentityServer"];
                     options.RequireHttpsMetadata = false;
@@ -70,7 +80,7 @@ namespace FightCore.Backend
 
 
             services.AddPatterns(Configuration);
-
+            
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
             
@@ -79,7 +89,6 @@ namespace FightCore.Backend
                 var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
                 BackendSeed.ExecuteSeed(context, userManager);
             }
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

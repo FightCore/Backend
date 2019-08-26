@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using AutoMapper;
+using IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FightCore.Backend.Controllers
@@ -54,8 +52,9 @@ namespace FightCore.Backend.Controllers
             // This is note because of Identity Server but rather because of the
             // default way that ASP.NET Core handles JWT (Microsoft standard)
             var subject = claimsPrincipal.FindFirst(claim =>
-                claim.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
-
+                claim.Type.Equals(ClaimTypes.NameIdentifier)
+                || claim.Type.Equals(JwtClaimTypes.Subject))?.Value;
+            
             if (subject == null)
             {
                 return null;
