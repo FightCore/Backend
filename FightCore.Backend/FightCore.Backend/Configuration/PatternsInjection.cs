@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using FightCore.Data;
 using FightCore.Models;
 using FightCore.Repositories.Fakes.Posts;
+using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
 using FightCore.Repositories.Users;
 using FightCore.Services;
+using FightCore.Services.Games;
 using FightCore.Services.Posts;
 using FightCore.Services.Users;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +38,8 @@ namespace FightCore.Backend.Configuration
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<ILikeService, LikeService>();
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
+            services.AddScoped<IStageService, StageService>();
+            services.AddScoped<ICharacterService, CharacterService>();
 
             var parsingSuccess = bool.TryParse(configuration["UseMocking"], out var mocking);
             if (parsingSuccess && mocking)
@@ -52,6 +56,8 @@ namespace FightCore.Backend.Configuration
                 services.AddScoped<IGameRepository, GameRepository>();
                 services.AddScoped<ILikeRepository, LikeRepository>();
                 services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+                services.AddScoped<IStageRepository, StageRepository>();
+                services.AddScoped<ICharacterRepository, CharacterRepository>();
             }
 
             return services;
