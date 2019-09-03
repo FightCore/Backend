@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
+using FightCore.Backend.Error;
+using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.User;
 using FightCore.Models;
 using FightCore.Services.Users;
@@ -38,9 +36,10 @@ namespace FightCore.Backend.Controllers
         public async Task<IActionResult> GetUser(long id)
         {
             var user = await _applicationUserService.GetByIdAsync(id);
+
             if (user == null)
             {
-                return NotFound();
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.AccountEntity, id));
             }
 
             return MappedOk<UserViewModel>(user);

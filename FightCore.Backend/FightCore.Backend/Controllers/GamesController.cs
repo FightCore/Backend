@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FightCore.Backend.Error;
 using FightCore.Backend.ViewModels;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Models;
@@ -66,7 +67,7 @@ namespace FightCore.Backend.Controllers
 
             if (game == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(nameof(Game), gameId));
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.GameEntity, gameId));
             }
             
             return MappedOk<GameViewModel>(game);
@@ -85,7 +86,7 @@ namespace FightCore.Backend.Controllers
 
             if (characters == null || !characters.Any())
             {
-                return NotFound(NotFoundErrorViewModel.Create(nameof(Character), gameId));
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.GameEntity, gameId));
             }
             
             return Ok(characters);
@@ -99,7 +100,7 @@ namespace FightCore.Backend.Controllers
 
             if (characterModel == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(nameof(Character), characterId));
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.CharacterEntity, characterId));
             }
             
             return Ok(characterModel);
@@ -125,7 +126,7 @@ namespace FightCore.Backend.Controllers
 
             if (stageModel == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(nameof(Stage), stageId));
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.StageEntity, stageId));
             }
 
             return Ok(stageModel);

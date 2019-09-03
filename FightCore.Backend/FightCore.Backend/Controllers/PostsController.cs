@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
+using FightCore.Backend.Error;
+using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models.Posts;
 using FightCore.Services.Posts;
@@ -88,7 +90,7 @@ namespace FightCore.Backend.Controllers
 
             if (post == null)
             {
-                return NotFound();
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.PostEntity, id));
             }
 
             if (userId.HasValue && post.Likes.Any(like => like.UserId == userId))
@@ -208,7 +210,7 @@ namespace FightCore.Backend.Controllers
 
             if (post == null)
             {
-                return NotFound($"Post can not be found with id: {id}");
+                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.PostEntity, id));
             }
 
             Like like;
