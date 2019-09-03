@@ -21,7 +21,7 @@ namespace FightCore.Backend.Controllers
     /// </summary>
     [Route("[controller]")]
     [ApiController]
-    [Produces("application/json")]
+    [Produces(HttpContentTypes.APPLICATION_JSON)]
     public class GamesController : BaseApiController
     {
         private readonly IGameService _gameService;
@@ -55,6 +55,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(200, "All of the games in the system", typeof(List<GameViewModel>))]
         public async Task<IActionResult> GetAllGames()
         {
+            throw new Exception("Test123");
             var games = await _gameService.GetAllAsync();
 
             return MappedOk<List<GameViewModel>>(games);
