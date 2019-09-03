@@ -112,7 +112,7 @@ namespace FightCore.Backend
             app.UseStaticFiles();
 
             app.UseSwagger();
-            app.UseReDoc(configuration=>
+            app.UseReDoc(configuration =>
                 configuration.RoutePrefix = "swagger");
         }
     }

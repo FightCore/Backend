@@ -18,6 +18,7 @@ namespace FightCore.Backend.Controllers
     /// <summary>
     /// Endpoints for CRUD actions for the Post object.
     /// </summary>
+    [Produces("application/json")]
     [Route("[controller]")]
     [ApiController]
     public class PostsController : BaseApiController

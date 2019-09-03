@@ -21,6 +21,7 @@ namespace FightCore.Backend.Controllers
     /// </summary>
     [Route("[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class GamesController : BaseApiController
     {
         private readonly IGameService _gameService;

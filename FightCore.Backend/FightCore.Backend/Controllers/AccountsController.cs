@@ -15,6 +15,7 @@ namespace FightCore.Backend.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class AccountsController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;

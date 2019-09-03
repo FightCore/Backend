@@ -62,7 +62,7 @@
             An endpoint to get information about games.
             </summary>
         </member>
-        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,FightCore.Services.Games.IStageService,FightCore.Services.Games.ICharacterService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.GamesController.GetAllGames">
@@ -75,6 +75,13 @@
              Some of these games might not be in use yet or be deprecated.
              </remarks>
              <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.GetAllCharacters(System.Int64)">
+            <summary>
+            Gets all characters from a specific game.
+            </summary>
+            <param name="gameId">The id of the <see cref="T:FightCore.Models.Game"/> wanting the characters from.</param>
+            <returns>The characters from that game.</returns>
         </member>
         <member name="T:FightCore.Backend.Controllers.PostsController">
             <summary>
