@@ -55,7 +55,6 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(200, "All of the games in the system", typeof(List<GameViewModel>))]
         public async Task<IActionResult> GetAllGames()
         {
-            throw new Exception("Test123");
             var games = await _gameService.GetAllAsync();
 
             return MappedOk<List<GameViewModel>>(games);
