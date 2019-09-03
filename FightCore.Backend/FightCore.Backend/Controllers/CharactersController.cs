@@ -34,7 +34,7 @@ namespace FightCore.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCharacters()
         {
-            var characters = await _characterService.GetCharactersWithGames();
+            var characters = await _characterService.GetAllWithGamesAsync();
 
             return MappedOk<List<GetCharacterViewModel>>(characters);
         }
@@ -42,7 +42,7 @@ namespace FightCore.Backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCharacter(long id)
         {
-            var character = await _characterService.GetByIdAsync(id);
+            var character = await _characterService.GetWithGameByIdAsync(id);
 
             if (character == null)
             {

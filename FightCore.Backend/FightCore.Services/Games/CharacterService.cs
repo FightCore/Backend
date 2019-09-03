@@ -10,7 +10,9 @@ namespace FightCore.Services.Games
     {
         void UpdateCharacter(Character trackedCharacter, Character character);
 
-        Task<List<Character>> GetCharactersWithGames();
+        Task<List<Character>> GetAllWithGamesAsync();
+
+        Task<Character> GetWithGameByIdAsync(long id);
     }
     
     public class CharacterService : EntityService<Character, ICharacterRepository>, ICharacterService
@@ -24,9 +26,14 @@ namespace FightCore.Services.Games
             trackedCharacter.Name = character.Name;
         }
 
-        public Task<List<Character>> GetCharactersWithGames()
+        public Task<List<Character>> GetAllWithGamesAsync()
         {
             return Repository.GetCharactersWithGames();
+        }
+
+        public Task<Character> GetWithGameByIdAsync(long id)
+        {
+            return Repository.GetWithGameByIdAsync(id);
         }
     }
 }
