@@ -11,6 +11,13 @@ namespace FightCore.Data.Configurations
             builder.HasOne(character => character.Game)
                 .WithMany(game => game.Characters)
                 .HasForeignKey(character => character.GameId);
+
+            builder.HasMany(character => character.Contributors)
+                .WithOne(contributor => contributor.Character)
+                .HasForeignKey(contributor => contributor.CharacterId);
+
+            builder.HasMany(character => character.NotablePlayers)
+                .WithOne(notablePlayer => notablePlayer.Character);
         }
     }
 }
