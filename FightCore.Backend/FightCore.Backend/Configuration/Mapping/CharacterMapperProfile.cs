@@ -9,6 +9,12 @@ namespace FightCore.Backend.Configuration.Mapping
         public CharacterMapperProfile()
         {
             CreateMap<Character, GetCharacterViewModel>();
+
+            CreateMap<NotablePlayer, NotablePlayerViewModel>();
+
+            CreateMap<Contributor, ContributorViewModel>();
+
+            CreateMap<Character, GetCharacterListViewModel>();
         }
     }
 }

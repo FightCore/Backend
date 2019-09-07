@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.Error;
 using FightCore.Backend.ViewModels;
+using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Models;
 using FightCore.Models.Characters;
@@ -90,7 +91,7 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.GameEntity, gameId));
             }
             
-            return Ok(characters);
+            return MappedOk<List<GetCharacterListViewModel>>(characters);
         }
         
         [HttpGet("{gameId}/characters/{characterId}")]
@@ -104,7 +105,7 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.CharacterEntity, characterId));
             }
             
-            return Ok(characterModel);
+            return MappedOk<GetCharacterViewModel>(characterModel);
         }
 
         [HttpGet("{gameId}/stages")]
