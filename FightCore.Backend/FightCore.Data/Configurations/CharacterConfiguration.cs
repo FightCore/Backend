@@ -18,6 +18,15 @@ namespace FightCore.Data.Configurations
 
             builder.HasMany(character => character.NotablePlayers)
                 .WithOne(notablePlayer => notablePlayer.Character);
+
+            builder.HasOne(character => character.StockIcon)
+                .WithMany();
+
+            builder.HasOne(character => character.CharacterImage)
+                .WithMany();
+
+            builder.HasMany(character => character.Videos)
+                .WithOne(video => video.Character);
         }
     }
 }

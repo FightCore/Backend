@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.Backend.ViewModels.Globals;
 using FightCore.Models.Enums;
 
 namespace FightCore.Backend.ViewModels.Characters
@@ -19,5 +20,13 @@ namespace FightCore.Backend.ViewModels.Characters
         public List<NotablePlayerViewModel> NotablePlayers { get; set; }
         
         public GameViewModel Game { get; set; }
+
+        public ImageViewModel StockIcon { get; set; }
+
+        public ImageViewModel CharacterImage { get; set; }
+
+        public List<VideoViewModel> Videos { get; set; }
+
+        public GameSeriesViewModel Series { get; set; }
     }
 }

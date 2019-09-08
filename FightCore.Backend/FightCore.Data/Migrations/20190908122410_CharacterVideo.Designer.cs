@@ -4,14 +4,16 @@ using FightCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FightCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190908122410_CharacterVideo")]
+    partial class CharacterVideo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +87,6 @@ namespace FightCore.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<long?>("SeriesId");
-
                     b.Property<long?>("StockIconId");
 
                     b.HasKey("Id");
@@ -94,8 +94,6 @@ namespace FightCore.Data.Migrations
                     b.HasIndex("CharacterImageId");
 
                     b.HasIndex("GameId");
-
-                    b.HasIndex("SeriesId");
 
                     b.HasIndex("StockIconId");
 
@@ -140,23 +138,6 @@ namespace FightCore.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Contributor");
-                });
-
-            modelBuilder.Entity("FightCore.Models.Characters.GameSeries", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("GameIconId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameIconId");
-
-                    b.ToTable("GameSeries");
                 });
 
             modelBuilder.Entity("FightCore.Models.Characters.NotablePlayer", b =>
@@ -560,10 +541,6 @@ namespace FightCore.Data.Migrations
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FightCore.Models.Characters.GameSeries", "Series")
-                        .WithMany()
-                        .HasForeignKey("SeriesId");
-
                     b.HasOne("FightCore.Models.Globals.FightCoreImage", "StockIcon")
                         .WithMany()
                         .HasForeignKey("StockIconId");
@@ -591,13 +568,6 @@ namespace FightCore.Data.Migrations
                         .WithMany("Contributors")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FightCore.Models.Characters.GameSeries", b =>
-                {
-                    b.HasOne("FightCore.Models.Globals.FightCoreImage", "GameIcon")
-                        .WithMany()
-                        .HasForeignKey("GameIconId");
                 });
 
             modelBuilder.Entity("FightCore.Models.Characters.NotablePlayer", b =>

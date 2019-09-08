@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Bartdebever.Patterns.Models;
+using FightCore.Models.Globals;
 
 namespace FightCore.Models.Characters
 {
@@ -16,5 +17,13 @@ namespace FightCore.Models.Characters
         public List<NotablePlayer> NotablePlayers { get; set; }
         
         public List<Contributor> Contributors { get; set; }
+
+        public FightCoreImage StockIcon { get; set; }
+
+        public FightCoreImage CharacterImage { get; set; }
+
+        public List<CharacterVideo> Videos { get; set; }
+
+        public GameSeries Series { get; set; }
     }
 }

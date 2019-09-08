@@ -22,12 +22,24 @@ namespace FightCore.Repositories.Games
 
         public Task<List<Character>> GetCharactersWithGames()
         {
-            return Queryable.Include(character => character.Game).ToListAsync();
+            return Queryable.Include(character => character.Game)
+                .Include(character => character.StockIcon)
+                .Include(character => character.Series)
+                .ThenInclude(gameSeries => gameSeries.GameIcon)
+                .ToListAsync();
         }
 
         public Task<Character> GetWithGameByIdAsync(long id)
         {
             return Queryable.Include(character => character.Game)
+                .Include(character => character.StockIcon)
+                .Include(character => character.CharacterImage)
+                .Include(character => character.NotablePlayers)
+                .Include(character => character.Contributors)
+                .Include(character => character.Videos)
+                .ThenInclude(characterVideo => characterVideo.Video)
+                .Include(character => character.Series)
+                .ThenInclude(gameSeries => gameSeries.GameIcon)
                 .FirstOrDefaultAsync(character => character.Id == id);
         }
     }
