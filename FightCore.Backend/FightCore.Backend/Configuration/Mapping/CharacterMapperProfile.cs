@@ -26,7 +26,11 @@ namespace FightCore.Backend.Configuration.Mapping
                         characterVideo.Video.Name))
                 .ForMember(viewModel => viewModel.Description,
                     options => options.MapFrom(characterVideo =>
-                        characterVideo.Video.Description));
+                        characterVideo.Video.Description))
+                .ForMember(viewModel => viewModel.Id,
+                    options => options.MapFrom(characterVideo =>
+                        characterVideo.Id));
+
 
             CreateMap<GameSeries, GameSeriesViewModel>();
         }

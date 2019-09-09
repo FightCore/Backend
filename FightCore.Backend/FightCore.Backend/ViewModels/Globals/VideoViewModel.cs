@@ -7,6 +7,8 @@ namespace FightCore.Backend.ViewModels.Globals
 {
     public class VideoViewModel
     {
+        public long Id { get; set; }
+
         public string YoutubeId { get; set; }
 
         public string Name { get; set; }
