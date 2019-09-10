@@ -132,8 +132,21 @@ namespace FightCore.Backend.Controllers
             return CreatedAtRoute(new { id = post.Id }, null);
         }
 
+        /// <summary>
+        /// Updates the post for the provided body.
+        ///
+        /// TODO Id should be in route not in body.
+        /// </summary>
+        /// <param name="viewModel">
+        /// The new values to update the post with.
+        /// </param>
+        /// <returns>If the action went successfully.</returns>
         [HttpPut]
         [Authorize]
+        [SwaggerResponse(401, "There is no logged in user or the token is invalid..")]
+        [SwaggerResponse(201, "The post was successfully updated.")]
+        [SwaggerResponse(404, "The post was not found.", typeof(NotFoundErrorViewModel))]
+        [SwaggerResponse(403, "The post is not from the user.")]
         public async Task<IActionResult> UpdatePost(UpdatePostViewModel viewModel)
         {
             var userId = GetUserIdFromClaims(User);
@@ -144,6 +157,11 @@ namespace FightCore.Backend.Controllers
             }
 
             var post = await _postService.GetByIdAsync(viewModel.Id);
+
+            if (post == null)
+            {
+                return NotFound(NotFoundErrorViewModel.Create(nameof(Post), viewModel.Id));
+            }
 
             if (post.AuthorId != userId)
             {
@@ -214,9 +232,7 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.PostEntity, id));
             }
 
-            Like like;
-
-            like = await _likeService.FindAsync(likeQuery =>
+            var like = await _likeService.FindAsync(likeQuery =>
                 likeQuery.PostId == id && likeQuery.UserId == userId);
 
             if (like == null)
