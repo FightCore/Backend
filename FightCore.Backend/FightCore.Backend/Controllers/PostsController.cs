@@ -120,7 +120,7 @@ namespace FightCore.Backend.Controllers
 
             if (userId == null)
             {   
-                return Unauthorized();
+                return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
             var post = Mapper.Map<Post>(viewModel);
@@ -153,7 +153,7 @@ namespace FightCore.Backend.Controllers
 
             if (userId == null)
             {
-                return Unauthorized();
+                return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
             var post = await _postService.GetByIdAsync(viewModel.Id);
@@ -165,7 +165,7 @@ namespace FightCore.Backend.Controllers
 
             if (post.AuthorId != userId)
             {
-                return Forbid();
+                return Forbid(new ForbiddenErrorViewModel());
             }
 
             post.Title = viewModel.Title;
@@ -188,7 +188,7 @@ namespace FightCore.Backend.Controllers
 
             if (post.AuthorId == userId)
             {
-                return Unauthorized();
+                return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
             _postService.Remove(post);
@@ -222,7 +222,7 @@ namespace FightCore.Backend.Controllers
 
             if (userId == null)
             {
-                return Unauthorized();
+                return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
             var post = await _postService.GetByIdAsync(id);

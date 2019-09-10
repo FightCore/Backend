@@ -4,6 +4,6 @@ namespace FightCore.Backend.ViewModels.Errors
     {
         public abstract string ErrorCode { get; }
         
-        public string Message { get; set; }
+        public virtual string Message { get; set; }
     }
 }

@@ -118,13 +118,13 @@ namespace FightCore.Backend.Controllers
 
             if (!userId.HasValue)
             {
-                return Unauthorized();
+                return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
             // If the user is not in the contributors, don't allow him/her to edit the character.
             if (trackedCharacter.Contributors.All(contributor => contributor.UserId != userId))
             {
-                return Forbid();
+                return Forbid(new ForbiddenErrorViewModel());
             }
 
             var character = Mapper.Map<Character>(characterViewModel);
