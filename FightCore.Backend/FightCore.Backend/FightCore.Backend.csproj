@@ -37,4 +37,8 @@
     <ProjectReference Include="..\FightCore.Services\FightCore.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Globals\" />
+  </ItemGroup>
+
 </Project>

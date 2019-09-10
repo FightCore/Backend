@@ -16,4 +16,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Globals\" />
+  </ItemGroup>
+
 </Project>

@@ -61,8 +61,14 @@ namespace FightCore.Backend.Controllers
             return MappedOk<List<GameViewModel>>(games);
         }
         
+        /// <summary>
+        /// Gets a singular game based on the provided <paramref name="gameId"/>.
+        /// </summary>
+        /// <param name="gameId">The id of the game to be found.</param>
+        /// <returns>The game found.</returns>
         [HttpGet("{gameId}")]
-        [SwaggerResponse(200, "All of the games in the system", typeof(List<GameViewModel>))]
+        [SwaggerResponse(200, "The game with the given id.", typeof(GameViewModel))]
+        [SwaggerResponse(404, "Game is not found.", typeof(NotFoundErrorViewModel))]
         public async Task<IActionResult> GetGame(long gameId)
         {
             var game = await _gameService.GetByIdAsync(gameId);
@@ -81,7 +87,8 @@ namespace FightCore.Backend.Controllers
         /// <param name="gameId">The id of the <see cref="Game"/> wanting the characters from.</param>
         /// <returns>The characters from that game.</returns>
         [HttpGet("{gameId}/characters")]
-        [SwaggerResponse(200, "Gets all characters in a game", typeof(List<Character>))]
+        [SwaggerResponse(200, "Gets all characters in a game", typeof(List<GetCharacterListViewModel>))]
+        [SwaggerResponse(404, "Game not found or has no characters", typeof(NotFoundErrorViewModel))]
         public async Task<IActionResult> GetAllCharacters(long gameId)
         {
             var characters = await _characterService.FindRangeAsync(character => character.GameId == gameId);
@@ -94,7 +101,19 @@ namespace FightCore.Backend.Controllers
             return MappedOk<List<GetCharacterListViewModel>>(characters);
         }
         
+        /// <summary>
+        /// Gets a character based on the <paramref name="gameId"/> and the <paramref name="characterId"/>.
+        /// </summary>
+        /// <param name="gameId">
+        /// The id of the <see cref="Game"/> to be searched for.
+        /// </param>
+        /// <param name="characterId">
+        /// The id of the <see cref="Character"/> to be searched for.
+        /// </param>
+        /// <returns>The character found for the specified game.</returns>
         [HttpGet("{gameId}/characters/{characterId}")]
+        [SwaggerResponse(404, "Game not found or character not found.", typeof(NotFoundErrorViewModel))]
+        [SwaggerResponse(200, "The character requested.", typeof(GetCharacterViewModel))]
         public async Task<IActionResult> GetCharacter(long gameId, long characterId)
         {
             var characterModel = await _characterService
@@ -108,7 +127,16 @@ namespace FightCore.Backend.Controllers
             return MappedOk<GetCharacterViewModel>(characterModel);
         }
 
+        /// <summary>
+        /// Gets all stages known for a specific game.
+        /// </summary>
+        /// <param name="gameId">
+        /// The id of the <see cref="Game"/> to be searched for.
+        /// </param>
+        /// <returns>A list of stages found.</returns>
         [HttpGet("{gameId}/stages")]
+        [SwaggerResponse(404, "Game not found or has no stages.", typeof(NotFoundErrorViewModel))]
+        [SwaggerResponse(200, "The stages the game has.", typeof(List<Stage>))]
         public async Task<IActionResult> GetAllStages(long gameId)
         {
             var stages = await _stageService.FindRangeAsync(stage => stage.GameId == gameId);
@@ -121,7 +149,19 @@ namespace FightCore.Backend.Controllers
             return Ok(stages);
         }
 
+        /// <summary>
+        /// Gets a stage based on the provided ids for the game and stage.
+        /// </summary>
+        /// <param name="gameId">
+        /// The id of the <see cref="Game"/> to be searched for.
+        /// </param>
+        /// <param name="stageId">
+        /// The id of the <see cref="Stage"/> to be searched for.
+        /// </param>
+        /// <returns>The found stage.</returns>
         [HttpGet("{gameId}/stages/{stageId}")]
+        [SwaggerResponse(404, "Game not found or stage not found.", typeof(NotFoundErrorViewModel))]
+        [SwaggerResponse(200, "Stage found for game and stage id.", typeof(Stage))]
         public async Task<IActionResult> GetStage(long gameId, long stageId)
         {
             var stageModel = await _stageService.FindAsync(stage => stage.GameId == gameId && stage.Id == stageId);
