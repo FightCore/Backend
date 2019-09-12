@@ -23,6 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using IdentityConstants = FightCore.Backend.Configuration.IdentityConstants;
 
 namespace FightCore.Backend
 {
@@ -75,8 +76,8 @@ namespace FightCore.Backend
                 {
                     // For some bizarre reason, if this isn't added, it doesn't work on Linux but does work on Windows.
                     // Please don't remove this line or it's another 7 hours of sadness.
-                    options.DefaultAuthenticateScheme = "Bearer";
-                    options.DefaultChallengeScheme = "oidc";
+                    options.DefaultAuthenticateScheme = IdentityConstants.AuthenticateScheme;
+                    options.DefaultChallengeScheme = IdentityConstants.ChallengeScheme;
                 })
                 .AddJwtBearer(options =>
                 {
