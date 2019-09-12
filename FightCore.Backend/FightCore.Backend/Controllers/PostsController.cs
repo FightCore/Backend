@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
-using FightCore.Backend.Error;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models.Posts;
@@ -18,7 +17,7 @@ namespace FightCore.Backend.Controllers
     /// <summary>
     /// Endpoints for CRUD actions for the Post object.
     /// </summary>
-    [Produces(HttpContentTypes.APPLICATION_JSON)]
+    [Produces(HttpContentTypes.ApplicationJson)]
     [Route("[controller]")]
     [ApiController]
     public class PostsController : BaseApiController
@@ -91,7 +90,7 @@ namespace FightCore.Backend.Controllers
 
             if (post == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.PostEntity, id));
+                return NotFound(NotFoundErrorViewModel.Create(nameof(Post), id));
             }
 
             if (userId.HasValue && post.Likes.Any(like => like.UserId == userId))
@@ -179,7 +178,14 @@ namespace FightCore.Backend.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes the post for the provided <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">The id of the post to be deleted.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
+        [SwaggerResponse(200, "The post is deleted")]
+        [SwaggerResponse(401, "You are unauthorized to perform this action")]
         [Authorize]
         public async Task<IActionResult> DeletePost(long id)
         {
@@ -229,7 +235,7 @@ namespace FightCore.Backend.Controllers
 
             if (post == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.PostEntity, id));
+                return NotFound(NotFoundErrorViewModel.Create(nameof(Post), id));
             }
 
             var like = await _likeService.FindAsync(likeQuery =>

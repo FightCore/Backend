@@ -5,8 +5,14 @@ using FightCore.Models.Characters;
 
 namespace FightCore.Backend.Configuration.Mapping
 {
+    /// <summary>
+    /// Profile to map the character objects to their respective view models.
+    /// </summary>
     public class CharacterMapperProfile : Profile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CharacterMapperProfile"/>.
+        /// </summary>
         public CharacterMapperProfile()
         {
             CreateMap<Character, GetCharacterViewModel>();

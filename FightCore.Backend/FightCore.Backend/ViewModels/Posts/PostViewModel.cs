@@ -6,6 +6,9 @@ using FightCore.Backend.ViewModels.User;
 
 namespace FightCore.Backend.ViewModels.Posts
 {
+    /// <summary>
+    /// View Model to display posts.
+    /// </summary>
     public class PostViewModel
     {
         /// <summary>
@@ -53,6 +56,9 @@ namespace FightCore.Backend.ViewModels.Posts
         /// </summary>
         public long GameId { get; set; }
 
+        /// <summary>
+        /// Defines if the post is private.
+        /// </summary>
         public bool IsPrivate { get; set; }
     }
 }

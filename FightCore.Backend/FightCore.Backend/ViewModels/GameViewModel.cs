@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FightCore.Backend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel to display game object.s
+    /// </summary>
     public class GameViewModel
     {
         /// <summary>

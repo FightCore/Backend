@@ -13,8 +13,15 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 namespace FightCore.Backend
 {
+    /// <summary>
+    /// The program executed to start the ASP net server.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Runs the actual server and starts the backend.
+        /// </summary>
+        /// <param name="args">The arguments used to build the configuration.</param>
         public static void Main(string[] args)
         {
             Console.Title = "FightCore Backend";
@@ -22,6 +29,11 @@ namespace FightCore.Backend
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// Creates the web host that will run the 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()

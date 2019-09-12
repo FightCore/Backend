@@ -9,6 +9,7 @@ using FightCore.Models.Characters;
 using FightCore.Services.Games;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
 {
@@ -25,6 +26,11 @@ namespace FightCore.Backend.Controllers
             _stageService = stageService;
         }
 
+        /// <summary>
+        /// Gets all stages.
+        /// </summary>
+        /// <returns>A list of all stages.</returns>
+        [SwaggerResponse(200, "All of the stages", typeof(List<StageViewModel>))]
         [HttpGet]
         public async Task<IActionResult> GetAllStages()
         {
@@ -33,7 +39,14 @@ namespace FightCore.Backend.Controllers
             return MappedOk<List<StageViewModel>>(stages);
         }
 
+        /// <summary>
+        /// Gets a stage based on the provided <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The id of the stage to be gotten.</param>
+        /// <returns>The stage found.</returns>
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "All of the stages", typeof(StageViewModel))]
+        [SwaggerResponse(404, "The stage was not found", typeof(NotFoundErrorViewModel))]
         public async Task<IActionResult> GetStage(long id)
         {
             var stage = await _stageService.GetWithGame(id);

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FightCore.Backend.ViewModels.Posts
 {
+    /// <summary>
+    /// ViewModel to create a post.
+    /// </summary>
     public class CreatePostViewModel
     {
         /// <summary>

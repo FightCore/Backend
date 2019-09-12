@@ -4,6 +4,81 @@
         <name>FightCore.Backend</name>
     </assembly>
     <members>
+        <member name="T:FightCore.Backend.Configuration.IdentityConstants">
+            <summary>
+            Set of constants to use to set up the configuration with the Identity Server.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.Configuration.IdentityConstants.AuthenticateScheme">
+            <summary>
+            Gets the authentication scheme used for FightCore.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.Configuration.IdentityConstants.ChallengeScheme">
+            <summary>
+            Gets the challenge scheme used for FightCore.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Configuration.Mapping.CharacterMapperProfile">
+            <summary>
+            Profile to map the character objects to their respective view models.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Mapping.CharacterMapperProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FightCore.Backend.Configuration.Mapping.CharacterMapperProfile"/>.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Configuration.Mapping.GameMapperProfile">
+            <summary>
+            Creates a mapping between the game models and view models
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Mapping.GameMapperProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FightCore.Models.Game"/> object.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Configuration.Mapping.GlobalMapperProfile">
+            <summary>
+            Global mapper for various view models to be used over the entire app.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Mapping.GlobalMapperProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FightCore.Backend.Configuration.Mapping.GlobalMapperProfile"/> object.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Configuration.Mapping.PostMapperProfile">
+            <summary>
+            Creates a mapping between the post models and view models.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Mapping.PostMapperProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FightCore.Backend.Configuration.Mapping.PostMapperProfile"/> object.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Configuration.Mapping.StageMapperProfile">
+            <summary>
+            Creates a mapping between the stage models and view models.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Mapping.StageMapperProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FightCore.Backend.Configuration.Mapping.StageMapperProfile"/> object.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Configuration.Mapping.UserMapperProfile">
+            <summary>
+            Creates a mapping between the users models and view models.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Mapping.UserMapperProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FightCore.Backend.Configuration.Mapping.UserMapperProfile"/> object.
+            </summary>
+        </member>
         <member name="T:FightCore.Backend.Configuration.PatternsInjection">
             <summary>
             Static class to add the patterns services to the dependency injection.
@@ -18,11 +93,56 @@
             <param name="configuration">The configuration to read the variables from.</param>
             <returns></returns>
         </member>
+        <member name="T:FightCore.Backend.Configuration.Seeds.BackendSeed">
+            <summary>
+            The seed to be used for the backend entities.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Configuration.Seeds.BackendSeed.ExecuteSeed(FightCore.Data.ApplicationDbContext,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser})">
+            <summary>
+            Executes the seed on the <paramref name="context"/> and and using
+            the <paramref name="userManager"/>.
+            </summary>
+            <param name="context">The context to be seeded.</param>
+            <param name="userManager">The user manager to add users to.</param>
+        </member>
         <member name="T:FightCore.Backend.ContextFactory">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.ContextFactory.CreateDbContext(System.String[])">
             <inheritdoc />
+        </member>
+        <member name="T:FightCore.Backend.Controllers.AccountsController">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser},Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService)">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.AccountsController.GetUser(System.Int64)">
+            <summary>
+            Gets the user based on the provided <paramref name="id"/>.
+            </summary>
+            <param name="id">The id of the user.</param>
+            <returns>The gotten user.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.AccountsController.UpdateUser">
+            <summary>
+            Updates the user using the data provided in the body.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.AccountsController.CreateUser(FightCore.Backend.ViewModels.User.CreateUserViewModel)">
+            <summary>
+            Creates a new user for the provided body.
+            </summary>
+            <param name="viewModel">The body containing the data for the new user.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.AccountsController.DeleteUser">
+            <summary>
+            Deletes the user based on the provided id.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:FightCore.Backend.Controllers.BaseApiController">
             <inheritdoc />
@@ -222,6 +342,13 @@
              </param>
              <returns>If the action went successfully.</returns>
         </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.DeletePost(System.Int64)">
+            <summary>
+            Deletes the post for the provided <paramref name="id"/>
+            </summary>
+            <param name="id">The id of the post to be deleted.</param>
+            <returns></returns>
+        </member>
         <member name="M:FightCore.Backend.Controllers.PostsController.LikePost(System.Int64)">
              <summary>
              Like post.
@@ -244,6 +371,303 @@
         <member name="M:FightCore.Backend.Controllers.StagesController.#ctor(AutoMapper.IMapper,FightCore.Services.Games.IStageService)">
             <inheritdoc />
         </member>
+        <member name="M:FightCore.Backend.Controllers.StagesController.GetAllStages">
+            <summary>
+            Gets all stages.
+            </summary>
+            <returns>A list of all stages.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.StagesController.GetStage(System.Int64)">
+            <summary>
+            Gets a stage based on the provided <paramref name="id"/>.
+            </summary>
+            <param name="id">The id of the stage to be gotten.</param>
+            <returns>The stage found.</returns>
+        </member>
+        <member name="T:FightCore.Backend.HttpContentTypes">
+            <summary>
+            The content types that will be returned by the API.
+            This is for use in Swagger and ReDoc.
+            </summary>
+        </member>
+        <member name="F:FightCore.Backend.HttpContentTypes.ApplicationJson">
+            <summary>
+            The string representing the JSON content type.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.Program">
+            <summary>
+            The program executed to start the ASP net server.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Program.Main(System.String[])">
+            <summary>
+            Runs the actual server and starts the backend.
+            </summary>
+            <param name="args">The arguments used to build the configuration.</param>
+        </member>
+        <member name="M:FightCore.Backend.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Creates the web host that will run the 
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FightCore.Backend.Startup">
+            <summary>
+            The class executed to start the application.
+            Configures most of the DI and other services.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <inheritdoc />
+        </member>
+        <member name="P:FightCore.Backend.Startup.Configuration">
+            <summary>
+            The configuration created from the JSON files.
+            </summary>
+        </member>
+        <member name="M:FightCore.Backend.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">The service collection to be built up.</param>
+        </member>
+        <member name="M:FightCore.Backend.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builders.</param>
+            <param name="env">The hosting environment.</param>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.ContributorViewModel">
+            <summary>
+            ViewModel to show off the contributors to a page or entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.ContributorViewModel.Name">
+            <summary>
+            The name of the contributor.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.ContributorViewModel.ContributorType">
+            <summary>
+            The type of contributor that this contributor is to the object.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.CreateCharacterViewModel">
+            <summary>
+            ViewModel to create a new character entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.CreateCharacterViewModel.Name">
+            <summary>
+            The name of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.CreateCharacterViewModel.GameId">
+            <summary>
+            The id of the game he/she belongs to.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.GameSeriesViewModel">
+            <summary>
+            Game series view model to indicate to which series a character belongs.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GameSeriesViewModel.Name">
+            <summary>
+            The name of the game series.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GameSeriesViewModel.GameIcon">
+            <summary>
+            The icon associated with this series in-game.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel">
+            <summary>
+            The view model to be used to display characters within a list.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.Id">
+            <summary>
+            The id of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.GameId">
+            <summary>
+            The id of the game the character belongs to.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.Name">
+            <summary>
+            The name of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.GeneralInformation">
+            <summary>
+            Some general information about the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.StockIcon">
+            <summary>
+            The image used as the stock icon.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.Series">
+            <summary>
+            The game series that the character belongs to.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterListViewModel.Game">
+            <summary>
+            The game that the character belongs to.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel">
+            <summary>
+            The ViewModel to be used to display a full character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.Id">
+            <summary>
+            The id of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.Name">
+            <summary>
+            The name of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.GeneralInformation">
+            <summary>
+            Some general information about the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.Contributors">
+            <summary>
+            The contributors which have worked on this character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.NotablePlayers">
+            <summary>
+            Notable players who play this character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.Game">
+            <summary>
+            The game that the character belongs to.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.StockIcon">
+            <summary>
+            The image used as the stock icon for the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.CharacterImage">
+            <summary>
+            A full body picture of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.Videos">
+            <summary>
+            A list of informative videos about the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.GetCharacterViewModel.Series">
+            <summary>
+            The game series that the character belongs to.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel">
+            <summary>
+            ViewModel to display notable players for a character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel.Id">
+            <summary>
+            The id of the notable player entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel.Name">
+            <summary>
+            The name of the player.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel.Description">
+            <summary>
+            A description of why this player is notable.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel">
+            <summary>
+            ViewModel to be used to update a character entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel.Name">
+            <summary>
+            The name of the character.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Errors.BaseErrorViewModel">
+            <summary>
+            The view model to display errors.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.BaseErrorViewModel.ErrorCode">
+            <summary>
+            The code that is unique to the error.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.BaseErrorViewModel.Message">
+            <summary>
+            The error message to displayed for the user.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Errors.ForbiddenErrorViewModel">
+            <summary>
+            ViewModel to return when the error is that the endpoint is forbidden for the user.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.ForbiddenErrorViewModel.ErrorCode">
+            <inheritdoc />
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.ForbiddenErrorViewModel.Message">
+            <inheritdoc />
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Errors.NotFoundErrorViewModel">
+            <summary>
+            ViewModel to display that the not found error occured.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.NotFoundErrorViewModel.ErrorCode">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.ViewModels.Errors.NotFoundErrorViewModel.Create(System.String,System.Int64)">
+            <summary>
+            Creates an instance of the <see cref="T:FightCore.Backend.ViewModels.Errors.NotFoundErrorViewModel"/> object.
+            </summary>
+            <param name="entity">The name of the entity which was not found.</param>
+            <param name="id">The id for which it wasn't found.</param>
+            <returns>The created view model.</returns>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Errors.UnauthorizedErrorViewModel">
+            <summary>
+            The ViewModel to return for the unauthorized errors
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.UnauthorizedErrorViewModel.ErrorCode">
+            <inheritdoc />
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Errors.UnauthorizedErrorViewModel.Message">
+            <inheritdoc />
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.GameViewModel">
+            <summary>
+            The ViewModel to display game object.s
+            </summary>
+        </member>
         <member name="P:FightCore.Backend.ViewModels.GameViewModel.Id">
             <summary>
             The id of the game object.
@@ -257,6 +681,58 @@
         <member name="P:FightCore.Backend.ViewModels.GameViewModel.Abbreviation">
             <summary>
             The abbreviation of the game's name.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Globals.ImageViewModel">
+            <summary>
+            The view model to display images.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.ImageViewModel.Url">
+            <summary>
+            The url of the image.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.ImageViewModel.Name">
+            <summary>
+            The name of the image.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.ImageViewModel.Description">
+            <summary>
+            An description of the image.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Globals.VideoViewModel">
+            <summary>
+            A viewmodel to display videos.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.VideoViewModel.Id">
+            <summary>
+            The id of the view entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.VideoViewModel.YoutubeId">
+            <summary>
+            The Id of the youtube video used in this video.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.VideoViewModel.Name">
+            <summary>
+            The name given to the video.
+            Note that this is not linked to the actual youtube video.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Globals.VideoViewModel.Description">
+            <summary>
+            A brief description of the video.
+            Note that this is not linked to the actual youtube video.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Posts.CreatePostViewModel">
+            <summary>
+            ViewModel to create a post.
             </summary>
         </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Body">
@@ -279,6 +755,11 @@
         <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.GameId">
             <summary>
             The id of the game to be linked to this post.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Posts.PostViewModel">
+            <summary>
+            View Model to display posts.
             </summary>
         </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Id">
@@ -324,6 +805,76 @@
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.GameId">
             <summary>
             The id of the game.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.IsPrivate">
+            <summary>
+            Defines if the post is private.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Posts.UpdatePostViewModel">
+            <summary>
+            ViewModel to update posts.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.UpdatePostViewModel.Id">
+            <summary>
+            The id of the post.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.Stages.StageViewModel">
+            <summary>
+            The ViewModel for the stage entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Stages.StageViewModel.Id">
+            <summary>
+            The id of the stage entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Stages.StageViewModel.Name">
+            <summary>
+            The name of the stage entity.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Stages.StageViewModel.Game">
+            <summary>
+            The game that the stage belongs to.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.User.CreateUserViewModel">
+            <summary>
+            ViewModel to create users.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.User.CreateUserViewModel.UserName">
+            <summary>
+            The user name of the user.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.User.CreateUserViewModel.Email">
+            <summary>
+            The email of the user.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.User.CreateUserViewModel.Password">
+            <summary>
+            The password to be used for the user.
+            </summary>
+        </member>
+        <member name="T:FightCore.Backend.ViewModels.User.UserViewModel">
+            <summary>
+            ViewModel for the user model.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.User.UserViewModel.Id">
+            <summary>
+            The id of the user.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.User.UserViewModel.Name">
+            <summary>
+            The name of the user.
             </summary>
         </member>
     </members>

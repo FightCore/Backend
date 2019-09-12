@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FightCore.Backend.Error;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Models.Characters;
@@ -19,7 +18,7 @@ namespace FightCore.Backend.Controllers
     /// <inheritdoc />
     [Route("[controller]")]
     [ApiController]
-    [Produces(HttpContentTypes.APPLICATION_JSON)]
+    [Produces(HttpContentTypes.ApplicationJson)]
     public class CharactersController : BaseApiController
     {
         private readonly ICharacterService _characterService;
@@ -64,7 +63,7 @@ namespace FightCore.Backend.Controllers
 
             if (character == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.CharacterEntity, id));
+                return NotFound(NotFoundErrorViewModel.Create(nameof(Character), id));
             }
 
             return MappedOk<GetCharacterViewModel>(character);
@@ -111,7 +110,7 @@ namespace FightCore.Backend.Controllers
 
             if (trackedCharacter == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(ErrorEntities.CharacterEntity, id));
+                return NotFound(NotFoundErrorViewModel.Create(nameof(Character), id));
             }
 
             var userId = GetUserIdFromClaims(User);

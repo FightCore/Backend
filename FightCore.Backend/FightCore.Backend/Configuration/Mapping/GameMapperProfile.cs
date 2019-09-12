@@ -8,8 +8,14 @@ using FightCore.Models;
 
 namespace FightCore.Backend.Configuration.Mapping
 {
+    /// <summary>
+    /// Creates a mapping between the game models and view models
+    /// </summary>
     public class GameMapperProfile : Profile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> object.
+        /// </summary>
         public GameMapperProfile()
         {
             CreateMap<Game, GameViewModel>();

@@ -1,6 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using AutoMapper;
 using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
@@ -8,8 +6,6 @@ using FightCore.Backend.Configuration.Seeds;
 using FightCore.Configuration;
 using FightCore.Data;
 using FightCore.Models;
-using IdentityModel;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -19,24 +15,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Swagger;
 using IdentityConstants = FightCore.Backend.Configuration.IdentityConstants;
 
 namespace FightCore.Backend
 {
+    /// <summary>
+    /// The class executed to start the application.
+    /// Configures most of the DI and other services.
+    /// </summary>
     public class Startup
     {
+        /// <inheritdoc />
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// The configuration created from the JSON files.
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">The service collection to be built up.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services
@@ -100,7 +105,11 @@ namespace FightCore.Backend
             }
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">The application builders.</param>
+        /// <param name="env">The hosting environment.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -109,7 +118,8 @@ namespace FightCore.Backend
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days. You may want to change this for production scenarios
+                // see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -124,7 +134,7 @@ namespace FightCore.Backend
 
                 var result = JsonConvert.SerializeObject(new { message = exception.Message });
 
-                context.Response.ContentType = HttpContentTypes.APPLICATION_JSON;
+                context.Response.ContentType = HttpContentTypes.ApplicationJson;
 
                 await context.Response.WriteAsync(result);
             }));
