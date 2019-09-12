@@ -10,8 +10,12 @@ namespace FightCore.Backend.ViewModels.Characters
         
         public string Name { get; set; }
 
+        public string GeneralInformation { get; set; }
+
         public ImageViewModel StockIcon { get; set; }
 
         public GameSeriesViewModel Series { get; set; }
+
+        public GameViewModel Game { get; set; }
     }
 }

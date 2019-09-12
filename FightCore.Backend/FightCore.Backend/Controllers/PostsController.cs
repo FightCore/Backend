@@ -165,7 +165,7 @@ namespace FightCore.Backend.Controllers
 
             if (post.AuthorId != userId)
             {
-                return Forbid(new ForbiddenErrorViewModel());
+                return Forbid();
             }
 
             post.Title = viewModel.Title;

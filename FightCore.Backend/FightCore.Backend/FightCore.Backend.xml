@@ -57,6 +57,52 @@
             </param>
             <returns>The id of the user or throws an exception if not parsed.</returns>
         </member>
+        <member name="T:FightCore.Backend.Controllers.CharactersController">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.CharactersController.GetAllCharacters">
+            <summary>
+            Gets all characters.
+            </summary>
+            <returns>A list of all characters.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.CharactersController.GetCharacter(System.Int64)">
+            <summary>
+            Gets a single character based on the provided <paramref name="id"/>.
+            </summary>
+            <param name="id">
+            The id of the <see cref="T:FightCore.Models.Characters.Character"/> to be searched for.
+            </param>
+            <returns>The found <see cref="T:FightCore.Models.Characters.Character"/></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.CharactersController.CreateCharacter(FightCore.Backend.ViewModels.Characters.CreateCharacterViewModel)">
+            <summary>
+            Creates a new character based on the provided body.
+            </summary>
+            <param name="characterViewModel">
+            The character to be created.
+            </param>
+            <returns>
+            Where the character is created.
+            </returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.CharactersController.UpdateCharacter(System.Int64,FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel)">
+            <summary>
+            Updates a character based on the provided <paramref name="id"/> and body.
+            </summary>
+            <param name="id">
+            The id of the existing character to override.
+            </param>
+            <param name="characterViewModel">
+            The new values to override it with.
+            </param>
+            <returns>
+            If the action was executed successfully.
+            </returns>
+        </member>
         <member name="T:FightCore.Backend.Controllers.GamesController">
             <summary>
             An endpoint to get information about games.
@@ -76,12 +122,52 @@
              </remarks>
              <returns></returns>
         </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.GetGame(System.Int64)">
+            <summary>
+            Gets a singular game based on the provided <paramref name="gameId"/>.
+            </summary>
+            <param name="gameId">The id of the game to be found.</param>
+            <returns>The game found.</returns>
+        </member>
         <member name="M:FightCore.Backend.Controllers.GamesController.GetAllCharacters(System.Int64)">
             <summary>
             Gets all characters from a specific game.
             </summary>
             <param name="gameId">The id of the <see cref="T:FightCore.Models.Game"/> wanting the characters from.</param>
             <returns>The characters from that game.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.GetCharacter(System.Int64,System.Int64)">
+            <summary>
+            Gets a character based on the <paramref name="gameId"/> and the <paramref name="characterId"/>.
+            </summary>
+            <param name="gameId">
+            The id of the <see cref="T:FightCore.Models.Game"/> to be searched for.
+            </param>
+            <param name="characterId">
+            The id of the <see cref="T:FightCore.Models.Characters.Character"/> to be searched for.
+            </param>
+            <returns>The character found for the specified game.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.GetAllStages(System.Int64)">
+            <summary>
+            Gets all stages known for a specific game.
+            </summary>
+            <param name="gameId">
+            The id of the <see cref="T:FightCore.Models.Game"/> to be searched for.
+            </param>
+            <returns>A list of stages found.</returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.GamesController.GetStage(System.Int64,System.Int64)">
+            <summary>
+            Gets a stage based on the provided ids for the game and stage.
+            </summary>
+            <param name="gameId">
+            The id of the <see cref="T:FightCore.Models.Game"/> to be searched for.
+            </param>
+            <param name="stageId">
+            The id of the <see cref="T:FightCore.Models.Characters.Stage"/> to be searched for.
+            </param>
+            <returns>The found stage.</returns>
         </member>
         <member name="T:FightCore.Backend.Controllers.PostsController">
             <summary>
@@ -125,6 +211,17 @@
             <param name="viewModel"></param>
             <returns></returns>
         </member>
+        <member name="M:FightCore.Backend.Controllers.PostsController.UpdatePost(FightCore.Backend.ViewModels.Posts.UpdatePostViewModel)">
+             <summary>
+             Updates the post for the provided body.
+            
+             TODO Id should be in route not in body.
+             </summary>
+             <param name="viewModel">
+             The new values to update the post with.
+             </param>
+             <returns>If the action went successfully.</returns>
+        </member>
         <member name="M:FightCore.Backend.Controllers.PostsController.LikePost(System.Int64)">
              <summary>
              Like post.
@@ -140,6 +237,12 @@
              </param>
              <returns>
              </returns>
+        </member>
+        <member name="T:FightCore.Backend.Controllers.StagesController">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.StagesController.#ctor(AutoMapper.IMapper,FightCore.Services.Games.IStageService)">
+            <inheritdoc />
         </member>
         <member name="P:FightCore.Backend.ViewModels.GameViewModel.Id">
             <summary>

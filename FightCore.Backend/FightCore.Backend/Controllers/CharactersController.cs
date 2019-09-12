@@ -124,7 +124,7 @@ namespace FightCore.Backend.Controllers
             // If the user is not in the contributors, don't allow him/her to edit the character.
             if (trackedCharacter.Contributors.All(contributor => contributor.UserId != userId))
             {
-                return Forbid(new ForbiddenErrorViewModel());
+                return Forbid();
             }
 
             var character = Mapper.Map<Character>(characterViewModel);

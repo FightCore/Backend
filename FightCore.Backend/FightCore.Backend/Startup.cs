@@ -61,7 +61,8 @@ namespace FightCore.Backend
                 typeof(PostMapperProfile),
                 typeof(GameMapperProfile),
                 typeof(UserMapperProfile),
-                typeof(GlobalMapperProfile));
+                typeof(GlobalMapperProfile),
+                typeof(StageMapperProfile));
 
             services.AddDbContext<ApplicationDbContext>(
                 options =>
