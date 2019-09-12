@@ -125,6 +125,15 @@ namespace FightCore.Backend.Controllers
             var post = Mapper.Map<Post>(viewModel);
             post.AuthorId = userId.Value;
 
+            // Automatically like your own post.
+            post.Likes = new List<Like>
+            {
+                new Like
+                {
+                    UserId = userId.Value
+                }
+            };
+
             post = await _postService.AddAsync(post);
             await _context.SaveChangesAsync();
 
