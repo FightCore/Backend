@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Errors;
+using FightCore.Models;
 using FightCore.Models.Characters;
+using FightCore.Services;
 using FightCore.Services.Games;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
@@ -22,16 +25,19 @@ namespace FightCore.Backend.Controllers
     public class CharactersController : BaseApiController
     {
         private readonly ICharacterService _characterService;
+        private readonly ICachingService _cachingService;
         private readonly DbContext _dbContext;
 
         /// <inheritdoc />
         public CharactersController(
             ICharacterService characterService,
             DbContext dbContext,
+            ICachingService cachingService,
             IMapper mapper) : base(mapper)
         {
             _characterService = characterService;
             _dbContext = dbContext;
+            _cachingService = cachingService;
         }
         
         /// <summary>
@@ -42,9 +48,22 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(200, "All characters known to the system.", typeof(List<GetCharacterListViewModel>))]
         public async Task<IActionResult> GetAllCharacters()
         {
+            var cacheKey = $"{nameof(Character)}s";
             var characters = await _characterService.GetAllWithGamesAsync();
 
-            return MappedOk<List<GetCharacterListViewModel>>(characters);
+            var charactersJson = await _cachingService.GetAsync(cacheKey);
+
+            if (!string.IsNullOrWhiteSpace(charactersJson))
+            {
+                var cachedViewModels = JsonConvert.DeserializeObject<List<GetCharacterViewModel>>(charactersJson);
+
+                return Ok(cachedViewModels);
+            }
+
+            var characterViewModels = Mapper.Map<List<GetCharacterListViewModel>>(characters);
+            await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(characterViewModels));
+
+            return Ok(characterViewModels);
         }
 
         /// <summary>
@@ -87,6 +106,7 @@ namespace FightCore.Backend.Controllers
             character = await _characterService.AddAsync(character);
             await _dbContext.SaveChangesAsync();
 
+            await _cachingService.RemoveAsync($"{nameof(Character)}s");
             return Created("characters", character.Id);
         }
 
@@ -130,6 +150,9 @@ namespace FightCore.Backend.Controllers
 
             _characterService.UpdateCharacter(trackedCharacter, character);
             await _dbContext.SaveChangesAsync();
+
+            await _cachingService.RemoveAsync($"{nameof(Character)}s");
+            await _cachingService.RemoveAsync($"{nameof(Character)}{character.Id}");
 
             return Accepted();
         }

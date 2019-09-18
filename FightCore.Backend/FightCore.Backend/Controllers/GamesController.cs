@@ -12,6 +12,7 @@ using FightCore.Services;
 using FightCore.Services.Games;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
@@ -25,9 +26,8 @@ namespace FightCore.Backend.Controllers
     public class GamesController : BaseApiController
     {
         private readonly IGameService _gameService;
-
         private readonly ICharacterService _characterService;
-
+        private readonly ICachingService _cachingService;
         private readonly IStageService _stageService;
 
         /// <inheritdoc />
@@ -35,11 +35,14 @@ namespace FightCore.Backend.Controllers
             IGameService gameService,
             IStageService stageService,
             ICharacterService characterService,
+            ICachingService cachingService,
             IMapper mapper) : base(mapper)
         {
             _gameService = gameService;
             _characterService = characterService;
             _stageService = stageService;
+            _characterService = characterService;
+            _cachingService = cachingService;
         }
 
         /// <summary>
@@ -55,9 +58,23 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(200, "All of the games in the system", typeof(List<GameViewModel>))]
         public async Task<IActionResult> GetAllGames()
         {
-            var games = await _gameService.GetAllAsync();
+            var cacheKey = $"{nameof(Game)}s";
+            var gamesJson = await _cachingService.GetAsync(cacheKey);
 
-            return MappedOk<List<GameViewModel>>(games);
+            if (!string.IsNullOrWhiteSpace(gamesJson))
+            {
+                var gameViewModels = JsonConvert.DeserializeObject<List<GameViewModel>>(gamesJson);
+
+                return Ok(gameViewModels);
+            }
+
+            var games = await _gameService.GetAllAsync();
+            var mappedGames = Mapper.Map<List<GameViewModel>>(games);
+
+            await _cachingService.AddAsync(cacheKey,
+                JsonConvert.SerializeObject(mappedGames));
+
+            return Ok(mappedGames);
         }
         
         /// <summary>
@@ -70,14 +87,27 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(404, "Game is not found.", typeof(NotFoundErrorViewModel))]
         public async Task<IActionResult> GetGame(long gameId)
         {
+            var cacheKey = $"{nameof(Game)}{gameId}";
+
+            var gameJson = await _cachingService.GetAsync(cacheKey);
+
+            if (!string.IsNullOrWhiteSpace(gameJson))
+            {
+                var gameViewmodel = JsonConvert.DeserializeObject<GameViewModel>(gameJson);
+                return Ok(gameViewmodel);
+            }
+
             var game = await _gameService.GetByIdAsync(gameId);
 
             if (game == null)
             {
                 return NotFound(NotFoundErrorViewModel.Create(nameof(Game), gameId));
             }
-            
-            return MappedOk<GameViewModel>(game);
+
+            var gameViewModel = Mapper.Map<GameViewModel>(game);
+            await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(gameViewModel));
+
+            return Ok(gameViewModel);
         }
 
         /// <summary>
