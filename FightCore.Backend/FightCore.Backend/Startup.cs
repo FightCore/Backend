@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using ConfigurationBuilder = FightCore.Configuration.ConfigurationBuilder;
+using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
 using IdentityConstants = FightCore.Backend.Configuration.IdentityConstants;
 
 namespace FightCore.Backend
@@ -31,14 +31,13 @@ namespace FightCore.Backend
         /// <inheritdoc />
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            ConfigurationBuilder.Build(Configuration);
+            FightCore.Configuration.ConfigurationBuilder.Build(Configuration);
         }
 
         /// <summary>
         /// The configuration created from the JSON files.
         /// </summary>
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; set; }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.

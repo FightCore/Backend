@@ -34,15 +34,44 @@ namespace FightCore.Backend
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var configuration = CreateConfiguration(args);
+
+            // UseConfiguration does nothing for me which is cool.
+            // Just set it as a static.
+            Startup.Configuration = configuration;
+
+            return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseSerilog((context, configuration) =>
+                .UseConfiguration(configuration)
+                .UseSerilog((context, serilogConfiguration) =>
                 {
-                    configuration
+                    serilogConfiguration
                         .MinimumLevel.Information()
                         .Enrich.FromLogContext()
-                        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Literate);
+                        .WriteTo.Console(
+                            outputTemplate:
+                            "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
+                            theme: AnsiConsoleTheme.Literate);
                 });
+        }
+
+        private static IConfiguration CreateConfiguration(IEnumerable<string> args)
+        {
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory());
+
+            configBuilder.AddEnvironmentVariables();
+
+            configBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            
+            foreach (var argument in args)
+            {
+                configBuilder.AddJsonFile($"appsettings.{argument}.json", false, true);
+            }
+
+            return configBuilder.Build();
+        }
     }
 }
