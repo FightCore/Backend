@@ -294,7 +294,7 @@
             Endpoints for CRUD actions for the Post object.
             </summary>
         </member>
-        <member name="M:FightCore.Backend.Controllers.PostsController.#ctor(FightCore.Services.Posts.IPostService,FightCore.Services.Posts.ILikeService,FightCore.Services.Encryption.IEncryptionService,AutoMapper.IMapper,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:FightCore.Backend.Controllers.PostsController.#ctor(FightCore.Services.Posts.IPostService,FightCore.Services.Posts.ILikeService,FightCore.Services.Encryption.IEncryptionService,AutoMapper.IMapper,FightCore.Services.ICachingService,Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.PostsController.GetPosts">

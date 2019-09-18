@@ -42,6 +42,7 @@ namespace FightCore.Backend.Configuration
             services.AddScoped<IStageService, StageService>();
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IEncryptionService, AesEncryptionService>();
+            services.AddScoped<ICachingService, CachingService>();
 
             var parsingSuccess = bool.TryParse(configuration["UseMocking"], out var mocking);
             if (parsingSuccess && mocking)

@@ -6,11 +6,16 @@ using AutoMapper;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models.Posts;
+using FightCore.Services;
 using FightCore.Services.Encryption;
 using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using Serilog;
+using Serilog.Core;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
@@ -27,6 +32,7 @@ namespace FightCore.Backend.Controllers
         private readonly ILikeService _likeService;
         private readonly IEncryptionService _encryptionService;
         private readonly DbContext _context;
+        private readonly ICachingService _cachingService;
 
         /// <inheritdoc />
         public PostsController(
@@ -34,12 +40,14 @@ namespace FightCore.Backend.Controllers
             ILikeService likeService,
             IEncryptionService encryptionService,
             IMapper mapper,
+            ICachingService cachingService,
             DbContext context) : base(mapper)
         {
             _postService = postService;
             _likeService = likeService;
             _encryptionService = encryptionService;
             _context = context;
+            _cachingService = cachingService;
         }
 
         /// <summary>
@@ -59,7 +67,6 @@ namespace FightCore.Backend.Controllers
             var userId = GetUserIdFromClaims(User);
 
             var posts = await _postService.GetPublicPostsAsync(userId);
-
 
             foreach (var post in posts)
             {
@@ -96,6 +103,17 @@ namespace FightCore.Backend.Controllers
         {
             var userId = GetUserIdFromClaims(User);
 
+            var cacheKey = $"{nameof(Post)}{id}";
+
+            var postJson = await _cachingService.GetAsync(cacheKey);
+
+            if (!string.IsNullOrWhiteSpace(postJson))
+            {
+                Log.Information("From cache.");
+                var viewModel = JsonConvert.DeserializeObject<PostViewModel>(postJson);
+                return Ok(viewModel);
+            }
+
             var post = await _postService.GetPublicByIdAsync(id, userId ?? 0);
 
             if (post == null)
@@ -103,14 +121,18 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(nameof(Post), id));
             }
 
+            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+
             if (userId.HasValue && post.Likes.Any(like => like.UserId == userId))
             {
                 post.Liked = true;
             }
 
-            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+            Log.Information("From database.");
+            var postViewModel = Mapper.Map<PostViewModel>(post);
+            await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(postViewModel));
 
-            return MappedOk<PostViewModel>(post);
+            return Ok(postViewModel);
         }
 
         /// <summary>
@@ -196,6 +218,8 @@ namespace FightCore.Backend.Controllers
             _postService.Update(post);
             await _context.SaveChangesAsync();
 
+            await _cachingService.RemoveAsync($"{nameof(Post)}{post.Id}");
+
             return Ok();
         }
 
@@ -220,6 +244,7 @@ namespace FightCore.Backend.Controllers
 
             _postService.Remove(post);
             await _context.SaveChangesAsync();
+            await _cachingService.RemoveAsync($"{nameof(Post)}{post.Id}");
 
             return Ok();
         }

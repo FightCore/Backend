@@ -4,6 +4,7 @@ using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
 using FightCore.Backend.Configuration.Seeds;
 using FightCore.Configuration;
+using FightCore.Configuration.Models;
 using FightCore.Data;
 using FightCore.Models;
 using Microsoft.AspNetCore.Builder;
@@ -32,12 +33,15 @@ namespace FightCore.Backend
         public Startup(IConfiguration configuration)
         {
             FightCore.Configuration.ConfigurationBuilder.Build(Configuration);
+            _customConfigurationObject = FightCore.Configuration.ConfigurationBuilder.Configuration;
         }
 
         /// <summary>
         /// The configuration created from the JSON files.
         /// </summary>
         public static IConfiguration Configuration { get; set; }
+
+        private ConfigurationObject _customConfigurationObject;
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
@@ -55,11 +59,17 @@ namespace FightCore.Backend
                 .AddApiExplorer()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = _customConfigurationObject.Caching.Server;
+                options.InstanceName = _customConfigurationObject.Caching.Instance;
+            });
+
             services.AddIdentity<ApplicationUser, IdentityRole<long>>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddSwaggerGen(configuration =>
             {
-                configuration.SwaggerDoc("v1", new OpenApiInfo {Title = "FightCore API", Version = "v1"});
+                configuration.SwaggerDoc("v1", new OpenApiInfo { Title = "FightCore API", Version = "v1" });
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "FightCore.Backend.xml");
                 configuration.IncludeXmlComments(filePath);
             });
@@ -73,10 +83,10 @@ namespace FightCore.Backend
 
             services.AddDbContext<ApplicationDbContext>(
                 options =>
-                    options.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection), 
+                    options.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection),
                         sqlServerOptions =>
                             sqlServerOptions.MigrationsAssembly(ConfigurationVariables.MigrationAssembly)));
-            
+
             // Add the Bearer authentication scheme as this is used by Identity Server.
             services.AddAuthentication(options =>
                 {
@@ -95,10 +105,10 @@ namespace FightCore.Backend
 
 
             services.AddPatterns(Configuration);
-            
+
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
-            
+
             using (var context = new ApplicationDbContext(optionsBuilder.Options))
             {
                 var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();

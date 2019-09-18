@@ -12,12 +12,18 @@ namespace FightCore.Configuration
 
         public static void Build(IConfiguration configuration)
         {
-            Configuration = new ConfigurationObject()
+            Configuration = new ConfigurationObject
             {
-                Encryption = new EncryptionConfiguration()
+                Encryption = new EncryptionConfiguration
                 {
                     Algorithm = "AES",
                     Key = configuration["Encryption:Key"]
+                },
+                Caching = new CachingConfiguration
+                {
+                    Enabled = Convert.ToBoolean(configuration["Caching:Enabled"]),
+                    Instance = configuration["Caching:Instance"],
+                    Server = configuration["Caching:Server"]
                 }
             };
         }
