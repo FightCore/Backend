@@ -26,5 +26,7 @@ namespace FightCore.Models.Posts
 
         [NotMapped]
         public bool Liked { get; set; }
+
+        public string Iv { get; set; }
     }
 }

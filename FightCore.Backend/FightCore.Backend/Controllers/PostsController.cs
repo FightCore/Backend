@@ -6,6 +6,7 @@ using AutoMapper;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models.Posts;
+using FightCore.Services.Encryption;
 using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,17 +25,20 @@ namespace FightCore.Backend.Controllers
     {
         private readonly IPostService _postService;
         private readonly ILikeService _likeService;
+        private readonly IEncryptionService _encryptionService;
         private readonly DbContext _context;
 
         /// <inheritdoc />
         public PostsController(
             IPostService postService,
             ILikeService likeService,
+            IEncryptionService encryptionService,
             IMapper mapper,
             DbContext context) : base(mapper)
         {
             _postService = postService;
             _likeService = likeService;
+            _encryptionService = encryptionService;
             _context = context;
         }
 
@@ -55,15 +59,21 @@ namespace FightCore.Backend.Controllers
             var userId = GetUserIdFromClaims(User);
 
             var posts = await _postService.GetPublicPostsAsync(userId);
-            if (userId.HasValue)
+
+
+            foreach (var post in posts)
             {
-                posts.ForEach(post =>
+                post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+
+                if (!userId.HasValue)
                 {
-                    if (post.Likes.Any(like => like.UserId == userId))
-                    {
-                        post.Liked = true;
-                    }
-                });
+                    continue;
+                }
+
+                if (post.Likes.Any(like => like.UserId == userId))
+                {
+                    post.Liked = true;
+                }
             }
 
             return MappedOk<List<PostViewModel>>(posts);
@@ -98,6 +108,8 @@ namespace FightCore.Backend.Controllers
                 post.Liked = true;
             }
 
+            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+
             return MappedOk<PostViewModel>(post);
         }
 
@@ -118,7 +130,7 @@ namespace FightCore.Backend.Controllers
             var userId = GetUserIdFromClaims(User);
 
             if (userId == null)
-            {   
+            {
                 return Unauthorized(new UnauthorizedErrorViewModel());
             }
 

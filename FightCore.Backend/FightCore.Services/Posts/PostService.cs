@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bartdebever.Patterns.Services;
 using FightCore.Models.Posts;
 using FightCore.Repositories.Posts;
+using FightCore.Services.Encryption;
 
 namespace FightCore.Services.Posts
 {
@@ -17,8 +18,13 @@ namespace FightCore.Services.Posts
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
     {
-        public PostService(IPostRepository repository) : base(repository)
+        private readonly IEncryptionService _encryptionService;
+
+        public PostService(
+            IPostRepository repository,
+            IEncryptionService encryptionService) : base(repository)
         {
+            _encryptionService = encryptionService;
         }
 
         public Task<List<Post>> GetPublicPostsAsync(long? userId = null)
@@ -29,6 +35,39 @@ namespace FightCore.Services.Posts
         public Task<Post> GetPublicByIdAsync(long id, long userId)
         {
             return Repository.GetPublicByIdAsync(id, userId);
+        }
+
+        public override Post Add(Post entity)
+        {
+            entity = EncryptPost(entity);
+
+            return base.Add(entity);
+        }
+
+        public override Task<Post> AddAsync(Post entity)
+        {
+            entity = EncryptPost(entity);
+
+            return base.AddAsync(entity);
+        }
+
+        public override Post Update(Post entity)
+        {
+            entity = EncryptPost(entity);
+
+            return base.Update(entity);
+        }
+
+        private Post EncryptPost(Post post)
+        {
+            if (string.IsNullOrWhiteSpace(post.Iv))
+            {
+                post.Iv = _encryptionService.GetIV();
+            }
+            
+            post.Body = _encryptionService.Encrypt(post.Body, post.Iv);
+
+            return post;
         }
     }
 }

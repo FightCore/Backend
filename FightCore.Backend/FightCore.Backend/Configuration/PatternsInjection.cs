@@ -9,6 +9,7 @@ using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
 using FightCore.Repositories.Users;
 using FightCore.Services;
+using FightCore.Services.Encryption;
 using FightCore.Services.Games;
 using FightCore.Services.Posts;
 using FightCore.Services.Users;
@@ -40,6 +41,7 @@ namespace FightCore.Backend.Configuration
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<IStageService, StageService>();
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<IEncryptionService, AesEncryptionService>();
 
             var parsingSuccess = bool.TryParse(configuration["UseMocking"], out var mocking);
             if (parsingSuccess && mocking)

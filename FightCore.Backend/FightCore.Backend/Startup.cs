@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using ConfigurationBuilder = FightCore.Configuration.ConfigurationBuilder;
 using IdentityConstants = FightCore.Backend.Configuration.IdentityConstants;
 
 namespace FightCore.Backend
@@ -31,6 +32,7 @@ namespace FightCore.Backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            ConfigurationBuilder.Build(Configuration);
         }
 
         /// <summary>
