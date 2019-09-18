@@ -109,7 +109,6 @@ namespace FightCore.Backend.Controllers
 
             if (!string.IsNullOrWhiteSpace(postJson))
             {
-                Log.Information("From cache.");
                 var viewModel = JsonConvert.DeserializeObject<PostViewModel>(postJson);
                 return Ok(viewModel);
             }
@@ -128,7 +127,6 @@ namespace FightCore.Backend.Controllers
                 post.Liked = true;
             }
 
-            Log.Information("From database.");
             var postViewModel = Mapper.Map<PostViewModel>(post);
             await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(postViewModel));
 
