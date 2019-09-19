@@ -44,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Error\" />
     <Folder Include="ViewModels\Globals\" />
   </ItemGroup>
 

@@ -143,9 +143,9 @@ namespace FightCore.Backend
                 var feature = context.Features.Get<IExceptionHandlerPathFeature>();
                 var exception = feature.Error;
 
-                var result = JsonConvert.SerializeObject(new { message = exception.Message });
-
+                var result = JsonConvert.SerializeObject(new { message = exception.Message, errorCode = "internalServerError" });
                 context.Response.ContentType = HttpContentTypes.ApplicationJson;
+                context.Response.StatusCode = 500;
 
                 await context.Response.WriteAsync(result);
             }));
