@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Security.Claims;
 using AutoMapper;
 using IdentityModel;
+using Jil;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FightCore.Backend.Controllers
@@ -61,6 +63,32 @@ namespace FightCore.Backend.Controllers
             }
 
             return Convert.ToInt64(subject);
+        }
+
+        /// <summary>
+        /// Deserialize the provided <paramref name="json"/> into the type
+        /// <typeparamref name="TEntity"/>.
+        /// </summary>
+        /// <typeparam name="TEntity">The type that should be deserialized to.</typeparam>
+        /// <param name="json">The json to deserialize.</param>
+        /// <returns>The deserialized object.</returns>
+        protected TEntity Deserialize<TEntity>(string json)
+        {
+            using (var input = new StringReader(json))
+            {
+                return JSON.Deserialize<TEntity>(input);
+            }
+        }
+
+        /// <summary>
+        /// Serializes the provided <paramref name="entity"/> into a JSON string.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of <paramref name="entity"/>.</typeparam>
+        /// <param name="entity">The entity to be serialized.</param>
+        /// <returns>An JSON representation of <paramref name="entity"/>.</returns>
+        protected string Serialize<TEntity>(TEntity entity)
+        {
+            return JSON.Serialize(entity);
         }
     }
 }

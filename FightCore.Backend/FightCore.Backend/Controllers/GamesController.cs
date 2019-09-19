@@ -63,7 +63,7 @@ namespace FightCore.Backend.Controllers
 
             if (!string.IsNullOrWhiteSpace(gamesJson))
             {
-                var gameViewModels = JsonConvert.DeserializeObject<List<GameViewModel>>(gamesJson);
+                var gameViewModels = Deserialize<List<GameViewModel>>(gamesJson);
 
                 return Ok(gameViewModels);
             }
@@ -72,7 +72,7 @@ namespace FightCore.Backend.Controllers
             var mappedGames = Mapper.Map<List<GameViewModel>>(games);
 
             await _cachingService.AddAsync(cacheKey,
-                JsonConvert.SerializeObject(mappedGames));
+                Serialize(mappedGames));
 
             return Ok(mappedGames);
         }
@@ -93,7 +93,7 @@ namespace FightCore.Backend.Controllers
 
             if (!string.IsNullOrWhiteSpace(gameJson))
             {
-                var gameViewmodel = JsonConvert.DeserializeObject<GameViewModel>(gameJson);
+                var gameViewmodel = Deserialize<GameViewModel>(gameJson);
                 return Ok(gameViewmodel);
             }
 
@@ -105,7 +105,7 @@ namespace FightCore.Backend.Controllers
             }
 
             var gameViewModel = Mapper.Map<GameViewModel>(game);
-            await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(gameViewModel));
+            await _cachingService.AddAsync(cacheKey, Serialize(gameViewModel));
 
             return Ok(gameViewModel);
         }

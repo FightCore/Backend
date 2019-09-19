@@ -55,13 +55,13 @@ namespace FightCore.Backend.Controllers
 
             if (!string.IsNullOrWhiteSpace(charactersJson))
             {
-                var cachedViewModels = JsonConvert.DeserializeObject<List<GetCharacterViewModel>>(charactersJson);
+                var cachedViewModels = Deserialize<List<GetCharacterViewModel>>(charactersJson);
 
                 return Ok(cachedViewModels);
             }
 
             var characterViewModels = Mapper.Map<List<GetCharacterListViewModel>>(characters);
-            await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(characterViewModels));
+            await _cachingService.AddAsync(cacheKey, Serialize(characterViewModels));
 
             return Ok(characterViewModels);
         }
