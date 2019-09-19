@@ -109,7 +109,7 @@ namespace FightCore.Backend.Controllers
 
             if (!string.IsNullOrWhiteSpace(postJson))
             {
-                var viewModel = JsonConvert.DeserializeObject<PostViewModel>(postJson);
+                var viewModel = Deserialize<PostViewModel>(postJson);
                 return Ok(viewModel);
             }
 
@@ -128,7 +128,7 @@ namespace FightCore.Backend.Controllers
             }
 
             var postViewModel = Mapper.Map<PostViewModel>(post);
-            await _cachingService.AddAsync(cacheKey, JsonConvert.SerializeObject(postViewModel));
+            await _cachingService.AddAsync(cacheKey, Serialize(postViewModel));
 
             return Ok(postViewModel);
         }
