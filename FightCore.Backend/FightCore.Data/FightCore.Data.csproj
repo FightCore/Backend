@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20190725092654_AddedGame.Designer.cs" />
     <Compile Remove="Migrations\20190810103546_Seed.cs" />
     <Compile Remove="Migrations\20190810103546_Seed.Designer.cs" />
+    <Compile Remove="Migrations\20190920062127_RenamedTables.cs" />
+    <Compile Remove="Migrations\20190920062127_RenamedTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

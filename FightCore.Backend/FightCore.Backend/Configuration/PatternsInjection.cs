@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FightCore.Data;
 using FightCore.Models;
+using FightCore.Repositories;
 using FightCore.Repositories.Fakes.Posts;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
@@ -40,6 +41,7 @@ namespace FightCore.Backend.Configuration
             services.AddScoped<ILikeService, LikeService>();
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<IStageService, StageService>();
+            services.AddScoped<IApiClientService, ApiClientService>();
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IEncryptionService, AesEncryptionService>();
             services.AddScoped<ICachingService, CachingService>();
@@ -61,6 +63,7 @@ namespace FightCore.Backend.Configuration
                 services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
                 services.AddScoped<IStageRepository, StageRepository>();
                 services.AddScoped<ICharacterRepository, CharacterRepository>();
+                services.AddScoped<IApiClientRepository, ApiClientRepository>();
             }
 
             return services;

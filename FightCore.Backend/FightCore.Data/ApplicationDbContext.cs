@@ -34,5 +34,7 @@ namespace FightCore.Data
 
         public DbSet<Game> Game { get; set; }
 
+        public DbSet<ApiClient> ApiClients { get; set; }
+
     }
 }

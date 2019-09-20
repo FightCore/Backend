@@ -3,6 +3,7 @@ using AutoMapper;
 using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
 using FightCore.Backend.Configuration.Seeds;
+using FightCore.Backend.Middleware;
 using FightCore.Configuration;
 using FightCore.Configuration.Models;
 using FightCore.Data;
@@ -137,6 +138,7 @@ namespace FightCore.Backend
             app.UseCors("TestPolicy");
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseApiKey();
 
             app.UseExceptionHandler(applicationBuilder => applicationBuilder.Run(async context =>
             {
