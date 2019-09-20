@@ -24,9 +24,9 @@ namespace FightCore.Backend.Configuration.Seeds
         /// <param name="userManager">The user manager to add users to.</param>
         public static void ExecuteSeed(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            if (!context.Games.Any())
+            if (!context.Game.Any())
             {
-                context.Games.AddRange(GamesSeed.GetGames());
+                context.Game.AddRange(GamesSeed.GetGames());
                 context.SaveChanges();
             }
 
