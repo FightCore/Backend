@@ -24,5 +24,7 @@ namespace FightCore.Backend.ViewModels
         /// The abbreviation of the game's name.
         /// </summary>
         public string Abbreviation { get; set; }
+
+        public string BannerUrl { get; set; }
     }
 }

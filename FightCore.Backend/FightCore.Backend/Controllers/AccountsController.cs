@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Errors;
+using FightCore.Backend.ViewModels.Posts;
 using FightCore.Backend.ViewModels.User;
 using FightCore.Models;
+using FightCore.Services.Posts;
 using FightCore.Services.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,17 +26,20 @@ namespace FightCore.Backend.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly DbContext _dbContext;
         private readonly IApplicationUserService _applicationUserService;
+        private readonly IPostService _postService;
 
         /// <inheritdoc />
         public AccountsController(
             IMapper mapper,
             UserManager<ApplicationUser> userManager,
             DbContext context,
-            IApplicationUserService applicationUserService) : base(mapper)
+            IApplicationUserService applicationUserService,
+            IPostService postService) : base(mapper)
         {
             _userManager = userManager;
             _applicationUserService = applicationUserService;
             _dbContext = context;
+            _postService = postService;
         }
 
         /// <summary>
@@ -112,6 +119,25 @@ namespace FightCore.Backend.Controllers
         {
             await Task.Delay(1);
             return StatusCode(StatusCodes.Status501NotImplemented);
+        }
+
+        /// <summary>
+        /// Gets all posts for the provided user <paramref name="id"/>.
+        /// If the authorized user is the provided user, private and unapproved
+        /// posts are also gathered.
+        /// </summary>
+        /// <param name="id">The user id to get the posts for.</param>
+        /// <returns>A list of posts.</returns>
+        [HttpGet("{id}/posts")]
+        public async Task<IActionResult> GetPostsFromUser(int id)
+        {
+            var userId = GetUserIdFromClaims(User);
+
+            var isUser = userId.HasValue && id == userId.Value;
+
+            var posts = await _postService.GetForUserIdAsync(id, isUser);
+
+            return MappedOk<List<PostViewModel>>(posts);
         }
     }
 }

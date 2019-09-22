@@ -115,7 +115,7 @@
         <member name="T:FightCore.Backend.Controllers.AccountsController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser},Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService)">
+        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser},Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService,FightCore.Services.Posts.IPostService)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.AccountsController.GetUser(System.Int64)">
@@ -143,6 +143,15 @@
             Deletes the user based on the provided id.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.AccountsController.GetPostsFromUser(System.Int32)">
+            <summary>
+            Gets all posts for the provided user <paramref name="id"/>.
+            If the authorized user is the provided user, private and unapproved
+            posts are also gathered.
+            </summary>
+            <param name="id">The user id to get the posts for.</param>
+            <returns>A list of posts.</returns>
         </member>
         <member name="T:FightCore.Backend.Controllers.BaseApiController">
             <inheritdoc />

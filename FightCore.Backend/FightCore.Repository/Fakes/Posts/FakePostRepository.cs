@@ -27,5 +27,10 @@ namespace FightCore.Repositories.Fakes.Posts
         {
             return GetByIdAsync(id);
         }
+
+        public Task<List<Post>> GetForUserIdAsync(long userId, bool getPrivate)
+        {
+            return GetAllAsync();
+        }
     }
 }
