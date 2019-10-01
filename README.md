@@ -17,15 +17,17 @@ It's meant to be as open as possible and allow changes from the smash developing
 
 ## Docker
 
-To build docker image for FightCore.Backend and/or FightCore.Identity, change to solution folder and issue following command  
-`docker build . -f FightCore.Backend\Dockerfile -t <tag>`  
+To build the docker image for FightCore.Backend and/or FightCore.Identity,
+open a commandline in the solution folder and execute the following command  
+`docker build . -f FightCore.Backend/Dockerfile -t <tag>`  
 
-There is also `docker-compose.yml` file in the solution folder, please use following to build and run images  
-`docker-compose up`  
+There is also `docker-compose.yml` file in the solution folder,
+please use following to build and run images `docker-compose up`  
 
-To change any settings in container pass those as environment settings from `docker-compose.yml` file.  
+To change any settings in for the container pass those as environment settings in the
+`docker-compose.yml` file.  
 
-You might have to configure SQL server as described in [Stackoverflow post](https://stackoverflow.com/a/50170217).
+You might have to configure SQL server as described in [this StackOverflow post](https://stackoverflow.com/a/50170217).
 
 ## Contributing
 
