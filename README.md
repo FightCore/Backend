@@ -25,6 +25,8 @@ There is also `docker-compose.yml` file in the solution folder, please use follo
 
 To change any settings in container pass those as environment settings from `docker-compose.yml` file.  
 
+You might have to configure SQL server as described in [Stackoverflow post](https://stackoverflow.com/a/50170217).
+
 ## Contributing
 
 If anything is missing in your eyes please feel free to submit an issue or
