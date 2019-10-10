@@ -54,6 +54,8 @@ namespace FightCore.Repositories.Posts
         private IQueryable<Post> IncludedQueryable => Queryable
             .Include(post => post.Author)
             .Include(post => post.Game)
+            .Include(post => post.Character)
+            .ThenInclude(character => character.StockIcon)
             .Include(post => post.Likes);
     }
 }

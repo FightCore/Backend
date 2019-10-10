@@ -12,14 +12,23 @@ namespace FightCore.Data.Configurations
         public void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.HasOne(post => post.Author)
-                .WithMany().HasForeignKey(post => post.AuthorId);
+                .WithMany().HasForeignKey(post => post.AuthorId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(post => post.Game)
-                .WithMany().HasForeignKey(post => post.GameId);
+                .WithMany().HasForeignKey(post => post.GameId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasMany(post => post.Likes)
                 .WithOne(like => like.Post)
-                .HasForeignKey(like => like.PostId);
+                .HasForeignKey(like => like.PostId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasOne(post => post.Character)
+                .WithMany()
+                .HasForeignKey(post => post.CharacterId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .IsRequired(false);
         }
     }
 }

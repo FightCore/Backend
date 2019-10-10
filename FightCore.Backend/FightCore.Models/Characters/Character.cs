@@ -10,7 +10,7 @@ namespace FightCore.Models.Characters
         
         public Game Game { get; set; }
         
-        public long GameId { get; set; }
+        public long? GameId { get; set; }
         
         public string GeneralInformation { get; set; }
         

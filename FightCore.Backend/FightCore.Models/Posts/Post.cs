@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Bartdebever.Patterns.Models;
+using FightCore.Models.Characters;
 
 namespace FightCore.Models.Posts
 {
@@ -14,7 +15,7 @@ namespace FightCore.Models.Posts
 
         public ApplicationUser Author { get; set; }
 
-        public long AuthorId { get; set; }
+        public long? AuthorId { get; set; }
 
         public bool IsPrivate { get; set; }
 
@@ -28,5 +29,9 @@ namespace FightCore.Models.Posts
         public bool Liked { get; set; }
 
         public string Iv { get; set; }
+
+        public long? CharacterId { get; set; }
+
+        public Character Character { get; set; }
     }
 }

@@ -10,23 +10,29 @@ namespace FightCore.Data.Configurations
         {
             builder.HasOne(character => character.Game)
                 .WithMany(game => game.Characters)
-                .HasForeignKey(character => character.GameId);
+                .HasForeignKey(character => character.GameId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasMany(character => character.Contributors)
                 .WithOne(contributor => contributor.Character)
-                .HasForeignKey(contributor => contributor.CharacterId);
+                .HasForeignKey(contributor => contributor.CharacterId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasMany(character => character.NotablePlayers)
-                .WithOne(notablePlayer => notablePlayer.Character);
+                .WithOne(notablePlayer => notablePlayer.Character)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(character => character.StockIcon)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(character => character.CharacterImage)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasMany(character => character.Videos)
-                .WithOne(video => video.Character);
+                .WithOne(video => video.Character)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

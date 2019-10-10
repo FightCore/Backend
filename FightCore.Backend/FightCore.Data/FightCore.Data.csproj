@@ -11,6 +11,12 @@
     <Compile Remove="Migrations\20190810103546_Seed.Designer.cs" />
     <Compile Remove="Migrations\20190920062127_RenamedTables.cs" />
     <Compile Remove="Migrations\20190920062127_RenamedTables.Designer.cs" />
+    <Compile Remove="Migrations\20191010063530_CharacterInPost.cs" />
+    <Compile Remove="Migrations\20191010063530_CharacterInPost.Designer.cs" />
+    <Compile Remove="Migrations\20191010064423_Cascades.cs" />
+    <Compile Remove="Migrations\20191010064423_Cascades.Designer.cs" />
+    <Compile Remove="Migrations\20191010064530_NotRequired.cs" />
+    <Compile Remove="Migrations\20191010064530_NotRequired.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

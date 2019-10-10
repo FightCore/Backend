@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.User;
 
 namespace FightCore.Backend.ViewModels.Posts
@@ -60,5 +61,10 @@ namespace FightCore.Backend.ViewModels.Posts
         /// Defines if the post is private.
         /// </summary>
         public bool IsPrivate { get; set; }
+
+        /// <summary>
+        /// The character that this post is written about.
+        /// </summary>
+        public GetCharacterListViewModel Character { get; set; }
     }
 }
