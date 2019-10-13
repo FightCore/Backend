@@ -32,5 +32,10 @@ namespace FightCore.Repositories.Fakes.Posts
         {
             return GetAllAsync();
         }
+
+        public Task<List<Post>> GetForCharacterIdAsync(long characterId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

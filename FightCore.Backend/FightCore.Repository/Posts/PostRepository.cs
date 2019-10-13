@@ -16,6 +16,8 @@ namespace FightCore.Repositories.Posts
         Task<Post> GetPublicByIdAsync(long id, long userId);
 
         Task<List<Post>> GetForUserIdAsync(long userId, bool getPrivate);
+
+        Task<List<Post>> GetForCharacterIdAsync(long characterId);
     }
 
     public class PostRepository : EntityRepository<Post>, IPostRepository
@@ -48,6 +50,15 @@ namespace FightCore.Repositories.Posts
                     && getPrivate
                     ? getPrivate
                     : post.IsPrivate)
+                .ToListAsync();
+        }
+
+        public Task<List<Post>> GetForCharacterIdAsync(long characterId)
+        {
+            return IncludedQueryable.Where(post =>
+                post.IsPrivate == false
+                && post.CharacterId.HasValue
+                && post.CharacterId == characterId)
                 .ToListAsync();
         }
 

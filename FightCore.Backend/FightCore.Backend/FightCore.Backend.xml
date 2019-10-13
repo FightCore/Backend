@@ -206,7 +206,7 @@
         <member name="T:FightCore.Backend.Controllers.CharactersController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Posts.IPostService,FightCore.Services.Encryption.IEncryptionService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.CharactersController.GetAllCharacters">
@@ -216,6 +216,15 @@
             <returns>A list of all characters.</returns>
         </member>
         <member name="M:FightCore.Backend.Controllers.CharactersController.GetCharacter(System.Int64)">
+            <summary>
+            Gets a single character based on the provided <paramref name="id"/>.
+            </summary>
+            <param name="id">
+            The id of the <see cref="T:FightCore.Models.Characters.Character"/> to be searched for.
+            </param>
+            <returns>The found <see cref="T:FightCore.Models.Characters.Character"/></returns>
+        </member>
+        <member name="M:FightCore.Backend.Controllers.CharactersController.GetCharacterPosts(System.Int64)">
             <summary>
             Gets a single character based on the provided <paramref name="id"/>.
             </summary>
@@ -709,6 +718,11 @@
             The abbreviation of the game's name.
             </summary>
         </member>
+        <member name="P:FightCore.Backend.ViewModels.GameViewModel.BannerUrl">
+            <summary>
+            The image url for the banner for the game.
+            </summary>
+        </member>
         <member name="T:FightCore.Backend.ViewModels.Globals.ImageViewModel">
             <summary>
             The view model to display images.
@@ -803,11 +817,6 @@
             The unparsed, unfiltered markdown body of the post.
             </summary>
         </member>
-        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.BannerUrl">
-            <summary>
-            The banner url that corresponds to the selected game.
-            </summary>
-        </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Author">
             <summary>
             The author's name who wrote the post.
@@ -836,6 +845,11 @@
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.IsPrivate">
             <summary>
             Defines if the post is private.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Character">
+            <summary>
+            The character that this post is written about.
             </summary>
         </member>
         <member name="T:FightCore.Backend.ViewModels.Posts.UpdatePostViewModel">

@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Errors;
+using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Services;
+using FightCore.Services.Encryption;
 using FightCore.Services.Games;
+using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +30,14 @@ namespace FightCore.Backend.Controllers
         private readonly ICharacterService _characterService;
         private readonly ICachingService _cachingService;
         private readonly DbContext _dbContext;
+        private readonly IPostService _postService;
+        private readonly IEncryptionService _encryptionService;
 
         /// <inheritdoc />
         public CharactersController(
             ICharacterService characterService,
+            IPostService postService,
+            IEncryptionService encryptionService,
             DbContext dbContext,
             ICachingService cachingService,
             IMapper mapper) : base(mapper)
@@ -38,6 +45,8 @@ namespace FightCore.Backend.Controllers
             _characterService = characterService;
             _dbContext = dbContext;
             _cachingService = cachingService;
+            _postService = postService;
+            _encryptionService = encryptionService;
         }
         
         /// <summary>
@@ -86,6 +95,38 @@ namespace FightCore.Backend.Controllers
             }
 
             return MappedOk<GetCharacterViewModel>(character);
+        }
+
+        /// <summary>
+        /// Gets a single character based on the provided <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">
+        /// The id of the <see cref="Character"/> to be searched for.
+        /// </param>
+        /// <returns>The found <see cref="Character"/></returns>
+        [HttpGet("{id}/posts")]
+        [SwaggerResponse(200, "The character for the id.", typeof(List<PostViewModel>))]
+        public async Task<IActionResult> GetCharacterPosts(long id)
+        {
+            var posts = await _postService.GetForCharacterIdAsync(id);
+            var userId = GetUserIdFromClaims(User);
+
+            foreach (var post in posts)
+            {
+                post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+
+                if (!userId.HasValue)
+                {
+                    continue;
+                }
+
+                if (post.Likes.Any(like => like.UserId == userId))
+                {
+                    post.Liked = true;
+                }
+            }
+
+            return MappedOk<List<PostViewModel>>(posts);
         }
 
         /// <summary>

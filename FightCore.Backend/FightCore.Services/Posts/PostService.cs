@@ -16,6 +16,8 @@ namespace FightCore.Services.Posts
         Task<Post> GetPublicByIdAsync(long id, long userId);
 
         Task<List<Post>> GetForUserIdAsync(long userId, bool getPrivate);
+
+        Task<List<Post>> GetForCharacterIdAsync(long characterId);
     }
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
@@ -42,6 +44,11 @@ namespace FightCore.Services.Posts
         public Task<List<Post>> GetForUserIdAsync(long userId, bool getPrivate)
         {
             return Repository.GetForUserIdAsync(userId, getPrivate);
+        }
+
+        public Task<List<Post>> GetForCharacterIdAsync(long characterId)
+        {
+            return Repository.GetForCharacterIdAsync(characterId);
         }
 
         public override Post Add(Post entity)

@@ -19,12 +19,8 @@ namespace FightCore.Backend.Configuration.Mapping
         public PostMapperProfile()
         {
             CreateMap<Post, PostViewModel>()
-                .ForMember(viewModel => viewModel.Game,
-                    options => options.MapFrom(post => post.Game.Abbreviation))
                 .ForMember(viewModel => viewModel.Likes,
                     options => options.MapFrom(post => post.Likes.Count))
-                .ForMember(viewModel => viewModel.BannerUrl,
-                    options => options.MapFrom(post => post.Game.BannerUrl))
                 .ForMember(viewModel => viewModel.GameId,
                     options => options.MapFrom(post => post.Game.Id));
 

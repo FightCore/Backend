@@ -28,11 +28,6 @@ namespace FightCore.Backend.ViewModels.Posts
         public string Body { get; set; }
 
         /// <summary>
-        /// The banner url that corresponds to the selected game.
-        /// </summary>
-        public string BannerUrl { get; set; }
-
-        /// <summary>
         /// The author's name who wrote the post.
         /// </summary>
         public UserViewModel Author { get; set; }
@@ -40,7 +35,7 @@ namespace FightCore.Backend.ViewModels.Posts
         /// <summary>
         /// The name of the game that the post is linked to.
         /// </summary>
-        public string Game { get; set; }
+        public GameViewModel Game { get; set; }
 
         /// <summary>
         /// The amount of likes the post has.

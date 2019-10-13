@@ -30,6 +30,8 @@ namespace FightCore.Backend.ViewModels.Posts
         /// <summary>
         /// The id of the game to be linked to this post.
         /// </summary>
-        public int GameId { get; set; }
+        public long GameId { get; set; }
+
+        public long? CharacterId { get; set; }
     }
 }
