@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Serilog;
 using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
 using IdentityConstants = FightCore.Backend.Configuration.IdentityConstants;
 
@@ -35,6 +36,10 @@ namespace FightCore.Backend
         {
             FightCore.Configuration.ConfigurationBuilder.Build(Configuration);
             _customConfigurationObject = FightCore.Configuration.ConfigurationBuilder.Configuration;
+            Log.Information("Launching FightCore API.");
+            Log.Information("Caching: {0}.\nItems will be cached and a Redis instance will be made.\n" +
+                            "Please be aware of this during testing.", _customConfigurationObject.Caching.Enabled);
+            Log.Information("Encryption Algorithm: {0}.", _customConfigurationObject.Encryption.Algorithm);
         }
 
         /// <summary>
@@ -127,6 +132,7 @@ namespace FightCore.Backend
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                Log.Information("Using developer exception pages.");
             }
             else
             {

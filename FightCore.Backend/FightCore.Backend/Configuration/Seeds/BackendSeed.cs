@@ -8,6 +8,7 @@ using FightCore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Serilog;
 
 namespace FightCore.Backend.Configuration.Seeds
 {
@@ -24,6 +25,7 @@ namespace FightCore.Backend.Configuration.Seeds
         /// <param name="userManager">The user manager to add users to.</param>
         public static void ExecuteSeed(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            Log.Debug("Attempting to execute the seed.");
             if (!context.Game.Any())
             {
                 context.Game.AddRange(GamesSeed.GetGames());
