@@ -18,7 +18,7 @@ namespace FightCore.UnitTests.Services.Posts
         public void Initialize()
         {
             _postRepository = new Mock<IPostRepository>();
-            _postService = new PostService(_postRepository.Object, null);
+            _postService = new PostService(_postRepository.Object, null, null);
         }
     }
 }
