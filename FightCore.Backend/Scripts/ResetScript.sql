@@ -1,0 +1,10 @@
+DELETE [FightCoreImage]
+DELETE [CharacterVideo]
+DELETE [VideoResource]
+DELETE [Character]
+DELETE [GameSeries]
+DELETE [Stage]
+DELETE [Like]
+DELETE [Posts]
+DELETE [Game]
+
