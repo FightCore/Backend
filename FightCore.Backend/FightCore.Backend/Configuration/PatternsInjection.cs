@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using FightCore.Data;
 using FightCore.Models;
 using FightCore.Repositories;
-using FightCore.Repositories.Fakes.Posts;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
 using FightCore.Repositories.Users;
@@ -46,25 +45,16 @@ namespace FightCore.Backend.Configuration
             services.AddScoped<IEncryptionService, AesEncryptionService>();
             services.AddScoped<ICachingService, CachingService>();
 
-            var parsingSuccess = bool.TryParse(configuration["UseMocking"], out var mocking);
-            if (parsingSuccess && mocking)
-            {
-                // Add the Mocks
-                services.AddScoped<IPostRepository, FakePostRepository>();
-                services.AddScoped<IGameRepository, FakeGameRepository>();
-                services.AddScoped<ILikeRepository, FakeLikeRepository>();
-            }
-            else
-            {
-                // Add the EF Core repositories
-                services.AddScoped<IPostRepository, PostRepository>();
-                services.AddScoped<IGameRepository, GameRepository>();
-                services.AddScoped<ILikeRepository, LikeRepository>();
-                services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-                services.AddScoped<IStageRepository, StageRepository>();
-                services.AddScoped<ICharacterRepository, CharacterRepository>();
-                services.AddScoped<IApiClientRepository, ApiClientRepository>();
-            }
+            // Add the EF Core repositories
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<IStageRepository, StageRepository>();
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<IApiClientRepository, ApiClientRepository>();
+
+            services.AddScoped<IProcessingService, ProcessingService>();
 
             return services;
         }

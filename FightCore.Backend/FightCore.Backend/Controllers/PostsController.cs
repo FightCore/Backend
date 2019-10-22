@@ -33,7 +33,7 @@ namespace FightCore.Backend.Controllers
         private readonly IEncryptionService _encryptionService;
         private readonly DbContext _context;
         private readonly ICachingService _cachingService;
-
+        private readonly IProcessingService _processingService;
         /// <inheritdoc />
         public PostsController(
             IPostService postService,
@@ -41,6 +41,7 @@ namespace FightCore.Backend.Controllers
             IEncryptionService encryptionService,
             IMapper mapper,
             ICachingService cachingService,
+            IProcessingService processingService,
             DbContext context) : base(mapper)
         {
             _postService = postService;
@@ -48,6 +49,7 @@ namespace FightCore.Backend.Controllers
             _encryptionService = encryptionService;
             _context = context;
             _cachingService = cachingService;
+            _processingService = processingService;
         }
 
         /// <summary>
@@ -138,7 +140,6 @@ namespace FightCore.Backend.Controllers
 
             var post = Mapper.Map<Post>(viewModel);
             post.AuthorId = userId.Value;
-
             // Automatically like your own post.
             post.Likes = new List<Like>
             {
@@ -280,6 +281,26 @@ namespace FightCore.Backend.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpGet("latest")]
+        public async Task<IActionResult> GetLatestPosts()
+        {
+            var posts = await _postService.GetLatestPosts();
+
+            posts = ProcessPosts(posts, GetUserIdFromClaims(User));
+
+            return MappedOk<List<PostViewModel>>(posts);
+        }
+
+        [HttpGet("featured")]
+        public async Task<IActionResult> GetFeaturedPosts()
+        {
+            var posts = await _postService.GetLatestPosts();
+
+            posts = ProcessPosts(posts, GetUserIdFromClaims(User));
+
+            return MappedOk<List<PostViewModel>>(posts);
         }
 
         #region Private

@@ -18,6 +18,8 @@ namespace FightCore.Repositories.Posts
         Task<List<Post>> GetForUserIdAsync(long userId, bool getPrivate);
 
         Task<List<Post>> GetForCharacterIdAsync(long characterId);
+
+        Task<List<Post>> GetLatestPosts();
     }
 
     public class PostRepository : EntityRepository<Post>, IPostRepository
@@ -60,6 +62,14 @@ namespace FightCore.Repositories.Posts
                 && post.CharacterId.HasValue
                 && post.CharacterId == characterId)
                 .ToListAsync();
+        }
+
+        public Task<List<Post>> GetLatestPosts()
+        {
+            return IncludedQueryable
+                .Where(post => !post.IsPrivate)
+                .OrderByDescending(post =>
+                post.Id).Take(3).ToListAsync();
         }
 
         private IQueryable<Post> IncludedQueryable => Queryable

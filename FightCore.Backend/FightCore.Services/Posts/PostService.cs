@@ -18,17 +18,22 @@ namespace FightCore.Services.Posts
         Task<List<Post>> GetForUserIdAsync(long userId, bool getPrivate);
 
         Task<List<Post>> GetForCharacterIdAsync(long characterId);
+
+        Task<List<Post>> GetLatestPosts();
     }
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
     {
         private readonly IEncryptionService _encryptionService;
+        private readonly IProcessingService _processingService;
 
         public PostService(
             IPostRepository repository,
-            IEncryptionService encryptionService) : base(repository)
+            IEncryptionService encryptionService,
+            IProcessingService processingService) : base(repository)
         {
             _encryptionService = encryptionService;
+            _processingService = processingService;
         }
 
         public Task<List<Post>> GetPublicPostsAsync(long? userId = null)
@@ -51,6 +56,11 @@ namespace FightCore.Services.Posts
             return Repository.GetForCharacterIdAsync(characterId);
         }
 
+        public Task<List<Post>> GetLatestPosts()
+        {
+            return Repository.GetLatestPosts();
+        }
+
         public override Post Add(Post entity)
         {
             entity = EncryptPost(entity);
@@ -58,11 +68,11 @@ namespace FightCore.Services.Posts
             return base.Add(entity);
         }
 
-        public override Task<Post> AddAsync(Post entity)
+        public override async Task<Post> AddAsync(Post entity)
         {
-            entity = EncryptPost(entity);
+            entity = await EncryptPostAsync(entity);
 
-            return base.AddAsync(entity);
+            return await base.AddAsync(entity);
         }
 
         public override Post Update(Post entity)
@@ -74,6 +84,20 @@ namespace FightCore.Services.Posts
 
         private Post EncryptPost(Post post)
         {
+            post = _processingService.ProcessPost(post);
+            if (string.IsNullOrWhiteSpace(post.Iv))
+            {
+                post.Iv = _encryptionService.GetIV();
+            }
+
+            post.Body = _encryptionService.Encrypt(post.Body, post.Iv);
+
+            return post;
+        }
+
+        private async Task<Post> EncryptPostAsync(Post post)
+        {
+            post = await _processingService.ProcessPostAsync(post);
             if (string.IsNullOrWhiteSpace(post.Iv))
             {
                 post.Iv = _encryptionService.GetIV();

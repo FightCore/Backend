@@ -138,7 +138,7 @@ namespace FightCore.Backend
             app.UseCors("TestPolicy");
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseApiKey();
+            //app.UseApiKey();
 
             app.UseExceptionHandler(applicationBuilder => applicationBuilder.Run(async context =>
             {
