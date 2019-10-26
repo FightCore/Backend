@@ -6,10 +6,14 @@ using AutoMapper;
 using FightCore.Backend.ViewModels;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Errors;
+using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models;
 using FightCore.Models.Characters;
+using FightCore.Models.Posts;
 using FightCore.Services;
+using FightCore.Services.Encryption;
 using FightCore.Services.Games;
+using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -27,8 +31,10 @@ namespace FightCore.Backend.Controllers
     {
         private readonly IGameService _gameService;
         private readonly ICharacterService _characterService;
+        private readonly IEncryptionService _encryptionService;
         private readonly ICachingService _cachingService;
         private readonly IStageService _stageService;
+        private readonly IPostService _postService;
 
         /// <inheritdoc />
         public GamesController(
@@ -36,6 +42,8 @@ namespace FightCore.Backend.Controllers
             IStageService stageService,
             ICharacterService characterService,
             ICachingService cachingService,
+            IEncryptionService encryptionService,
+            IPostService postService,
             IMapper mapper) : base(mapper)
         {
             _gameService = gameService;
@@ -43,6 +51,8 @@ namespace FightCore.Backend.Controllers
             _stageService = stageService;
             _characterService = characterService;
             _cachingService = cachingService;
+            _encryptionService = encryptionService;
+            _postService = postService;
         }
 
         /// <summary>
@@ -120,7 +130,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(404, "Game not found or has no characters", typeof(NotFoundErrorViewModel))]
         public async Task<IActionResult> GetAllCharacters(long gameId)
         {
-            var characters = await _characterService.FindRangeAsync(character => character.GameId == gameId);
+            var characters = await _characterService.GetCharactersByGameAsync(gameId);
 
             if (characters == null || !characters.Any())
             {
@@ -202,5 +212,41 @@ namespace FightCore.Backend.Controllers
 
             return Ok(stageModel);
         }
+
+        [HttpGet("{gameId}/posts")]
+        public async Task<IActionResult> GetPosts(long gameId)
+        {
+            var posts = await _postService.GetPostsByGameId(gameId);
+
+            posts = ProcessPosts(posts, GetUserIdFromClaims(User));
+
+            return MappedOk<List<PostViewModel>>(posts);
+        }
+
+        #region Private
+        private List<Post> ProcessPosts(List<Post> posts, long? userId)
+        {
+            for (var i = 0; i < posts.Count(); i++)
+            {
+                posts[i] = ProcessPost(posts[i], userId);
+            }
+
+            return posts;
+        }
+
+        private Post ProcessPost(Post post, long? userId)
+        {
+            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+
+            if (!userId.HasValue)
+            {
+                return post;
+            }
+
+            post.Liked = post.Likes.Any(like => like.UserId == userId);
+
+            return post;
+        }
+        #endregion Private
     }
 }

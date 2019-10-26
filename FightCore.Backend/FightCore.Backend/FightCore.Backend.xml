@@ -263,7 +263,7 @@
             An endpoint to get information about games.
             </summary>
         </member>
-        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,FightCore.Services.Games.IStageService,FightCore.Services.Games.ICharacterService,FightCore.Services.ICachingService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,FightCore.Services.Games.IStageService,FightCore.Services.Games.ICharacterService,FightCore.Services.ICachingService,FightCore.Services.Encryption.IEncryptionService,FightCore.Services.Posts.IPostService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.GamesController.GetAllGames">
@@ -721,6 +721,16 @@
         <member name="P:FightCore.Backend.ViewModels.GameViewModel.BannerUrl">
             <summary>
             The image url for the banner for the game.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.GameViewModel.Description">
+            <summary>
+            A small description about the game.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.GameViewModel.Icon">
+            <summary>
+            An icon that represents the game.
             </summary>
         </member>
         <member name="T:FightCore.Backend.ViewModels.Globals.ImageViewModel">

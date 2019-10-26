@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Bartdebever.Patterns.Models;
 using FightCore.Models.Characters;
+using FightCore.Models.Globals;
 
 namespace FightCore.Models
 {
@@ -17,5 +18,9 @@ namespace FightCore.Models
         public List<Character> Characters { get; set; }
         
         public List<Stage> Stages { get; set; }
+
+        public string Description { get; set; }
+
+        public FightCoreImage Icon { get; set; }
     }
 }

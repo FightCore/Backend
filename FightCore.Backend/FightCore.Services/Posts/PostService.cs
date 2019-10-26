@@ -20,6 +20,8 @@ namespace FightCore.Services.Posts
         Task<List<Post>> GetForCharacterIdAsync(long characterId);
 
         Task<List<Post>> GetLatestPosts();
+
+        Task<List<Post>> GetPostsByGameId(long gameId);
     }
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
@@ -34,6 +36,11 @@ namespace FightCore.Services.Posts
         {
             _encryptionService = encryptionService;
             _processingService = processingService;
+        }
+
+        public Task<List<Post>> GetPostsByGameId(long gameId)
+        {
+            return Repository.GetPostsByGameId(gameId);
         }
 
         public Task<List<Post>> GetPublicPostsAsync(long? userId = null)

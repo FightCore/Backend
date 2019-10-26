@@ -9,6 +9,8 @@ namespace FightCore.Repositories.Games
 {
     public interface ICharacterRepository : IRepository<Character, long>
     {
+        Task<List<Character>> GetCharactersByGameAsync(long gameId);
+
         Task<List<Character>> GetCharactersWithGames();
         
         Task<Character> GetWithGameByIdAsync(long id);
@@ -22,16 +24,27 @@ namespace FightCore.Repositories.Games
 
         public Task<List<Character>> GetCharactersWithGames()
         {
-            return Queryable.Include(character => character.Game)
-                .Include(character => character.StockIcon)
-                .Include(character => character.Series)
-                .ThenInclude(gameSeries => gameSeries.GameIcon)
-                .ToListAsync();
+            return MinimalInclude.ToListAsync();
         }
 
         public Task<Character> GetWithGameByIdAsync(long id)
         {
-            return Queryable.Include(character => character.Game)
+            return FullInclude.FirstOrDefaultAsync(character => character.Id == id);
+        }
+
+        public Task<List<Character>> GetCharactersByGameAsync(long gameId)
+        {
+            return MinimalInclude.Where(character => character.GameId == gameId).ToListAsync();
+        }
+
+        private IQueryable<Character> MinimalInclude =>
+            Queryable.Include(character => character.Game)
+                .Include(character => character.StockIcon)
+                .Include(character => character.Series)
+                .ThenInclude(gameSeries => gameSeries.GameIcon);
+
+        private IQueryable<Character> FullInclude =>
+            Queryable.Include(character => character.Game)
                 .Include(character => character.StockIcon)
                 .Include(character => character.CharacterImage)
                 .Include(character => character.NotablePlayers)
@@ -39,8 +52,6 @@ namespace FightCore.Repositories.Games
                 .Include(character => character.Videos)
                 .ThenInclude(characterVideo => characterVideo.Video)
                 .Include(character => character.Series)
-                .ThenInclude(gameSeries => gameSeries.GameIcon)
-                .FirstOrDefaultAsync(character => character.Id == id);
-        }
+                .ThenInclude(gameSeries => gameSeries.GameIcon);
     }
 }

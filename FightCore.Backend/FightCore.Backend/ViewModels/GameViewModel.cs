@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.Backend.ViewModels.Globals;
 
 namespace FightCore.Backend.ViewModels
 {
@@ -29,5 +30,15 @@ namespace FightCore.Backend.ViewModels
         /// The image url for the banner for the game.
         /// </summary>
         public string BannerUrl { get; set; }
+
+        /// <summary>
+        /// A small description about the game.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// An icon that represents the game.
+        /// </summary>
+        public ImageViewModel Icon { get; set; }
     }
 }

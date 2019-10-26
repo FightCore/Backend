@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using FightCore.Data.Configurations;
 using FightCore.Models;
+using FightCore.Models.Characters;
 using FightCore.Models.Posts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
