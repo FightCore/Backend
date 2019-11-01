@@ -81,7 +81,7 @@ namespace FightCore.Backend.Controllers
                 return Ok(gameViewModels);
             }
 
-            var games = await _gameService.GetAllAsync();
+            var games = await _gameService.GetAllGamesAsync();
             var mappedGames = Mapper.Map<List<GameViewModel>>(games);
 
             await _cachingService.AddAsync(cacheKey,
@@ -110,7 +110,7 @@ namespace FightCore.Backend.Controllers
                 return Ok(gameViewmodel);
             }
 
-            var game = await _gameService.GetByIdAsync(gameId);
+            var game = await _gameService.GetGameByIdAsync(gameId);
 
             if (game == null)
             {

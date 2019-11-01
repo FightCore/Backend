@@ -218,9 +218,15 @@ namespace FightCore.Backend.Controllers
             var userId = GetUserIdFromClaims(User);
             var post = await _postService.GetByIdAsync(id);
 
-            if (post.AuthorId == userId)
+            if (post.AuthorId != userId)
             {
                 return Unauthorized(new UnauthorizedErrorViewModel());
+            }
+
+            var likes = await _likeService.FindRangeAsync(like => like.PostId == id);
+            foreach (var like in likes)
+            {
+                _likeService.Remove(like);
             }
 
             _postService.Remove(post);
