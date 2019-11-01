@@ -27,6 +27,7 @@ namespace FightCore.Backend.Controllers
         private readonly DbContext _dbContext;
         private readonly IApplicationUserService _applicationUserService;
         private readonly IPostService _postService;
+        private readonly IProcessingService _processingService;
 
         /// <inheritdoc />
         public AccountsController(
@@ -34,12 +35,14 @@ namespace FightCore.Backend.Controllers
             UserManager<ApplicationUser> userManager,
             DbContext context,
             IApplicationUserService applicationUserService,
-            IPostService postService) : base(mapper)
+            IPostService postService,
+            IProcessingService processingService) : base(mapper)
         {
             _userManager = userManager;
             _applicationUserService = applicationUserService;
             _dbContext = context;
             _postService = postService;
+            _processingService = processingService;
         }
 
         /// <summary>
@@ -136,6 +139,8 @@ namespace FightCore.Backend.Controllers
             var isUser = userId.HasValue && id == userId.Value;
 
             var posts = await _postService.GetForUserIdAsync(id, isUser);
+
+            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
 
             return MappedOk<List<PostViewModel>>(posts);
         }

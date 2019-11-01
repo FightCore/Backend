@@ -1,30 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FightCore.Models.Posts;
+using FightCore.Services.Encryption;
 using FightCore.Services.Games;
 
 namespace FightCore.Services.Posts
 {
     public interface IProcessingService
     {
-        Post ProcessPost(Post post);
+        Post ProcessPostLinks(Post post);
 
-        Task<Post> ProcessPostAsync(Post post);
+        Task<Post> ProcessPostLinksAsync(Post post);
+
+        List<Post> ProcessPosts(List<Post> posts, long? userId);
+
+        Post ProcessPost(Post post, long? userId);
     }
 
     public class ProcessingService : IProcessingService
     {
         private readonly ICharacterService _characterService;
+        private readonly IEncryptionService _encryptionService;
 
-        public ProcessingService(ICharacterService characterService)
+        public ProcessingService(ICharacterService characterService, IEncryptionService encryptionService)
         {
             _characterService = characterService;
+            _encryptionService = encryptionService;
         }
 
-        public Post ProcessPost(Post post)
+        public List<Post> ProcessPosts(List<Post> posts, long? userId)
+        {
+            for (var i = 0; i < posts.Count(); i++)
+            {
+                posts[i] = ProcessPost(posts[i], userId);
+            }
+
+            return posts;
+        }
+
+        public Post ProcessPost(Post post, long? userId)
+        {
+            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+
+            if (!userId.HasValue)
+            {
+                return post;
+            }
+
+            post.Liked = post.Likes.Any(like => like.UserId == userId);
+
+            return post;
+        }
+
+        public Post ProcessPostLinks(Post post)
         {
             var matches = Regex.Matches(post.Body, "(#[a-zA-Z0-9]+)");
 
@@ -49,7 +81,7 @@ namespace FightCore.Services.Posts
             return post;
         }
 
-        public async Task<Post> ProcessPostAsync(Post post)
+        public async Task<Post> ProcessPostLinksAsync(Post post)
         {
             var matches = Regex.Matches(post.Body, "(#[a-zA-Z0-9]+)");
 

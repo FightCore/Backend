@@ -91,7 +91,7 @@ namespace FightCore.Services.Posts
 
         private Post EncryptPost(Post post)
         {
-            post = _processingService.ProcessPost(post);
+            post = _processingService.ProcessPostLinks(post);
             if (string.IsNullOrWhiteSpace(post.Iv))
             {
                 post.Iv = _encryptionService.GetIV();
@@ -104,7 +104,7 @@ namespace FightCore.Services.Posts
 
         private async Task<Post> EncryptPostAsync(Post post)
         {
-            post = await _processingService.ProcessPostAsync(post);
+            post = await _processingService.ProcessPostLinksAsync(post);
             if (string.IsNullOrWhiteSpace(post.Iv))
             {
                 post.Iv = _encryptionService.GetIV();

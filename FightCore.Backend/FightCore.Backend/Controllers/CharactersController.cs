@@ -31,13 +31,13 @@ namespace FightCore.Backend.Controllers
         private readonly ICachingService _cachingService;
         private readonly DbContext _dbContext;
         private readonly IPostService _postService;
-        private readonly IEncryptionService _encryptionService;
+        private readonly IProcessingService _processingService;
 
         /// <inheritdoc />
         public CharactersController(
             ICharacterService characterService,
             IPostService postService,
-            IEncryptionService encryptionService,
+            IProcessingService processingService,
             DbContext dbContext,
             ICachingService cachingService,
             IMapper mapper) : base(mapper)
@@ -46,7 +46,7 @@ namespace FightCore.Backend.Controllers
             _dbContext = dbContext;
             _cachingService = cachingService;
             _postService = postService;
-            _encryptionService = encryptionService;
+            _processingService = processingService;
         }
         
         /// <summary>
@@ -111,20 +111,7 @@ namespace FightCore.Backend.Controllers
             var posts = await _postService.GetForCharacterIdAsync(id);
             var userId = GetUserIdFromClaims(User);
 
-            foreach (var post in posts)
-            {
-                post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
-
-                if (!userId.HasValue)
-                {
-                    continue;
-                }
-
-                if (post.Likes.Any(like => like.UserId == userId))
-                {
-                    post.Liked = true;
-                }
-            }
+            posts = _processingService.ProcessPosts(posts, userId);
 
             return MappedOk<List<PostViewModel>>(posts);
         }

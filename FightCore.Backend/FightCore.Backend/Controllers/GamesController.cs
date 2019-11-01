@@ -35,6 +35,7 @@ namespace FightCore.Backend.Controllers
         private readonly ICachingService _cachingService;
         private readonly IStageService _stageService;
         private readonly IPostService _postService;
+        private readonly IProcessingService _processingService;
 
         /// <inheritdoc />
         public GamesController(
@@ -44,6 +45,7 @@ namespace FightCore.Backend.Controllers
             ICachingService cachingService,
             IEncryptionService encryptionService,
             IPostService postService,
+            IProcessingService processingService,
             IMapper mapper) : base(mapper)
         {
             _gameService = gameService;
@@ -53,6 +55,7 @@ namespace FightCore.Backend.Controllers
             _cachingService = cachingService;
             _encryptionService = encryptionService;
             _postService = postService;
+            _processingService = processingService;
         }
 
         /// <summary>
@@ -218,35 +221,9 @@ namespace FightCore.Backend.Controllers
         {
             var posts = await _postService.GetPostsByGameId(gameId);
 
-            posts = ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
 
             return MappedOk<List<PostViewModel>>(posts);
         }
-
-        #region Private
-        private List<Post> ProcessPosts(List<Post> posts, long? userId)
-        {
-            for (var i = 0; i < posts.Count(); i++)
-            {
-                posts[i] = ProcessPost(posts[i], userId);
-            }
-
-            return posts;
-        }
-
-        private Post ProcessPost(Post post, long? userId)
-        {
-            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
-
-            if (!userId.HasValue)
-            {
-                return post;
-            }
-
-            post.Liked = post.Likes.Any(like => like.UserId == userId);
-
-            return post;
-        }
-        #endregion Private
     }
 }

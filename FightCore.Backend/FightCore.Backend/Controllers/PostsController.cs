@@ -70,7 +70,7 @@ namespace FightCore.Backend.Controllers
 
             var posts = await _postService.GetPublicPostsAsync(userId);
 
-            posts = ProcessPosts(posts, userId);
+            posts = _processingService.ProcessPosts(posts, userId);
 
             return MappedOk<List<PostViewModel>>(posts);
         }
@@ -109,7 +109,7 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(nameof(Post), id));
             }
 
-            post = ProcessPost(post, userId);
+            post = _processingService.ProcessPost(post, userId);
 
             var postViewModel = Mapper.Map<PostViewModel>(post);
             await _cachingService.AddAsync(cacheKey, Serialize(postViewModel));
@@ -288,7 +288,7 @@ namespace FightCore.Backend.Controllers
         {
             var posts = await _postService.GetLatestPosts();
 
-            posts = ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
 
             return MappedOk<List<PostViewModel>>(posts);
         }
@@ -298,35 +298,9 @@ namespace FightCore.Backend.Controllers
         {
             var posts = await _postService.GetLatestPosts();
 
-            posts = ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
 
             return MappedOk<List<PostViewModel>>(posts);
         }
-
-        #region Private
-        private List<Post> ProcessPosts(List<Post> posts, long? userId)
-        {
-            for (var i = 0; i < posts.Count(); i++)
-            {
-                posts[i] = ProcessPost(posts[i], userId);
-            }
-
-            return posts;
-        }
-
-        private Post ProcessPost(Post post, long? userId)
-        {
-            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
-
-            if (!userId.HasValue)
-            {
-                return post;
-            }
-
-            post.Liked = post.Likes.Any(like => like.UserId == userId);
-
-            return post;
-        }
-        #endregion Private
     }
 }

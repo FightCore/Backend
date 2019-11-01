@@ -115,7 +115,7 @@
         <member name="T:FightCore.Backend.Controllers.AccountsController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser},Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService,FightCore.Services.Posts.IPostService)">
+        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser},Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.AccountsController.GetUser(System.Int64)">
@@ -206,7 +206,7 @@
         <member name="T:FightCore.Backend.Controllers.CharactersController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Posts.IPostService,FightCore.Services.Encryption.IEncryptionService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.CharactersController.GetAllCharacters">
@@ -263,7 +263,7 @@
             An endpoint to get information about games.
             </summary>
         </member>
-        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,FightCore.Services.Games.IStageService,FightCore.Services.Games.ICharacterService,FightCore.Services.ICachingService,FightCore.Services.Encryption.IEncryptionService,FightCore.Services.Posts.IPostService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.GamesController.#ctor(FightCore.Services.IGameService,FightCore.Services.Games.IStageService,FightCore.Services.Games.ICharacterService,FightCore.Services.ICachingService,FightCore.Services.Encryption.IEncryptionService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.GamesController.GetAllGames">
