@@ -480,7 +480,7 @@
             ViewModel to show off the contributors to a page or entity.
             </summary>
         </member>
-        <member name="P:FightCore.Backend.ViewModels.Characters.ContributorViewModel.Name">
+        <member name="P:FightCore.Backend.ViewModels.Characters.ContributorViewModel.User">
             <summary>
             The name of the contributor.
             </summary>

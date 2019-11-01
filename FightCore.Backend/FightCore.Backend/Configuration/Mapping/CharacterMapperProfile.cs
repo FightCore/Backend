@@ -20,6 +20,8 @@ namespace FightCore.Backend.Configuration.Mapping
             CreateMap<NotablePlayer, NotablePlayerViewModel>();
 
             CreateMap<Contributor, ContributorViewModel>();
+                //.ForMember(viewModel => viewModel.User,
+                //    options => options.MapFrom(model => model.User));
 
             CreateMap<Character, GetCharacterListViewModel>();
 

@@ -1,3 +1,4 @@
+using FightCore.Backend.ViewModels.User;
 using FightCore.Models.Enums;
 
 namespace FightCore.Backend.ViewModels.Characters
@@ -10,7 +11,7 @@ namespace FightCore.Backend.ViewModels.Characters
         /// <summary>
         /// The name of the contributor.
         /// </summary>
-        public string Name { get; set; }
+        public UserViewModel User { get; set; }
         
         /// <summary>
         /// The type of contributor that this contributor is to the object.

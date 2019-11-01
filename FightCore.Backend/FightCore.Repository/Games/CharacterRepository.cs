@@ -49,6 +49,7 @@ namespace FightCore.Repositories.Games
                 .Include(character => character.CharacterImage)
                 .Include(character => character.NotablePlayers)
                 .Include(character => character.Contributors)
+                .ThenInclude(contributor => contributor.User)
                 .Include(character => character.Videos)
                 .ThenInclude(characterVideo => characterVideo.Video)
                 .Include(character => character.Series)
