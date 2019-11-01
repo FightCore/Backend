@@ -19,5 +19,7 @@ namespace FightCore.Backend.ViewModels.User
         /// The name of the user.
         /// </summary>
         public string Name { get; set; }
+
+        public string GravatarMd5 { get; set; }
     }
 }

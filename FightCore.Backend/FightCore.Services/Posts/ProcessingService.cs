@@ -39,6 +39,8 @@ namespace FightCore.Services.Posts
                 posts[i] = ProcessPost(posts[i], userId);
             }
 
+            posts.RemoveAll(post => post == null);
+
             return posts;
         }
 
@@ -46,12 +48,20 @@ namespace FightCore.Services.Posts
         {
             post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
 
+            if (post.IsPrivate && (!userId.HasValue || post.AuthorId != userId))
+            {
+                // Private post did get into the mix, remove it.
+                return null;
+            }
+
             if (!userId.HasValue)
             {
                 return post;
             }
 
             post.Liked = post.Likes.Any(like => like.UserId == userId);
+
+            
 
             return post;
         }
