@@ -58,6 +58,12 @@ namespace FightCore.Backend.ViewModels.Posts
         public bool IsPrivate { get; set; }
 
         /// <summary>
+        /// The id of the character this post is about.
+        /// Null if the post is not about a character.
+        /// </summary>
+        public float? CharacterId { get; set; }
+
+        /// <summary>
         /// The character that this post is written about.
         /// </summary>
         public GetCharacterListViewModel Character { get; set; }
