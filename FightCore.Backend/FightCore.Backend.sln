@@ -26,10 +26,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightCore.Repositories", "FightCore.Repository\FightCore.Repositories.csproj", "{9121FCD0-A9BD-41D3-89F5-7957A00403D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{EFC28529-6631-477C-BBFC-3DBDD84B1014}"
+	ProjectSection(SolutionItems) = preProject
+		..\.travis.yml = ..\.travis.yml
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightCore.Configuration", "FightCore.Configuration\FightCore.Configuration.csproj", "{493C36F9-26EC-48A7-9B29-0FBB72C65E4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightCore.UnitTests", "FightCore.Tests\FightCore.UnitTests.csproj", "{E0C6D87B-122F-4221-AB51-DAC2367689E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightCore.UnitTests", "FightCore.Tests\FightCore.UnitTests.csproj", "{E0C6D87B-122F-4221-AB51-DAC2367689E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
