@@ -22,6 +22,8 @@ namespace FightCore.Services.Posts
         Task<List<Post>> GetLatestPosts();
 
         Task<List<Post>> GetPostsByGameId(long gameId);
+
+        Task<Post> EncryptAndAddAsync(Post entity);
     }
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
@@ -75,11 +77,11 @@ namespace FightCore.Services.Posts
             return base.Add(entity);
         }
 
-        public override async Task<Post> AddAsync(Post entity)
+        public async Task<Post> EncryptAndAddAsync(Post entity)
         {
             entity = await EncryptPostAsync(entity);
 
-            return await base.AddAsync(entity);
+            return base.Add(entity);
         }
 
         public override Post Update(Post entity)

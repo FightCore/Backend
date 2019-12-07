@@ -131,7 +131,7 @@ namespace FightCore.Backend.Controllers
         {
             var character = Mapper.Map<Character>(characterViewModel);
 
-            character = await _characterService.AddAsync(character);
+            character = _characterService.Add(character);
             await _dbContext.SaveChangesAsync();
 
             await _cachingService.RemoveAsync($"{nameof(Character)}s");

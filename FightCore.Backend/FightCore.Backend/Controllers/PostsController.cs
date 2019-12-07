@@ -149,7 +149,7 @@ namespace FightCore.Backend.Controllers
                 }
             };
 
-            post = await _postService.AddAsync(post);
+            post = await _postService.EncryptAndAddAsync(post);
             await _context.SaveChangesAsync();
 
             return CreatedAtRoute(new { id = post.Id }, null);
@@ -277,7 +277,7 @@ namespace FightCore.Backend.Controllers
             if (like == null)
             {
                 like = new Like { PostId = post.Id, UserId = userId.Value };
-                await _likeService.AddAsync(like);
+                 _likeService.Add(like);
             }
             else
             {
