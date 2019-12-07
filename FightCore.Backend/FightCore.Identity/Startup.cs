@@ -8,16 +8,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace FightCore.Identity
 {
     public class Startup
     {
-        public IHostingEnvironment Environment { get; }
+        public IWebHostEnvironment Environment { get; }
 
         public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment environment, IConfiguration configuration)
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
             Environment = environment;
             Configuration = configuration;
@@ -25,13 +26,15 @@ namespace FightCore.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+            services.AddRazorPages();
             services
                 .AddCors(options => options.AddPolicy("TestPolicy", policyBuilder =>
                         policyBuilder.AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowAnyOrigin()))
                 .AddMvc()
-                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
 
             services.AddIdentity<ApplicationUser, IdentityRole<long>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -75,6 +78,8 @@ namespace FightCore.Identity
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseCors("TestPolicy");
 
             if (Environment.IsDevelopment())
@@ -86,7 +91,11 @@ namespace FightCore.Identity
 
             app.UseIdentityServer();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+
+            });
         }
     }
 }
