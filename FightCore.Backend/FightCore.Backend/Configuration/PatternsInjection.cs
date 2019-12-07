@@ -34,27 +34,28 @@ namespace FightCore.Backend.Configuration
         /// <returns></returns>
         public static IServiceCollection AddPatterns(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<DbContext, ApplicationDbContext>();
-            services.AddScoped<IPostService, PostService>();
-            services.AddScoped<IGameService, GameService>();
-            services.AddScoped<ILikeService, LikeService>();
-            services.AddScoped<IApplicationUserService, ApplicationUserService>();
-            services.AddScoped<IStageService, StageService>();
-            services.AddScoped<IApiClientService, ApiClientService>();
-            services.AddScoped<ICharacterService, CharacterService>();
-            services.AddScoped<IEncryptionService, AesEncryptionService>();
-            services.AddScoped<ICachingService, CachingService>();
+            services.AddScoped<DbContext, ApplicationDbContext>()
+                .AddScoped<IPostService, PostService>()
+                .AddScoped<IGameService, GameService>()
+                .AddScoped<ILikeService, LikeService>()
+                .AddScoped<IApplicationUserService, ApplicationUserService>()
+                .AddScoped<IStageService, StageService>()
+                .AddScoped<IApiClientService, ApiClientService>()
+                .AddScoped<ICharacterService, CharacterService>()
+                .AddScoped<IEncryptionService, AesEncryptionService>()
+                .AddScoped<ICachingService, CachingService>()
+                .AddScoped<ITournamentService, TournamentService>();
 
             // Add the EF Core repositories
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<ILikeRepository, LikeRepository>();
-            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-            services.AddScoped<IStageRepository, StageRepository>();
-            services.AddScoped<ICharacterRepository, CharacterRepository>();
-            services.AddScoped<IApiClientRepository, ApiClientRepository>();
-
-            services.AddScoped<IProcessingService, ProcessingService>();
+            services.AddScoped<IPostRepository, PostRepository>()
+                .AddScoped<IGameRepository, GameRepository>()
+                .AddScoped<ILikeRepository, LikeRepository>()
+                .AddScoped<IApplicationUserRepository, ApplicationUserRepository>()
+                .AddScoped<IStageRepository, StageRepository>()
+                .AddScoped<ICharacterRepository, CharacterRepository>()
+                .AddScoped<IApiClientRepository, ApiClientRepository>()
+                .AddScoped<ITournamentRepository, TournamentRepository>()
+                .AddScoped<IProcessingService, ProcessingService>();
 
             return services;
         }

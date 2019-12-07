@@ -419,6 +419,12 @@
             <param name="id">The id of the stage to be gotten.</param>
             <returns>The stage found.</returns>
         </member>
+        <member name="T:FightCore.Backend.Controllers.TournamentsController">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.TournamentsController.#ctor(FightCore.Services.ITournamentService,AutoMapper.IMapper)">
+            <inheritdoc />
+        </member>
         <member name="T:FightCore.Backend.HttpContentTypes">
             <summary>
             The content types that will be returned by the API.
@@ -845,7 +851,7 @@
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Liked">
             <summary>
             If the current user has liked the post.
-            </summary>
+            </summary>Ik 
         </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.GameId">
             <summary>
@@ -855,6 +861,12 @@
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.IsPrivate">
             <summary>
             Defines if the post is private.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.CharacterId">
+            <summary>
+            The id of the character this post is about.
+            Null if the post is not about a character.
             </summary>
         </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Character">

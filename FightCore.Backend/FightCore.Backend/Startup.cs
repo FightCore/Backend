@@ -56,14 +56,16 @@ namespace FightCore.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddControllersWithViews();
+            services
                 .AddMvcCore()
                 .AddCors(options => options.AddPolicy("TestPolicy", policyBuilder =>
                     policyBuilder.AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowAnyOrigin()))
-                .AddJsonFormatters()
+                .AddNewtonsoftJson()
                 .AddApiExplorer()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddDistributedRedisCache(options =>
             {
@@ -141,8 +143,10 @@ namespace FightCore.Backend
                 app.UseHsts();
             }
 
+            app.UseRouting();
             app.UseCors("TestPolicy");
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseHttpsRedirection();
             //app.UseApiKey();
 
@@ -158,7 +162,13 @@ namespace FightCore.Backend
                 await context.Response.WriteAsync(result);
             }));
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
             app.UseStaticFiles();
 
             app.UseSwagger();

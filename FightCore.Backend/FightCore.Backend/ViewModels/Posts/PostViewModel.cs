@@ -44,7 +44,7 @@ namespace FightCore.Backend.ViewModels.Posts
 
         /// <summary>
         /// If the current user has liked the post.
-        /// </summary>
+        /// </summary>Ik 
         public bool Liked { get; set; }
 
         /// <summary>
