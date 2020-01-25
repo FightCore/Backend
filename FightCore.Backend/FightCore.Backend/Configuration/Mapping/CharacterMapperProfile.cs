@@ -2,6 +2,7 @@ using AutoMapper;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Globals;
 using FightCore.Models.Characters;
+using FightCore.Models.Globals;
 
 namespace FightCore.Backend.Configuration.Mapping
 {
@@ -20,8 +21,6 @@ namespace FightCore.Backend.Configuration.Mapping
             CreateMap<NotablePlayer, NotablePlayerViewModel>();
 
             CreateMap<Contributor, ContributorViewModel>();
-                //.ForMember(viewModel => viewModel.User,
-                //    options => options.MapFrom(model => model.User));
 
             CreateMap<Character, GetCharacterListViewModel>();
 
@@ -39,6 +38,7 @@ namespace FightCore.Backend.Configuration.Mapping
                     options => options.MapFrom(characterVideo =>
                         characterVideo.Id));
 
+            CreateMap<InformationSource, InformationSourceViewModel>();
 
             CreateMap<GameSeries, GameSeriesViewModel>();
         }

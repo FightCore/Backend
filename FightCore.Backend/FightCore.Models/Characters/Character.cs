@@ -15,6 +15,8 @@ namespace FightCore.Models.Characters
         public string GeneralInformation { get; set; }
         
         public List<NotablePlayer> NotablePlayers { get; set; }
+
+        public List<InformationSource> InformationSources { get; set; }
         
         public List<Contributor> Contributors { get; set; }
 

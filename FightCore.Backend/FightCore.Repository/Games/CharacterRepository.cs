@@ -46,6 +46,7 @@ namespace FightCore.Repositories.Games
         private IQueryable<Character> FullInclude =>
             Queryable.Include(character => character.Game)
                 .Include(character => character.StockIcon)
+                .Include(character => character.InformationSources)
                 .Include(character => character.CharacterImage)
                 .Include(character => character.NotablePlayers)
                 .Include(character => character.Contributors)

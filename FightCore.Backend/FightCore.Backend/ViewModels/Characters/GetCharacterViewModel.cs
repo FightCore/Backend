@@ -61,5 +61,7 @@ namespace FightCore.Backend.ViewModels.Characters
         /// The game series that the character belongs to.
         /// </summary>
         public GameSeriesViewModel Series { get; set; }
+
+        public List<InformationSourceViewModel> InformationSources { get; set; }
     }
 }
