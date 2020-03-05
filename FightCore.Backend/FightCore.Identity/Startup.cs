@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using FightCore.Configuration;
 using FightCore.Data;
 using FightCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -72,13 +74,21 @@ namespace FightCore.Identity
             }
             else
             {
-                throw new Exception("need to configure key material");
+                var certificate = new X509Certificate2("bundle.pfx", "PASSWORD");
+                builder.AddSigningCredential(certificate);
             }
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
+
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseAuthorization();
             app.UseCors("TestPolicy");
 
