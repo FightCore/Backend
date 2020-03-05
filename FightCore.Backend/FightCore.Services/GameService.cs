@@ -13,6 +13,8 @@ namespace FightCore.Services
         Task<List<Game>> GetAllGamesAsync();
 
         Task<Game> GetGameByIdAsync(long id);
+
+        Task<Game> GetByAbbreviationAsync(string abbreviation);
     }
 
     public class GameService : EntityService<Game, IGameRepository>, IGameService
@@ -29,6 +31,11 @@ namespace FightCore.Services
         public Task<Game> GetGameByIdAsync(long id)
         {
             return Repository.GetGameById(id);
+        }
+
+        public Task<Game> GetByAbbreviationAsync(string abbreviation)
+        {
+            return Repository.GetByAbbreviationAsync(abbreviation.ToLower());
         }
     }
 }

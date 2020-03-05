@@ -1,4 +1,7 @@
-﻿using FightCore.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using FightCore.Data;
 using FightCore.Repositories;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
@@ -12,12 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FightCore.Backend.Configuration
+namespace FightCore.Bot.Configuration
 {
-    /// <summary>
-    /// Static class to add the patterns services to the dependency injection.
-    /// </summary>
-    public static class PatternsInjection
+    public static class PatterrnsInjection
     {
         /// <summary>
         /// Adds the required dependencies for patterns and all repositories
@@ -26,7 +26,7 @@ namespace FightCore.Backend.Configuration
         /// <param name="services">The service collection to build off.</param>
         /// <param name="configuration">The configuration to read the variables from.</param>
         /// <returns></returns>
-        public static IServiceCollection AddPatterns(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPatterns(this IServiceCollection services)
         {
             services.AddScoped<DbContext, ApplicationDbContext>()
                 .AddScoped<IPostService, PostService>()

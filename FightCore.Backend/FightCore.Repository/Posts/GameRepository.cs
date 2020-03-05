@@ -14,6 +14,8 @@ namespace FightCore.Repositories.Posts
         Task<List<Game>> GetAllGamesAsync();
 
         Task<Game> GetGameById(long id);
+
+        Task<Game> GetByAbbreviationAsync(string abbreviation);
     }
 
     public class GameRepository : EntityRepository<Game>, IGameRepository
@@ -30,6 +32,12 @@ namespace FightCore.Repositories.Posts
         public Task<Game> GetGameById(long id)
         {
             return IncludedQueryable.FirstOrDefaultAsync(game => game.Id == id);
+        }
+
+        public Task<Game> GetByAbbreviationAsync(string abbreviation)
+        {
+            return IncludedQueryable.FirstOrDefaultAsync(game =>
+                game.Abbreviation.ToLower() == abbreviation);
         }
 
         private IQueryable<Game> IncludedQueryable =>
