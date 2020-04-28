@@ -1,4 +1,5 @@
 ﻿using FightCore.Data;
+using FightCore.KuroganeHammer.Services;
 using FightCore.Repositories;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
@@ -38,6 +39,7 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<ICharacterService, CharacterService>()
                 .AddScoped<IEncryptionService, AesEncryptionService>()
                 .AddScoped<ICachingService, CachingService>()
+                .AddScoped<IKuroganeHammerService, KuroganeHammerService>()
                 .AddScoped<ITournamentService, TournamentService>();
 
             // Add the EF Core repositories
