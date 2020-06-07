@@ -206,7 +206,7 @@
         <member name="T:FightCore.Backend.Controllers.CharactersController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Games.ICharacterFacadeService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.CharactersController.GetAllCharacters">
@@ -646,9 +646,29 @@
             ViewModel to be used to update a character entity.
             </summary>
         </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel.Id">
+            <summary>
+            The id of the character.
+            </summary>
+        </member>
         <member name="P:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel.Name">
             <summary>
             The name of the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel.GeneralInformation">
+            <summary>
+            Some general information about the character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel.NotablePlayers">
+            <summary>
+            Notable players who play this character.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.UpdateCharacterViewModel.Videos">
+            <summary>
+            A list of informative videos about the character.
             </summary>
         </member>
         <member name="T:FightCore.Backend.ViewModels.Errors.BaseErrorViewModel">

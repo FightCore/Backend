@@ -5,17 +5,28 @@ services:
     image: fightcore-backend
     build:
       context: .
-      dockerfile: FightCore.Backend/Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "5000:80"
+      - "5000:5000"
+      - "5001:5001"
     environment:
-      ConnectionStrings__DefaultConnection: Server=host.docker.internal,1433;Database=FightCore;User Id=sa;Password=Password1;MultipleActiveResultSets=True;
+      ConnectionStrings:DefaultConnection: Server=host.docker.internal,1433;Database=FightCore;User Id=sa;Password=Your_password123!;MultipleActiveResultSets=True;
       IdentityServer: http://fightcore-identity
-
-  fightcore-identity:
-    image: fightcore-identity
-    build:
-      context: .
-      dockerfile: FightCore.Identity/Dockerfile
+    depends_on:
+      - db
+    restart: always
+  db:
+    image: "mcr.microsoft.com/mssql/server"
     environment:
-      ConnectionStrings__DefaultConnection: Server=host.docker.internal,1433;Database=FightCore;User Id=sa;Password=Password1;MultipleActiveResultSets=True;
+      SA_PASSWORD: "Your_password123!"
+      ACCEPT_EULA: "sa"
+    ports:
+      - "1433:1433"
+    restart: always
+  # fightcore-identity:
+  #   image: fightcore-identity
+  #   build:
+  #     context: .
+  #     dockerfile: FightCore.Identity/Dockerfile
+  #   environment:
+  #     ConnectionStrings__DefaultConnection: Server=host.docker.internal,1433;Database=FightCore;User Id=sa;Password=Password1;MultipleActiveResultSets=True;

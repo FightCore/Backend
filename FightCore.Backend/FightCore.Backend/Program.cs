@@ -62,15 +62,13 @@ namespace FightCore.Backend
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory());
 
-            configBuilder.AddEnvironmentVariables();
-
             configBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            
-            foreach (var argument in args)
-            {
-                configBuilder.AddJsonFile($"appsettings.{argument}.json", false, true);
-            }
+            // foreach (var argument in args)
+            // {
+            //     configBuilder.AddJsonFile($"appsettings.{argument}.json", false, true);
+            // }
 
+            configBuilder.AddEnvironmentVariables();
             return configBuilder.Build();
         }
     }

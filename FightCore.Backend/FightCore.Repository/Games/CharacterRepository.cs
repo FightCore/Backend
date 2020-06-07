@@ -13,7 +13,7 @@ namespace FightCore.Repositories.Games
 
         Task<List<Character>> GetCharactersWithGames();
         
-        Task<Character> GetWithGameByIdAsync(long id);
+        Task<Character> GetWithFullIncludeByIdAsync(long id, bool enableTracking = true);
     }
     
     public class CharacterRepository : EntityRepository<Character>, ICharacterRepository
@@ -27,9 +27,15 @@ namespace FightCore.Repositories.Games
             return MinimalInclude.ToListAsync();
         }
 
-        public Task<Character> GetWithGameByIdAsync(long id)
+        public Task<Character> GetWithFullIncludeByIdAsync(long id, bool enableTracking = true)
         {
-            return FullInclude.FirstOrDefaultAsync(character => character.Id == id);
+            var queryable = FullInclude;
+            if (!enableTracking)
+            {
+                queryable = queryable.AsNoTracking();
+            }
+
+            return queryable.FirstOrDefaultAsync(character => character.Id == id);
         }
 
         public Task<List<Character>> GetCharactersByGameAsync(long gameId)
@@ -54,6 +60,7 @@ namespace FightCore.Repositories.Games
                 .Include(character => character.Videos)
                 .ThenInclude(characterVideo => characterVideo.Video)
                 .Include(character => character.Series)
-                .ThenInclude(gameSeries => gameSeries.GameIcon);
+                .ThenInclude(gameSeries => gameSeries.GameIcon)
+                .Include(character => character.Websites);
     }
 }

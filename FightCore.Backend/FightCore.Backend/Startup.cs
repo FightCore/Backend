@@ -116,11 +116,14 @@ namespace FightCore.Backend
 
             services.AddPatterns(Configuration);
 
+
+
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
 
             using (var context = new ApplicationDbContext(optionsBuilder.Options))
             {
+                context.Database.Migrate();
                 var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
                 BackendSeed.ExecuteSeed(context, userManager);
             }

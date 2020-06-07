@@ -18,11 +18,11 @@ namespace FightCore.Backend.Configuration.Mapping
         {
             CreateMap<Character, GetCharacterViewModel>();
 
-            CreateMap<NotablePlayer, NotablePlayerViewModel>();
+            CreateMap<NotablePlayer, NotablePlayerViewModel>().ReverseMap();
 
-            CreateMap<Contributor, ContributorViewModel>();
+            CreateMap<Contributor, ContributorViewModel>().ReverseMap();
 
-            CreateMap<Character, GetCharacterListViewModel>();
+            CreateMap<Character, GetCharacterListViewModel>().ReverseMap();
 
             CreateMap<CharacterVideo, VideoViewModel>()
                 .ForMember(viewModel => viewModel.YoutubeId,
@@ -36,11 +36,15 @@ namespace FightCore.Backend.Configuration.Mapping
                         characterVideo.Video.Description))
                 .ForMember(viewModel => viewModel.Id,
                     options => options.MapFrom(characterVideo =>
-                        characterVideo.Id));
+                        characterVideo.Id)).ReverseMap();
 
-            CreateMap<InformationSource, InformationSourceViewModel>();
+            CreateMap<InformationSource, InformationSourceViewModel>().ReverseMap();
 
-            CreateMap<GameSeries, GameSeriesViewModel>();
+            CreateMap<GameSeries, GameSeriesViewModel>().ReverseMap();
+
+            CreateMap<WebsiteResource, WebsiteViewModel>().ReverseMap();
+
+            CreateMap<UpdateCharacterViewModel, Character>();
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using FightCore.Data;
 using FightCore.KuroganeHammer.Services;
 using FightCore.Repositories;
+using FightCore.Repositories.Characters;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
 using FightCore.Repositories.Users;
 using FightCore.Services;
+using FightCore.Services.Characters;
 using FightCore.Services.Encryption;
 using FightCore.Services.Games;
 using FightCore.Services.Posts;
@@ -40,7 +42,11 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<IEncryptionService, AesEncryptionService>()
                 .AddScoped<ICachingService, CachingService>()
                 .AddScoped<IKuroganeHammerService, KuroganeHammerService>()
-                .AddScoped<ITournamentService, TournamentService>();
+                .AddScoped<ITournamentService, TournamentService>()
+                .AddScoped<INotablePlayerService, NotablePlayerService>()
+                .AddScoped<ICharacterFacadeService, CharacterFacadeService>()
+                .AddScoped<IWebsiteResourceService, WebsiteResourceService>()
+                .AddScoped<ICharacterVideoService, CharacterVideoService>();
 
             // Add the EF Core repositories
             services.AddScoped<IPostRepository, PostRepository>()
@@ -51,7 +57,10 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<ICharacterRepository, CharacterRepository>()
                 .AddScoped<IApiClientRepository, ApiClientRepository>()
                 .AddScoped<ITournamentRepository, TournamentRepository>()
-                .AddScoped<IProcessingService, ProcessingService>();
+                .AddScoped<IProcessingService, ProcessingService>()
+                .AddScoped<INotablePlayerRepository, NotablePlayerRepository>()
+                .AddScoped<IWebsiteResourceRepository, WebsiteResourceRepository>()
+                .AddScoped<ICharacterVideoRepository, CharacterVideoRepository>();
 
             return services;
         }

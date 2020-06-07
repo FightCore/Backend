@@ -63,5 +63,7 @@ namespace FightCore.Backend.ViewModels.Characters
         public GameSeriesViewModel Series { get; set; }
 
         public List<InformationSourceViewModel> InformationSources { get; set; }
+
+        public List<WebsiteViewModel> Websites { get; set; }
     }
 }

@@ -33,6 +33,11 @@ namespace FightCore.Data.Configurations
             builder.HasMany(character => character.Videos)
                 .WithOne(video => video.Character)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasMany(character => character.Websites)
+                .WithOne(website => website.Character)
+                .HasForeignKey(website => website.CharacterId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

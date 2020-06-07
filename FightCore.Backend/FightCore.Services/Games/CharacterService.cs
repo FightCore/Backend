@@ -12,7 +12,7 @@ namespace FightCore.Services.Games
 
         Task<List<Character>> GetAllWithGamesAsync();
 
-        Task<Character> GetWithGameByIdAsync(long id);
+        Task<Character> GetWithGameByIdAsync(long id, bool enableTracking = true);
 
         Task<List<Character>> GetCharactersByGameAsync(long gameId);
     }
@@ -25,7 +25,25 @@ namespace FightCore.Services.Games
 
         public void UpdateCharacter(Character trackedCharacter, Character character)
         {
-            trackedCharacter.Name = character.Name;
+            trackedCharacter.GeneralInformation = character.GeneralInformation;
+
+            // Be sure to set the references to the character correctly.
+            foreach (var video in character.Videos)
+            {
+                video.Character = character;
+            }
+            foreach (var player in character.NotablePlayers)
+            {
+                player.Character = character;
+            }
+            foreach (var website in character.Websites)
+            {
+                website.Character = character;
+            }
+
+            trackedCharacter.Videos = character.Videos;
+            trackedCharacter.NotablePlayers = character.NotablePlayers;
+            trackedCharacter.Websites = character.Websites;
         }
 
         public Task<List<Character>> GetAllWithGamesAsync()
@@ -33,9 +51,9 @@ namespace FightCore.Services.Games
             return Repository.GetCharactersWithGames();
         }
 
-        public Task<Character> GetWithGameByIdAsync(long id)
+        public Task<Character> GetWithGameByIdAsync(long id, bool enableTracking = true)
         {
-            return Repository.GetWithGameByIdAsync(id);
+            return Repository.GetWithFullIncludeByIdAsync(id, enableTracking);
         }
 
         public Task<List<Character>> GetCharactersByGameAsync(long gameId)

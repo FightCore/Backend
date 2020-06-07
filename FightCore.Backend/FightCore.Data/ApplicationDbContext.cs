@@ -37,5 +37,7 @@ namespace FightCore.Data
 
         public DbSet<ApiClient> ApiClients { get; set; }
 
+        public DbSet<WebsiteResource> WebsiteResources { get; set; }
+
     }
 }

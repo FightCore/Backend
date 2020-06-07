@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -32,10 +33,12 @@ namespace FightCore.Backend.Controllers
         private readonly DbContext _dbContext;
         private readonly IPostService _postService;
         private readonly IProcessingService _processingService;
+        private readonly ICharacterFacadeService _characterFacadeService;
 
         /// <inheritdoc />
         public CharactersController(
             ICharacterService characterService,
+            ICharacterFacadeService characterFacadeService,
             IPostService postService,
             IProcessingService processingService,
             DbContext dbContext,
@@ -47,6 +50,7 @@ namespace FightCore.Backend.Controllers
             _cachingService = cachingService;
             _postService = postService;
             _processingService = processingService;
+            _characterFacadeService = characterFacadeService;
         }
         
         /// <summary>
@@ -154,9 +158,9 @@ namespace FightCore.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateCharacter(long id, UpdateCharacterViewModel characterViewModel)
         {
-            var trackedCharacter = await _characterService.GetByIdAsync(id);
+            var currentCharacter = await _characterService.GetWithGameByIdAsync(id, false);
 
-            if (trackedCharacter == null)
+            if (currentCharacter == null)
             {
                 return NotFound(NotFoundErrorViewModel.Create(nameof(Character), id));
             }
@@ -169,18 +173,18 @@ namespace FightCore.Backend.Controllers
             }
 
             // If the user is not in the contributors, don't allow him/her to edit the character.
-            if (trackedCharacter.Contributors.All(contributor => contributor.UserId != userId))
+            if (currentCharacter.Contributors.All(contributor => contributor.UserId != userId))
             {
                 return Forbid();
             }
 
             var character = Mapper.Map<Character>(characterViewModel);
-
-            _characterService.UpdateCharacter(trackedCharacter, character);
+            _characterFacadeService.UpdateCharacter(currentCharacter, character);
+            _characterService.Update(currentCharacter);
             await _dbContext.SaveChangesAsync();
 
             await _cachingService.RemoveAsync($"{nameof(Character)}s");
-            await _cachingService.RemoveAsync($"{nameof(Character)}{character.Id}");
+            await _cachingService.RemoveAsync($"{nameof(Character)}{currentCharacter.Id}");
 
             return Accepted();
         }
