@@ -8,7 +8,7 @@ namespace FightCore.Bot.EmbedCreators.Game
 {
     public class GameEmbedCreator : BaseEmbedCreator
     {
-        public Embed CreateGameEmbed(Models.Game game)
+        public Embed CreateGameEmbed(FightCore.Models.Game game)
         {
             var embedBuilder = new EmbedBuilder();
             embedBuilder.WithTitle(game.Name);

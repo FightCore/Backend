@@ -26,7 +26,7 @@ namespace FightCore.Backend.Controllers
         [HttpGet("{characterId}")]
         public async Task<IActionResult> GetForCharacter(long characterId)
         {
-            var character = await _characterService.GetWithGameByIdAsync(characterId);
+            var character = await _characterService.GetWithAllByIdAsync(characterId);
 
             if (character == null)
             {

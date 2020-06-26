@@ -12,7 +12,7 @@ namespace FightCore.Services.Games
 
         Task<List<Character>> GetAllWithGamesAsync();
 
-        Task<Character> GetWithGameByIdAsync(long id, bool enableTracking = true);
+        Task<Character> GetWithAllByIdAsync(long id, bool enableTracking = true);
 
         Task<List<Character>> GetCharactersByGameAsync(long gameId);
     }
@@ -51,7 +51,7 @@ namespace FightCore.Services.Games
             return Repository.GetCharactersWithGames();
         }
 
-        public Task<Character> GetWithGameByIdAsync(long id, bool enableTracking = true)
+        public Task<Character> GetWithAllByIdAsync(long id, bool enableTracking = true)
         {
             return Repository.GetWithFullIncludeByIdAsync(id, enableTracking);
         }

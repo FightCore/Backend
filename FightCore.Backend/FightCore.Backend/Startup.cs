@@ -87,6 +87,7 @@ namespace FightCore.Backend
             services.AddAutoMapper(
                 typeof(PostMapperProfile),
                 typeof(GameMapperProfile),
+                typeof(EditMapperProfile),
                 typeof(UserMapperProfile),
                 typeof(GlobalMapperProfile),
                 typeof(StageMapperProfile));
@@ -123,7 +124,7 @@ namespace FightCore.Backend
 
             using (var context = new ApplicationDbContext(optionsBuilder.Options))
             {
-                context.Database.Migrate();
+                //context.Database.Migrate();
                 var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
                 BackendSeed.ExecuteSeed(context, userManager);
             }

@@ -26,7 +26,7 @@ namespace FightCore.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
-
+            builder.ApplyConfiguration(new SuggestedEditConfiguration());
             builder.UseOpenIddict();
 
         }

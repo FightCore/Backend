@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FightCore.Models.Characters;
+using FightCore.Models.Enums;
 using FightCore.Services.Characters;
 
 namespace FightCore.Services.Games
 {
     public interface ICharacterFacadeService
     {
-        void UpdateCharacter(Character oldCharacter, Character newCharacter);
+        void UpdateCharacter(Character oldCharacter, Character newCharacter, long userId);
     }
 
     public class CharacterFacadeService : ICharacterFacadeService
@@ -17,61 +18,33 @@ namespace FightCore.Services.Games
         public CharacterFacadeService(
             INotablePlayerService notablePlayerService,
             IWebsiteResourceService websiteResourceService,
-            ICharacterVideoService characterVideoService)
+            ICharacterVideoService characterVideoService,
+            ISuggestedEditService suggestedEditService)
         {
             _notablePlayerService = notablePlayerService;
             _characterVideoService = characterVideoService;
             _websiteResourceService = websiteResourceService;
+            _suggestedEditService = suggestedEditService;
         }
 
         private readonly INotablePlayerService _notablePlayerService;
         private readonly ICharacterVideoService _characterVideoService;
         private readonly IWebsiteResourceService _websiteResourceService;
+        private readonly ISuggestedEditService _suggestedEditService;
 
-        public void UpdateCharacter(Character oldCharacter, Character newCharacter)
+        public void UpdateCharacter(Character oldCharacter, Character newCharacter, long userId)
         {
-            var removedPlayers = oldCharacter.NotablePlayers.Where(notablePlayer =>
-                    newCharacter.NotablePlayers.Any(newNotablePlayer => notablePlayer.Id != newNotablePlayer.Id)).ToList();
-            foreach (var player in removedPlayers)
+            if (oldCharacter.GeneralInformation != newCharacter.GeneralInformation)
             {
-                _notablePlayerService.Remove(player);
+                _suggestedEditService.Add(new SuggestedEdit()
+                {
+                    UserId = userId,
+                    Editable = Editables.GeneralInformations,
+                    Original = oldCharacter.GeneralInformation,
+                    Target = newCharacter.GeneralInformation,
+                    EntityId = oldCharacter.Id
+                });
             }
-
-            foreach (var notablePlayer in newCharacter.NotablePlayers)
-            {
-                notablePlayer.Character = oldCharacter;
-            }
-
-            oldCharacter.NotablePlayers = newCharacter.NotablePlayers;
-
-            var removedVideos = oldCharacter.Videos.Where(notablePlayer =>
-                newCharacter.Videos.Any(newNotablePlayer => notablePlayer.Id != newNotablePlayer.Id)).ToList();
-            foreach (var video in removedVideos)
-            {
-                _characterVideoService.Remove(video);
-            }
-
-            foreach (var video in newCharacter.Videos)
-            {
-                video.Character = oldCharacter;
-            }
-
-            oldCharacter.Videos = newCharacter.Videos;
-
-            var removedWebsite = oldCharacter.Websites.Where(oldWebsite =>
-                newCharacter.Websites.Any(website => oldWebsite.Id != website.Id)).ToList();
-            foreach (var website in removedWebsite)
-            {
-                _websiteResourceService.Remove(website);
-            }
-
-            foreach (var website in newCharacter.Websites)
-            {
-                website.Character = oldCharacter;
-            }
-
-            oldCharacter.Websites = newCharacter.Websites;
-
         }
     }
 }

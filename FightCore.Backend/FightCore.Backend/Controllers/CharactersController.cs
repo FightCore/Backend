@@ -4,13 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Characters;
+using FightCore.Backend.ViewModels.Characters.Edits;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Services;
+using FightCore.Services.Characters;
 using FightCore.Services.Encryption;
 using FightCore.Services.Games;
+using FightCore.Services.Helpers;
 using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +37,7 @@ namespace FightCore.Backend.Controllers
         private readonly IPostService _postService;
         private readonly IProcessingService _processingService;
         private readonly ICharacterFacadeService _characterFacadeService;
+        private readonly ISuggestedEditService _suggestedEditService;
 
         /// <inheritdoc />
         public CharactersController(
@@ -43,6 +47,7 @@ namespace FightCore.Backend.Controllers
             IProcessingService processingService,
             DbContext dbContext,
             ICachingService cachingService,
+            ISuggestedEditService suggestedEditService,
             IMapper mapper) : base(mapper)
         {
             _characterService = characterService;
@@ -51,6 +56,7 @@ namespace FightCore.Backend.Controllers
             _postService = postService;
             _processingService = processingService;
             _characterFacadeService = characterFacadeService;
+            _suggestedEditService = suggestedEditService;
         }
         
         /// <summary>
@@ -91,7 +97,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(404, "No character found for that id.", typeof(NotFoundErrorViewModel))]
         public async Task<IActionResult> GetCharacter(long id)
         {
-            var character = await _characterService.GetWithGameByIdAsync(id);
+            var character = await _characterService.GetWithAllByIdAsync(id);
 
             if (character == null)
             {
@@ -118,6 +124,14 @@ namespace FightCore.Backend.Controllers
             posts = _processingService.ProcessPosts(posts, userId);
 
             return MappedOk<List<PostViewModel>>(posts);
+        }
+
+        [HttpGet("{id}/edits")]
+        public async Task<IActionResult> GetEditsForCharacter(long id)
+        {
+            var edits = await _suggestedEditService.GetAllForCharacter(id);
+            var editDtos = Mapper.Map<List<SuggestedEditDto>>(edits);
+            return Ok(editDtos);
         }
 
         /// <summary>
@@ -158,7 +172,7 @@ namespace FightCore.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateCharacter(long id, UpdateCharacterViewModel characterViewModel)
         {
-            var currentCharacter = await _characterService.GetWithGameByIdAsync(id, false);
+            var currentCharacter = await _characterService.GetWithAllByIdAsync(id, false);
 
             if (currentCharacter == null)
             {
@@ -179,12 +193,8 @@ namespace FightCore.Backend.Controllers
             }
 
             var character = Mapper.Map<Character>(characterViewModel);
-            _characterFacadeService.UpdateCharacter(currentCharacter, character);
-            _characterService.Update(currentCharacter);
+            _characterFacadeService.UpdateCharacter(currentCharacter, character, userId.Value);
             await _dbContext.SaveChangesAsync();
-
-            await _cachingService.RemoveAsync($"{nameof(Character)}s");
-            await _cachingService.RemoveAsync($"{nameof(Character)}{currentCharacter.Id}");
 
             return Accepted();
         }

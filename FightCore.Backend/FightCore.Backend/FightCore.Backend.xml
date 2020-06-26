@@ -206,7 +206,7 @@
         <member name="T:FightCore.Backend.Controllers.CharactersController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Games.ICharacterFacadeService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,AutoMapper.IMapper)">
+        <member name="M:FightCore.Backend.Controllers.CharactersController.#ctor(FightCore.Services.Games.ICharacterService,FightCore.Services.Games.ICharacterFacadeService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.ICachingService,FightCore.Services.Characters.ISuggestedEditService,AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.CharactersController.GetAllCharacters">
@@ -418,6 +418,12 @@
             </summary>
             <param name="id">The id of the stage to be gotten.</param>
             <returns>The stage found.</returns>
+        </member>
+        <member name="T:FightCore.Backend.Controllers.SuggestedEditsController">
+            <inheritdoc />
+        </member>
+        <member name="M:FightCore.Backend.Controllers.SuggestedEditsController.#ctor(AutoMapper.IMapper,FightCore.Services.Characters.ISuggestedEditService,FightCore.Services.Games.ICharacterService,Microsoft.EntityFrameworkCore.DbContext)">
+            <inheritdoc />
         </member>
         <member name="T:FightCore.Backend.Controllers.TournamentsController">
             <inheritdoc />
