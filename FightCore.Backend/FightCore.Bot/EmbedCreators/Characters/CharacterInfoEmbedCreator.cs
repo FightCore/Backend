@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Discord;
 using FightCore.Bot.BotModels.FrameData;
@@ -16,7 +17,15 @@ namespace FightCore.Bot.EmbedCreators.Characters
             var embedBuilder = new EmbedBuilder();
 
             embedBuilder.Title = character.Name;
-            embedBuilder.WithDescription(ShortenDescription(character.GeneralInformation));
+            embedBuilder.AddField("General information",ShortenString(character.GeneralInformation, 300));
+
+            if (character.NotablePlayers.Any())
+            {
+                embedBuilder.AddField("Notable players",
+                    string.Join(", ", character.NotablePlayers.Take(6).Select(player => player.Name))
+                );
+            }
+
             if (character.StockIcon != null)
                 embedBuilder.WithThumbnailUrl(character.StockIcon.Url);
 
@@ -24,7 +33,7 @@ namespace FightCore.Bot.EmbedCreators.Characters
                 embedBuilder.WithImageUrl(character.CharacterImage.Url);
 
             embedBuilder.WithUrl($"https://www.fightcore.gg/character/{character.Id}");
-
+            embedBuilder = AddFightCoreFooter(embedBuilder);
             return embedBuilder.Build();
         }
 
@@ -51,9 +60,24 @@ namespace FightCore.Bot.EmbedCreators.Characters
             }
 
             embedBuilder.Description = descriptionBuilder.ToString();
-            embedBuilder.WithFooter("Visit us at www.FightCore.gg");
-            embedBuilder.WithCurrentTimestamp();
-            embedBuilder.WithColor(Color.Red);
+            embedBuilder = AddFightCoreFooter(embedBuilder);
+            return embedBuilder.Build();
+        }
+
+        public Embed CreateMoveListEmbed(WrapperCharacter character, Character fightCoreCharacter)
+        {
+            var embedBuilder = new EmbedBuilder();
+            embedBuilder.WithUrl(character.Source);
+            embedBuilder.WithThumbnailUrl(fightCoreCharacter.StockIcon.Url);
+            embedBuilder.Title = $"{character.Name} - Moves";
+
+            embedBuilder.AddField("Moves", ShortenField(
+                string.Join(", ", character.Moves.Select(move => move.Name))));
+            embedBuilder.AddField("Help", "To check out a move use:\n`-character move {CHARACTER NAME} {MOVE NAME}`\n" +
+                                          "For example: `-character move Fox u-smash`");
+
+
+            embedBuilder = AddFightCoreFooter(embedBuilder);
             return embedBuilder.Build();
         }
 

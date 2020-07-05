@@ -25,5 +25,7 @@ namespace FightCore.Models.Characters
         public string Original { get; set; }
 
         public string Target { get; set; }
+
+        public EditType EditType { get; set; }
     }
 }

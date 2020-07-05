@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FightCore.Models.Enums;
 using FightCore.Services.Characters;
 using FightCore.Services.Games;
 using Microsoft.AspNetCore.Authorization;
@@ -20,6 +16,7 @@ namespace FightCore.Backend.Controllers
     {
         private readonly ISuggestedEditService _suggestedEditService;
         private readonly ICharacterService _characterService;
+        private readonly IEditFacadeService _editFacadeService;
         private readonly DbContext _dbContext;
 
         /// <inheritdoc />
@@ -27,10 +24,12 @@ namespace FightCore.Backend.Controllers
             IMapper mapper,
             ISuggestedEditService suggestedEditService,
             ICharacterService characterService,
+            IEditFacadeService editFacadeService,
             DbContext dbContext
         ) : base(mapper)
         {
             _suggestedEditService = suggestedEditService;
+            _editFacadeService = editFacadeService;
             _characterService = characterService;
             _dbContext = dbContext;
         }
@@ -41,7 +40,7 @@ namespace FightCore.Backend.Controllers
         {
             var edit = await _suggestedEditService.GetByIdAsync(id);
 
-            if (edit.IsApproved)
+            if (edit == null || edit.IsApproved)
             {
                 return BadRequest();
             }
@@ -64,15 +63,32 @@ namespace FightCore.Backend.Controllers
                 return Unauthorized();
             }
 
-            switch (edit.Editable)
+            _editFacadeService.ApproveEdit(edit, character);
+            edit.ApprovedByUserId = userId.Value;
+            await _dbContext.SaveChangesAsync();
+
+            return Accepted();
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteSuggestedEdit(long id)
+        {
+            var edit = await _suggestedEditService.GetByIdAsync(id);
+            if (edit == null || edit.IsApproved)
             {
-                case Editables.GeneralInformations:
-                    edit.Original = character.GeneralInformation;
-                    character.GeneralInformation = edit.Target;
-                    break;
+                return BadRequest();
             }
 
-            edit.ApprovedByUserId = userId.Value;
+            var character = await _characterService.GetWithAllByIdAsync(edit.EntityId);
+
+            var userId = GetUserIdFromClaims(User);
+            if (!userId.HasValue || character.Contributors.All(contributor => contributor.UserId != userId.Value) && edit.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            _suggestedEditService.Remove(edit);
             await _dbContext.SaveChangesAsync();
 
             return Accepted();

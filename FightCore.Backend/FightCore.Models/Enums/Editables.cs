@@ -7,6 +7,8 @@ namespace FightCore.Models.Enums
     public enum Editables
     {
         GeneralInformations,
-        Website
+        Website,
+        Video,
+        Player
     }
 }

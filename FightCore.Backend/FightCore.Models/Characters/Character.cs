@@ -24,7 +24,7 @@ namespace FightCore.Models.Characters
 
         public FightCoreImage CharacterImage { get; set; }
 
-        public List<CharacterVideo> Videos { get; set; }
+        public List<VideoResource> Videos { get; set; }
 
         public GameSeries Series { get; set; }
 

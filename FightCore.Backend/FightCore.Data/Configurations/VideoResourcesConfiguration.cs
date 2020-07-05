@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FightCore.Data.Configurations
 {
-    public class CharacterVideoConfiguration : IEntityTypeConfiguration<CharacterVideo>
+    public class CharacterVideoConfiguration : IEntityTypeConfiguration<VideoResource>
     {
-        public void Configure(EntityTypeBuilder<CharacterVideo> builder)
+        public void Configure(EntityTypeBuilder<VideoResource> builder)
         {
-            builder.HasOne(video => video.Video)
+            builder.HasOne(video => video.Character)
                 .WithMany();
         }
     }

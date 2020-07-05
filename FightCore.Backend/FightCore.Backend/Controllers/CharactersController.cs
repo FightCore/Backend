@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -7,20 +6,14 @@ using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Characters.Edits;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
-using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Services;
 using FightCore.Services.Characters;
-using FightCore.Services.Encryption;
 using FightCore.Services.Games;
-using FightCore.Services.Helpers;
 using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.CompilerServices;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
@@ -127,11 +120,26 @@ namespace FightCore.Backend.Controllers
         }
 
         [HttpGet("{id}/edits")]
+        [Authorize]
         public async Task<IActionResult> GetEditsForCharacter(long id)
         {
-            var edits = await _suggestedEditService.GetAllForCharacter(id);
+            var userId = GetUserIdFromClaims(User);
+            var character = await _characterService.GetWithAllByIdAsync(id);
+            List<SuggestedEdit> edits = null;
+
+            if (character.Contributors.Any(contributor => contributor.UserId == userId))
+            {
+                edits = await _suggestedEditService.GetAllForCharacter(id);
+                
+            }
+            else
+            {
+                edits = await _suggestedEditService.GetEditsForCharacterAndUser(id, userId.Value);
+            }
+
             var editDtos = Mapper.Map<List<SuggestedEditDto>>(edits);
             return Ok(editDtos);
+
         }
 
         /// <summary>
@@ -186,11 +194,6 @@ namespace FightCore.Backend.Controllers
                 return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
-            // If the user is not in the contributors, don't allow him/her to edit the character.
-            if (currentCharacter.Contributors.All(contributor => contributor.UserId != userId))
-            {
-                return Forbid();
-            }
 
             var character = Mapper.Map<Character>(characterViewModel);
             _characterFacadeService.UpdateCharacter(currentCharacter, character, userId.Value);

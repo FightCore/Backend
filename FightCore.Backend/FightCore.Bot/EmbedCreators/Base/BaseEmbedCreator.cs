@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Discord;
 
 namespace FightCore.Bot.EmbedCreators.Base
 {
@@ -28,6 +29,23 @@ namespace FightCore.Bot.EmbedCreators.Base
         protected string ShortenField(string text)
         {
             return ShortenString(text, MaxDescriptionLength);
+        }
+
+        protected bool CheckString(string text)
+        {
+            if (text.Contains("@everyone") || text.Contains("@here"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected EmbedBuilder AddFightCoreFooter(EmbedBuilder embedBuilder)
+        {
+            return embedBuilder.WithFooter("Visit us at www.FightCore.gg")
+                .WithCurrentTimestamp()
+                .WithColor(Color.Red);
         }
     }
 }

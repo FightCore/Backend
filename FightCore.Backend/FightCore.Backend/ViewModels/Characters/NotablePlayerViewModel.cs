@@ -14,6 +14,11 @@ namespace FightCore.Backend.ViewModels.Characters
         /// The name of the player.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The country that the player is from.
+        /// </summary>
+        public string Country { get; set; }
         
         /// <summary>
         /// A description of why this player is notable.

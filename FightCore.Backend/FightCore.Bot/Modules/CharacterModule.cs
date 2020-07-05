@@ -27,17 +27,20 @@ namespace FightCore.Bot.Modules
         }
 
         [Command]
-        public async Task Info(long characterId)
+        public async Task Info(string character)
         {
-            var character = await _characterService.GetWithAllByIdAsync(characterId);
+            var characterEntity = _moves.FirstOrDefault(wrapperCharacter =>
+                wrapperCharacter.Name.Equals(character, StringComparison.InvariantCultureIgnoreCase));
 
-            var embed = new CharacterInfoEmbedCreator().CreateInfoEmbed(character);
+            var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
+
+            var embed = new CharacterInfoEmbedCreator().CreateInfoEmbed(fightCoreCharacter);
 
             await ReplyAsync(string.Empty, embed: embed);
         }
 
         [Command("move")]
-        public async Task FrameDataTest(string character, [Remainder]string move)
+        public async Task FrameDataTest(string character, [Remainder] string move)
         {
             var characterEntity = _moves.FirstOrDefault(wrapperCharacter =>
                 wrapperCharacter.Name.Equals(character, StringComparison.InvariantCultureIgnoreCase));
@@ -46,7 +49,20 @@ namespace FightCore.Bot.Modules
 
             var moveEntity = characterEntity.Moves.FirstOrDefault(storedMove =>
                 storedMove.Name.Equals(move, StringComparison.InvariantCultureIgnoreCase));
-            var embed = new CharacterInfoEmbedCreator().CreateMoveEmbed(characterEntity, moveEntity, fightCoreCharacter);
+            var embed = new CharacterInfoEmbedCreator().CreateMoveEmbed(characterEntity, moveEntity,
+                fightCoreCharacter);
+            await ReplyAsync(string.Empty, embed: embed);
+        }
+
+        [Command("moves")]
+        public async Task ListMoves(string character)
+        {
+            var characterEntity = _moves.FirstOrDefault(wrapperCharacter =>
+                wrapperCharacter.Name.Equals(character, StringComparison.InvariantCultureIgnoreCase));
+
+            var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
+
+            var embed = new CharacterInfoEmbedCreator().CreateMoveListEmbed(characterEntity, fightCoreCharacter);
             await ReplyAsync(string.Empty, embed: embed);
         }
     }

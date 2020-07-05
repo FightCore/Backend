@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.Models.Characters;
 
 namespace FightCore.Backend.ViewModels.Characters.Edits
 {
@@ -14,5 +15,7 @@ namespace FightCore.Backend.ViewModels.Characters.Edits
         public string Target { get; set; }
 
         public string UserName { get; set; }
+
+        public EditType EditType { get; set; }
     }
 }

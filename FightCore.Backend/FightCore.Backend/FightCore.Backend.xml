@@ -422,7 +422,7 @@
         <member name="T:FightCore.Backend.Controllers.SuggestedEditsController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.SuggestedEditsController.#ctor(AutoMapper.IMapper,FightCore.Services.Characters.ISuggestedEditService,FightCore.Services.Games.ICharacterService,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:FightCore.Backend.Controllers.SuggestedEditsController.#ctor(AutoMapper.IMapper,FightCore.Services.Characters.ISuggestedEditService,FightCore.Services.Games.ICharacterService,FightCore.Services.Characters.IEditFacadeService,Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
         <member name="T:FightCore.Backend.Controllers.TournamentsController">
@@ -640,6 +640,11 @@
         <member name="P:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel.Name">
             <summary>
             The name of the player.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel.Country">
+            <summary>
+            The country that the player is from.
             </summary>
         </member>
         <member name="P:FightCore.Backend.ViewModels.Characters.NotablePlayerViewModel.Description">

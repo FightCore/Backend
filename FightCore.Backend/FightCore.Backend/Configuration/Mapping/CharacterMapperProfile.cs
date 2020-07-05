@@ -24,16 +24,16 @@ namespace FightCore.Backend.Configuration.Mapping
 
             CreateMap<Character, GetCharacterListViewModel>().ReverseMap();
 
-            CreateMap<CharacterVideo, VideoViewModel>()
+            CreateMap<VideoResource, VideoViewModel>()
                 .ForMember(viewModel => viewModel.YoutubeId,
                     options => options.MapFrom(characterVideo =>
-                        characterVideo.Video.YoutubeId))
+                        characterVideo.YoutubeId))
                 .ForMember(viewModel => viewModel.Name,
                     options => options.MapFrom(characterVideo =>
-                        characterVideo.Video.Name))
+                        characterVideo.Name))
                 .ForMember(viewModel => viewModel.Description,
                     options => options.MapFrom(characterVideo =>
-                        characterVideo.Video.Description))
+                        characterVideo.Description))
                 .ForMember(viewModel => viewModel.Id,
                     options => options.MapFrom(characterVideo =>
                         characterVideo.Id)).ReverseMap();

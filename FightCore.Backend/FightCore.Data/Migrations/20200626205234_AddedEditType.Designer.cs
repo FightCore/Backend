@@ -4,14 +4,16 @@ using FightCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FightCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200626205234_AddedEditType")]
+    partial class AddedEditType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +150,28 @@ namespace FightCore.Data.Migrations
                     b.ToTable("Character");
                 });
 
+            modelBuilder.Entity("FightCore.Models.Characters.CharacterVideo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CharacterId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("VideoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("CharacterVideo");
+                });
+
             modelBuilder.Entity("FightCore.Models.Characters.Contributor", b =>
                 {
                     b.Property<long>("Id")
@@ -202,10 +226,6 @@ namespace FightCore.Data.Migrations
 
                     b.Property<long?>("CharacterId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(2)")
-                        .HasMaxLength(2);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -380,9 +400,6 @@ namespace FightCore.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CharacterId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -393,8 +410,6 @@ namespace FightCore.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CharacterId");
 
                     b.ToTable("VideoResource");
                 });
@@ -794,6 +809,17 @@ namespace FightCore.Data.Migrations
                         .HasForeignKey("StockIconId");
                 });
 
+            modelBuilder.Entity("FightCore.Models.Characters.CharacterVideo", b =>
+                {
+                    b.HasOne("FightCore.Models.Characters.Character", "Character")
+                        .WithMany("Videos")
+                        .HasForeignKey("CharacterId");
+
+                    b.HasOne("FightCore.Models.Globals.VideoResource", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId");
+                });
+
             modelBuilder.Entity("FightCore.Models.Characters.Contributor", b =>
                 {
                     b.HasOne("FightCore.Models.Characters.Character", "Character")
@@ -865,13 +891,6 @@ namespace FightCore.Data.Migrations
                 {
                     b.HasOne("FightCore.Models.Characters.Character", null)
                         .WithMany("InformationSources")
-                        .HasForeignKey("CharacterId");
-                });
-
-            modelBuilder.Entity("FightCore.Models.Globals.VideoResource", b =>
-                {
-                    b.HasOne("FightCore.Models.Characters.Character", "Character")
-                        .WithMany("Videos")
                         .HasForeignKey("CharacterId");
                 });
 
