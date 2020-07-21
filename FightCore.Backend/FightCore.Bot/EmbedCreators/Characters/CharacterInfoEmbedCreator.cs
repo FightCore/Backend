@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discord;
-using FightCore.Bot.BotModels.FrameData;
 using FightCore.Bot.EmbedCreators.Base;
+using FightCore.Bot.Helpers;
 using FightCore.Bot.Models.FrameData;
+using FightCore.MeleeFrameData;
 using FightCore.Models.Characters;
 
 namespace FightCore.Bot.EmbedCreators.Characters
@@ -14,9 +15,8 @@ namespace FightCore.Bot.EmbedCreators.Characters
     {
         public Embed CreateInfoEmbed(Character character)
         {
-            var embedBuilder = new EmbedBuilder();
+            var embedBuilder = new EmbedBuilder {Title = character.Name};
 
-            embedBuilder.Title = character.Name;
             embedBuilder.AddField("General information",ShortenString(character.GeneralInformation, 300));
 
             if (character.NotablePlayers.Any())
@@ -37,60 +37,148 @@ namespace FightCore.Bot.EmbedCreators.Characters
             return embedBuilder.Build();
         }
 
-        public Embed CreateMoveEmbed(WrapperCharacter character, Move move, Character fightCoreCharacter)
+        public Embed CreateMoveEmbed(WrapperCharacter character, NormalizedEntity move, Character fightCoreCharacter)
         {
-            var embedBuilder = new EmbedBuilder();
-            embedBuilder.WithUrl(character.Source);
-            embedBuilder.WithThumbnailUrl(fightCoreCharacter.StockIcon.Url);
-            embedBuilder.WithImageUrl(
-                move.GifURL);
-            embedBuilder.Title = $"{character.Name} - {move.Name}";
-
-            var descriptionBuilder = new StringBuilder();
-            AddString("Frames", move.TotalFrames, descriptionBuilder);
-            AddString("Hit", move.HitFrames, descriptionBuilder);
-            AddString("IASA", move.IASA, descriptionBuilder);
-            AddString("Auto cancel", move.AutoCancel, descriptionBuilder);
-            AddString("Land lag", move.LandLag, descriptionBuilder);
-            AddString("L-Canceled", move.LCanceled, descriptionBuilder);
-
-            foreach (var keyValuePair in move.Extra)
+            return move switch
             {
-                AddString(keyValuePair.Key, keyValuePair.Value, descriptionBuilder);
-            }
-
-            embedBuilder.Description = descriptionBuilder.ToString();
-            embedBuilder = AddFightCoreFooter(embedBuilder);
-            return embedBuilder.Build();
+                Attack attack => CreateAttackEmbed(character, attack, fightCoreCharacter),
+                Dodge dodge => CreateDodgeEmbed(character, dodge, fightCoreCharacter),
+                Grab grab => CreateGrabEmbed(character, grab, fightCoreCharacter),
+                Throw @throw => CreateThrowEmbed(character, @throw, fightCoreCharacter),
+                _ => throw new NotImplementedException()
+            };
         }
 
-        public Embed CreateMoveListEmbed(WrapperCharacter character, Character fightCoreCharacter)
+        public Embed CreateMoveListEmbed(WrapperCharacter character, List<NormalizedEntity> moves, Character fightCoreCharacter)
         {
             var embedBuilder = new EmbedBuilder();
-            embedBuilder.WithUrl(character.Source);
-            embedBuilder.WithThumbnailUrl(fightCoreCharacter.StockIcon.Url);
+            embedBuilder.WithUrl($"http://meleeframedata.com/{character.NormalizedName}")
+                .WithThumbnailUrl(fightCoreCharacter.StockIcon.Url.Replace(" ", "+"));
             embedBuilder.Title = $"{character.Name} - Moves";
 
             embedBuilder.AddField("Moves", ShortenField(
-                string.Join(", ", character.Moves.Select(move => move.Name))));
-            embedBuilder.AddField("Help", "To check out a move use:\n`-character move {CHARACTER NAME} {MOVE NAME}`\n" +
+                string.Join(", ", moves.Select(move => move.Name))))
+                .AddField("Help", "To check out a move use:\n`-character move {CHARACTER NAME} {MOVE NAME}`\n" +
                                           "For example: `-character move Fox u-smash`");
-
 
             embedBuilder = AddFightCoreFooter(embedBuilder);
             return embedBuilder.Build();
         }
 
-        private StringBuilder AddString(string key, string value, StringBuilder stringBuilder)
+
+        private Embed CreateAttackEmbed(WrapperCharacter character, Attack move, Character fightCoreCharacter)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            var embedBuilder = CreateDefaultFrameDataEmbed(character, move, fightCoreCharacter);
+
+            var frameDataBuilder = new StringBuilder();
+            AddIfPossible("Total frames", move.Total, frameDataBuilder);
+            AddIfPossible("Hit start", move.Start, frameDataBuilder);
+            AddIfPossible("Hit end", move.End, frameDataBuilder);
+            AddIfPossible("Shield stun", move.Stun, frameDataBuilder);
+            AddIfPossible("Percent", move.Percent, frameDataBuilder);
+            AddIfPossible("Percent (weak hit)", move.PercentWeak, frameDataBuilder);
+            AddIfPossible("IASA", move.Iasa, frameDataBuilder);
+            AddIfPossible("Auto cancel start", move.AutoCancelStart, frameDataBuilder);
+            AddIfPossible("Auto cancel end", move.AutoCancelEnd, frameDataBuilder);
+            AddIfPossible("Land lag", move.LandingLag, frameDataBuilder);
+            AddIfPossible("L-Canceled", move.LCanceledLandingLag, frameDataBuilder);
+
+            embedBuilder.AddField("Frame Data", frameDataBuilder.ToString(), true);
+
+            if (!string.IsNullOrWhiteSpace(move.Notes))
             {
-                return stringBuilder;
+                embedBuilder.AddField("Notes", move.Notes, true);
+            }
+
+            embedBuilder = AddMeleeFrameDataInfo(embedBuilder);
+
+            return embedBuilder.Build();
+        }
+
+        private Embed CreateDodgeEmbed(WrapperCharacter character, Dodge dodge, Character fightCoreCharacter)
+        {
+            var embedBuilder = CreateDefaultFrameDataEmbed(character, dodge, fightCoreCharacter);
+            var frameDataBuilder = new StringBuilder();
+            AddIfPossible("Start", dodge.Start, frameDataBuilder);
+            AddIfPossible("Invulnerable ends", dodge.EndInvulnerable, frameDataBuilder);
+            AddIfPossible("Total", dodge.Total, frameDataBuilder);
+
+            embedBuilder.AddField("Frame data", frameDataBuilder.ToString());
+
+            embedBuilder = AddMeleeFrameDataInfo(embedBuilder);
+            return embedBuilder.Build();
+        }
+
+        private Embed CreateGrabEmbed(WrapperCharacter character, Grab grab, Character fightCoreCharacter)
+        {
+            var embedBuilder = CreateDefaultFrameDataEmbed(character, grab, fightCoreCharacter);
+
+
+            var frameDataBuilder = new StringBuilder();
+            AddIfPossible("Start", grab.Start, frameDataBuilder);
+            AddIfPossible("Total", grab.Total, frameDataBuilder);
+            embedBuilder.AddField("Frame data", frameDataBuilder.ToString());
+
+            if (!string.IsNullOrWhiteSpace(grab.Notes))
+            {
+                embedBuilder.AddField("Notes", grab.Notes, true);
+            }
+
+            embedBuilder = AddMeleeFrameDataInfo(embedBuilder);
+            return embedBuilder.Build();
+        }
+
+        private Embed CreateThrowEmbed(WrapperCharacter character, Throw throwMove, Character fightCoreCharacter)
+        {
+            var embedBuilder = CreateDefaultFrameDataEmbed(character, throwMove, fightCoreCharacter);
+
+
+            var frameDataBuilder = new StringBuilder();
+            AddIfPossible("Start", throwMove.Start, frameDataBuilder);
+            AddIfPossible("End", throwMove.End, frameDataBuilder);
+            AddIfPossible("Total", throwMove.Total, frameDataBuilder);
+            AddIfPossible("Percent", throwMove.Percent, frameDataBuilder);
+            embedBuilder.AddField("Frame data", frameDataBuilder.ToString());
+
+            if (!string.IsNullOrWhiteSpace(throwMove.Notes))
+            {
+                embedBuilder.AddField("Notes", throwMove.Notes, true);
+            }
+
+            embedBuilder = AddMeleeFrameDataInfo(embedBuilder);
+            return embedBuilder.Build();
+        }
+
+        private EmbedBuilder CreateDefaultFrameDataEmbed(WrapperCharacter character, NormalizedEntity move,
+            Character fightCoreCharacter)
+        {
+            var characterName = SearchHelper.Normalize(move.Character);
+            var moveName = SearchHelper.Normalize(move.NormalizedType);
+            var embedBuilder = new EmbedBuilder()
+                .WithUrl($"http://meleeframedata.com/{move.Character}")
+                .WithThumbnailUrl(fightCoreCharacter.StockIcon.Url.Replace(" ", "+"))
+                .WithImageUrl($"https://i.fightcore.gg/melee/moves/{characterName}/{moveName}.gif");
+
+            embedBuilder.Title = $"{character.Name} - {move.Name}";
+            embedBuilder = AddFightCoreFooter(embedBuilder);
+
+            return embedBuilder;
+        }
+
+        private static EmbedBuilder AddMeleeFrameDataInfo(EmbedBuilder builder)
+        {
+            return builder.AddField("Melee Frame Data",
+                "All of this data is provided by http://meleeframedata.com.");
+        }
+
+        private static void AddIfPossible(string key, int? value, StringBuilder stringBuilder)
+        {
+            if (!value.HasValue || value <= 0)
+            {
+                return;
             }
 
             stringBuilder.Append($"**{key}:** {value}\n");
-
-            return stringBuilder;
         }
     }
 }

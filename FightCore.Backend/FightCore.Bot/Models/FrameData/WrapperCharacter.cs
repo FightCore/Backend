@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using FightCore.Bot.BotModels.FrameData;
+using FightCore.Bot.Models.FrameData;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace FightCore.Bot.Models.FrameData
 {
@@ -7,10 +8,12 @@ namespace FightCore.Bot.Models.FrameData
     {
         public string Name { get; set; }
 
-        public List<Move> Moves { get; set; }
+        public string NormalizedName { get; set; }
 
-        public string Source { get; set; }
+        public List<string> Names { get; set; }
 
         public long FightCoreId { get; set; }
+
+        public Dictionary<string, string> Moves { get; set; }
     }
 }

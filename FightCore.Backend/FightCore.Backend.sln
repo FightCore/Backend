@@ -40,7 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightCore.Bot", "FightCore.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{E7F5F8BF-E951-429B-861D-8BA0A16FD672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightCore.KuroganeHammer", "FightCore.KuroganeHammer\FightCore.KuroganeHammer.csproj", "{094638D7-F05A-435C-AD34-68FE3C97033E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightCore.KuroganeHammer", "FightCore.KuroganeHammer\FightCore.KuroganeHammer.csproj", "{094638D7-F05A-435C-AD34-68FE3C97033E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightCore.MeleeFrameData", "FightCore.MeleeFrameData\FightCore.MeleeFrameData.csproj", "{30220DFB-2852-4E0C-8F0B-7BFD67C2150B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +94,10 @@ Global
 		{094638D7-F05A-435C-AD34-68FE3C97033E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{094638D7-F05A-435C-AD34-68FE3C97033E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{094638D7-F05A-435C-AD34-68FE3C97033E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30220DFB-2852-4E0C-8F0B-7BFD67C2150B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30220DFB-2852-4E0C-8F0B-7BFD67C2150B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30220DFB-2852-4E0C-8F0B-7BFD67C2150B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30220DFB-2852-4E0C-8F0B-7BFD67C2150B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +114,7 @@ Global
 		{E0C6D87B-122F-4221-AB51-DAC2367689E3} = {2F3C4FB0-7273-4552-B2D6-5BE614D36E7E}
 		{8742DD0D-0893-4CB1-9146-9C845A68A1FE} = {F049935F-5411-4FB3-9180-9B30EB6FFDFF}
 		{094638D7-F05A-435C-AD34-68FE3C97033E} = {E7F5F8BF-E951-429B-861D-8BA0A16FD672}
+		{30220DFB-2852-4E0C-8F0B-7BFD67C2150B} = {E7F5F8BF-E951-429B-861D-8BA0A16FD672}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {598DB799-4DC9-47A5-9383-1341DDAAA824}

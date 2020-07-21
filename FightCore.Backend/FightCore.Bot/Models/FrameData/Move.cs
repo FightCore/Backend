@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace FightCore.Bot.BotModels.FrameData
+namespace FightCore.Bot.Models.FrameData
 {
     public class Move
     {
@@ -25,5 +23,7 @@ namespace FightCore.Bot.BotModels.FrameData
         public string GifURL { get; set; }
 
         public Dictionary<string, string> Extra { get; set; }
+
+        public string NormalizedName { get; set; }
     }
 }

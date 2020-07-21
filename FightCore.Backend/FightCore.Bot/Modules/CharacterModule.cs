@@ -1,69 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Discord.Commands;
-using FightCore.Bot.BotModels.FrameData;
 using FightCore.Bot.EmbedCreators.Characters;
-using FightCore.Bot.Models.FrameData;
+using FightCore.Bot.Services;
 using FightCore.Services.Games;
-using Microsoft.EntityFrameworkCore.Internal;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace FightCore.Bot.Modules
 {
     [Group("character")]
+    [Alias("c")]
     public class CharacterModule : ModuleBase<SocketCommandContext>
     {
         private readonly ICharacterService _characterService;
-        private readonly List<WrapperCharacter> _moves;
+        private readonly FrameDataService _frameDataService;
 
-        public CharacterModule(ICharacterService characterService)
+        public CharacterModule(ICharacterService characterService, FrameDataService frameDataService)
         {
             _characterService = characterService;
-            _moves = JsonConvert.DeserializeObject<List<WrapperCharacter>>(File.ReadAllText("Data/Moves.json"));
+            _frameDataService = frameDataService;
         }
 
         [Command]
         public async Task Info(string character)
         {
-            var characterEntity = _moves.FirstOrDefault(wrapperCharacter =>
-                wrapperCharacter.Name.Equals(character, StringComparison.InvariantCultureIgnoreCase));
+            using (Context.Channel.EnterTypingState())
+            {
+                var characterEntity = _frameDataService.GetCharacter(character);
 
-            var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
+                var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
 
-            var embed = new CharacterInfoEmbedCreator().CreateInfoEmbed(fightCoreCharacter);
+                var embed = new CharacterInfoEmbedCreator().CreateInfoEmbed(fightCoreCharacter);
 
-            await ReplyAsync(string.Empty, embed: embed);
+                await ReplyAsync(string.Empty, embed: embed);
+            }
         }
 
         [Command("move")]
+        [Alias("m")]
         public async Task FrameDataTest(string character, [Remainder] string move)
         {
-            var characterEntity = _moves.FirstOrDefault(wrapperCharacter =>
-                wrapperCharacter.Name.Equals(character, StringComparison.InvariantCultureIgnoreCase));
+            using (Context.Channel.EnterTypingState())
+            {
+                var characterEntity = _frameDataService.GetCharacter(character);
 
-            var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
+                var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
+                var attack = _frameDataService.GetMove(character, move);
 
-            var moveEntity = characterEntity.Moves.FirstOrDefault(storedMove =>
-                storedMove.Name.Equals(move, StringComparison.InvariantCultureIgnoreCase));
-            var embed = new CharacterInfoEmbedCreator().CreateMoveEmbed(characterEntity, moveEntity,
-                fightCoreCharacter);
-            await ReplyAsync(string.Empty, embed: embed);
+                if (attack == null)
+                {
+                    await ReplyAsync("Not found");
+                    return;
+                }
+
+                var embed = new CharacterInfoEmbedCreator().CreateMoveEmbed(characterEntity, attack, fightCoreCharacter);
+
+                await ReplyAsync(string.Empty, embed: embed);
+            }
         }
 
         [Command("moves")]
-        public async Task ListMoves(string character)
+        public async Task ListMoves([Remainder] string character)
         {
-            var characterEntity = _moves.FirstOrDefault(wrapperCharacter =>
-                wrapperCharacter.Name.Equals(character, StringComparison.InvariantCultureIgnoreCase));
+            using (Context.Channel.EnterTypingState())
+            {
+                var characterEntity = _frameDataService.GetCharacter(character);
+                var moves = _frameDataService.GetMoves(characterEntity.NormalizedName);
 
-            var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
+                var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
 
-            var embed = new CharacterInfoEmbedCreator().CreateMoveListEmbed(characterEntity, fightCoreCharacter);
-            await ReplyAsync(string.Empty, embed: embed);
+                var embed = new CharacterInfoEmbedCreator().CreateMoveListEmbed(characterEntity, moves, fightCoreCharacter);
+                await ReplyAsync(string.Empty, embed: embed);
+            }
         }
     }
 }

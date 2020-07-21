@@ -14,6 +14,10 @@ namespace FightCore.Repositories.Characters
         Task<List<SuggestedEdit>> GetAllForCharacter(long characterId);
 
         Task<List<SuggestedEdit>> GetEditsForCharacterAndUser(long characterId, long userId);
+
+        Task<List<string>> GetContributorsForEntity(long entityId);
+
+        Task<List<long>> GetPopularCharacterId();
     }
 
     public class SuggestedEditRepository : EntityRepository<SuggestedEdit>, ISuggestedEditRepository
@@ -36,6 +40,24 @@ namespace FightCore.Repositories.Characters
                 .Include(edit => edit.User)
                 .Where(edit => edit.EntityId == characterId && edit.ApprovedByUserId == null
                     && edit.UserId == userId)
+                .ToListAsync();
+        }
+
+        public Task<List<string>> GetContributorsForEntity(long entityId)
+        {
+            return Queryable.Include(edit => edit.User)
+                .Where(edit => edit.EntityId == entityId)
+                .Select(edit => edit.User.UserName)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public Task<List<long>> GetPopularCharacterId()
+        {
+            return Queryable.GroupBy(edit => edit.EntityId)
+                .OrderByDescending(entityIds => entityIds.Count())
+                .Take(5)
+                .Select(key => key.Key)
                 .ToListAsync();
         }
     }

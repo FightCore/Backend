@@ -25,6 +25,8 @@ namespace FightCore.Models.Posts
 
         public List<Like> Likes { get; set; }
 
+        public bool Featured { get; set; }
+
         [NotMapped]
         public bool Liked { get; set; }
 
@@ -33,5 +35,7 @@ namespace FightCore.Models.Posts
         public long? CharacterId { get; set; }
 
         public Character Character { get; set; }
+
+        public DateTime Posted { get; set; }
     }
 }

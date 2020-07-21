@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FightCore.Models.Characters;
+using FightCore.Models.Enums;
 
 namespace FightCore.Backend.ViewModels.Characters.Edits
 {
-    public class SuggestedEditDto
+    public class SuggestedEditViewModel
     {
         public long Id { get; set; }
 
@@ -17,5 +18,7 @@ namespace FightCore.Backend.ViewModels.Characters.Edits
         public string UserName { get; set; }
 
         public EditType EditType { get; set; }
+
+        public Editables Editable { get; set; }
     }
 }

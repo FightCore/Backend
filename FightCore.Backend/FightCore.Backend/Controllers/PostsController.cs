@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -148,7 +149,7 @@ namespace FightCore.Backend.Controllers
                     UserId = userId.Value
                 }
             };
-
+            post.Posted = DateTime.Now;
             post = await _postService.EncryptAndAddAsync(post);
             await _context.SaveChangesAsync();
 
@@ -302,7 +303,7 @@ namespace FightCore.Backend.Controllers
         [HttpGet("featured")]
         public async Task<IActionResult> GetFeaturedPosts()
         {
-            var posts = await _postService.GetLatestPosts();
+            var posts = await _postService.GetFeaturedPosts();
 
             posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
 

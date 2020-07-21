@@ -21,6 +21,8 @@ namespace FightCore.Services.Posts
 
         Task<List<Post>> GetLatestPosts();
 
+        Task<List<Post>> GetFeaturedPosts();
+
         Task<List<Post>> GetPostsByGameId(long gameId);
 
         Task<Post> EncryptAndAddAsync(Post entity);
@@ -38,6 +40,11 @@ namespace FightCore.Services.Posts
         {
             _encryptionService = encryptionService;
             _processingService = processingService;
+        }
+
+        public Task<List<Post>> GetFeaturedPosts()
+        {
+            return Repository.GetFeaturedPosts();
         }
 
         public Task<List<Post>> GetPostsByGameId(long gameId)

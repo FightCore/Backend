@@ -14,7 +14,11 @@ namespace FightCore.Services.Games
 
         Task<Character> GetWithAllByIdAsync(long id, bool enableTracking = true);
 
+        Task<List<Character>> GetWithAllByIdsAsync(ICollection<long> id, bool enableTracking = true);
+
         Task<List<Character>> GetCharactersByGameAsync(long gameId);
+
+        Task<List<Character>> GetCharactersForContributor(long userId);
     }
     
     public class CharacterService : EntityService<Character, ICharacterRepository>, ICharacterService
@@ -56,9 +60,19 @@ namespace FightCore.Services.Games
             return Repository.GetWithFullIncludeByIdAsync(id, enableTracking);
         }
 
+        public Task<List<Character>> GetWithAllByIdsAsync(ICollection<long> id, bool enableTracking = true)
+        {
+            return Repository.GetWithAllByIdsAsync(id, enableTracking);
+        }
+
         public Task<List<Character>> GetCharactersByGameAsync(long gameId)
         {
             return Repository.GetCharactersByGameAsync(gameId);
+        }
+
+        public Task<List<Character>> GetCharactersForContributor(long userId)
+        {
+            return Repository.GetCharactersForContributor(userId);
         }
     }
 }

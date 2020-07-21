@@ -1,0 +1,29 @@
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace FightCore.MeleeFrameData
+{
+    public class FrameDataContext : DbContext
+    {
+        public DbSet<Attack> Attacks { get; set; }
+
+        public DbSet<Dodge> Dodges { get; set; }
+
+        public DbSet<Grab> Grabs { get; set; }
+
+        public DbSet<Throw> Throws { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseSqlite(@"Data Source=C:/Users/bartd/Downloads/characters.db;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Attack>().HasNoKey();
+            modelBuilder.Entity<Dodge>().HasNoKey();
+            modelBuilder.Entity<Grab>().HasNoKey();
+            modelBuilder.Entity<Throw>().HasNoKey();
+        }
+    }
+}

@@ -6,7 +6,9 @@ using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Characters.Edits;
 using FightCore.Backend.ViewModels.Errors;
 using FightCore.Backend.ViewModels.Posts;
+using FightCore.Backend.ViewModels.User;
 using FightCore.Models.Characters;
+using FightCore.Models.Enums;
 using FightCore.Services;
 using FightCore.Services.Characters;
 using FightCore.Services.Games;
@@ -51,7 +53,7 @@ namespace FightCore.Backend.Controllers
             _characterFacadeService = characterFacadeService;
             _suggestedEditService = suggestedEditService;
         }
-        
+
         /// <summary>
         /// Gets all characters.
         /// </summary>
@@ -97,7 +99,32 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(nameof(Character), id));
             }
 
-            return MappedOk<GetCharacterViewModel>(character);
+            var mappedCharacter = Mapper.Map<GetCharacterViewModel>(character);
+            var contributors = await _suggestedEditService.GetContributorsForEntity(id);
+
+            contributors = contributors.Where(contributor =>
+                mappedCharacter.Contributors.All(contributor2 => contributor2.User.Name != contributor)).ToList();
+
+            mappedCharacter.Contributors.AddRange(contributors.Select(name =>
+                new ContributorViewModel()
+                {
+                    ContributorType = ContributorType.Contributor,
+                    User = new UserViewModel()
+                    {
+                        Name = name
+                    }
+                }).ToList());
+            return Ok(mappedCharacter);
+        }
+
+        [HttpGet("popular")]
+        public async Task<IActionResult> GetPopularCharacters()
+        {
+            var characterIds = await _suggestedEditService.GetPopularCharacterIds();
+
+            var characters = await _characterService.GetWithAllByIdsAsync(characterIds);
+            var characterViewModels = Mapper.Map<List<GetCharacterListViewModel>>(characters);
+            return Ok(characterViewModels);
         }
 
         /// <summary>
@@ -130,14 +157,14 @@ namespace FightCore.Backend.Controllers
             if (character.Contributors.Any(contributor => contributor.UserId == userId))
             {
                 edits = await _suggestedEditService.GetAllForCharacter(id);
-                
+
             }
             else
             {
                 edits = await _suggestedEditService.GetEditsForCharacterAndUser(id, userId.Value);
             }
 
-            var editDtos = Mapper.Map<List<SuggestedEditDto>>(edits);
+            var editDtos = Mapper.Map<List<SuggestedEditViewModel>>(edits);
             return Ok(editDtos);
 
         }

@@ -12,12 +12,11 @@ using FightCore.Services.Games;
 using FightCore.Services.Posts;
 using FightCore.Services.Users;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FightCore.Bot.Configuration
 {
-    public static class PatterrnsInjection
+    public static class PatternsInjection
     {
         /// <summary>
         /// Adds the required dependencies for patterns and all repositories

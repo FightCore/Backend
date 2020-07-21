@@ -14,6 +14,10 @@ namespace FightCore.Repositories.Games
         Task<List<Character>> GetCharactersWithGames();
         
         Task<Character> GetWithFullIncludeByIdAsync(long id, bool enableTracking = true);
+
+        Task<List<Character>> GetCharactersForContributor(long userId);
+
+        Task<List<Character>> GetWithAllByIdsAsync(ICollection<long> id, bool enableTracking = true);
     }
     
     public class CharacterRepository : EntityRepository<Character>, ICharacterRepository
@@ -37,6 +41,25 @@ namespace FightCore.Repositories.Games
 
             return queryable.FirstOrDefaultAsync(character => character.Id == id);
         }
+
+        public Task<List<Character>> GetCharactersForContributor(long userId)
+        {
+            return MinimalInclude.Where(character =>
+                character.Contributors.Any(contributor => contributor.UserId == userId))
+                .ToListAsync();
+        }
+
+        public Task<List<Character>> GetWithAllByIdsAsync(ICollection<long> id, bool enableTracking = true)
+        {
+            var queryable = FullInclude;
+            if (!enableTracking)
+            {
+                queryable = queryable.AsNoTracking();
+            }
+
+            return queryable.Where(character => id.Contains(character.Id)).ToListAsync();
+        }
+
 
         public Task<List<Character>> GetCharactersByGameAsync(long gameId)
         {

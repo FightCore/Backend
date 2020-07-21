@@ -12,7 +12,7 @@ namespace FightCore.Backend.Configuration.Mapping
     {
         public EditMapperProfile()
         {
-            CreateMap<SuggestedEdit, SuggestedEditDto>()
+            CreateMap<SuggestedEdit, SuggestedEditViewModel>()
                 .ForMember(editDto => editDto.UserName, options => options.MapFrom(edit => edit.User.UserName));
         }
     }

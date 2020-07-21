@@ -21,6 +21,8 @@ namespace FightCore.Repositories.Posts
 
         Task<List<Post>> GetLatestPosts();
 
+        Task<List<Post>> GetFeaturedPosts();
+
         Task<List<Post>> GetPostsByGameId(long gameId);
     }
 
@@ -72,6 +74,15 @@ namespace FightCore.Repositories.Posts
                 .Where(post => !post.IsPrivate)
                 .OrderByDescending(post =>
                 post.Id).Take(3).ToListAsync();
+        }
+
+        public Task<List<Post>> GetFeaturedPosts()
+        {
+            return IncludedQueryable
+                .Where(post => post.Featured)
+                .OrderByDescending(post => post.Id)
+                .Take(3)
+                .ToListAsync();
         }
 
         public Task<List<Post>> GetPostsByGameId(long gameId)

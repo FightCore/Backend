@@ -42,6 +42,7 @@ namespace FightCore.Bot.Services
             if (!message.HasMentionPrefix(_discord.CurrentUser, ref argPos) && !message.HasCharPrefix(prefix, ref argPos)) return;
 
             var context = new SocketCommandContext(_discord, message);
+
             var result = await _commands.ExecuteAsync(context, argPos, _provider);
 
             if (result.Error.HasValue &&

@@ -48,6 +48,7 @@ namespace FightCore.Bot
                 // Logging
                 .AddLogging()
                 .AddSingleton<LogService>()
+                .AddSingleton<FrameDataService>()
                 // Extra
                 .AddSingleton(_config)
                 .AddDbContext<ApplicationDbContext>(

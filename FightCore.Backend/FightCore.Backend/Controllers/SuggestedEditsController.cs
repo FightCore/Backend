@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FightCore.Backend.ViewModels.Characters;
+using FightCore.Backend.ViewModels.Characters.Edits;
+using FightCore.Models.Characters;
 using FightCore.Services.Characters;
 using FightCore.Services.Games;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +36,41 @@ namespace FightCore.Backend.Controllers
             _editFacadeService = editFacadeService;
             _characterService = characterService;
             _dbContext = dbContext;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllEditsForUser()
+        {
+            var userId = GetUserIdFromClaims(User);
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var characters = await _characterService.GetCharactersForContributor(userId.Value);
+
+            var characterEditsDictionary = new Dictionary<Character, List<SuggestedEdit>>();
+            foreach (var character in characters)
+            {
+                var edits = await _suggestedEditService.GetEditsForCharacterAndUser(character.Id, userId.Value);
+                if (edits.Count == 0)
+                {
+                    continue;
+                }
+
+                characterEditsDictionary.Add(character, edits);
+            }
+
+            var viewModelList = characterEditsDictionary.Select(keyValuePair =>
+                new EditListItemViewModel
+                {
+                    Character = Mapper.Map<GetCharacterListViewModel>(keyValuePair.Key),
+                    Edits = Mapper.Map<List<SuggestedEditViewModel>>(keyValuePair.Value)
+                }).ToList();
+
+            return Ok(viewModelList);
         }
 
         [HttpPut("{id}")]
