@@ -14,11 +14,16 @@ namespace FightCore.Bot.Modules
     {
         private readonly ICharacterService _characterService;
         private readonly FrameDataService _frameDataService;
+        private readonly CharacterInfoEmbedCreator _characterInfoEmbedCreator;
 
-        public CharacterModule(ICharacterService characterService, FrameDataService frameDataService)
+        public CharacterModule(
+            ICharacterService characterService,
+            FrameDataService frameDataService,
+            CharacterInfoEmbedCreator characterInfoEmbedCreator)
         {
             _characterService = characterService;
             _frameDataService = frameDataService;
+            _characterInfoEmbedCreator = characterInfoEmbedCreator;
         }
 
         [Command]
@@ -29,8 +34,8 @@ namespace FightCore.Bot.Modules
                 var characterEntity = _frameDataService.GetCharacter(character);
 
                 var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
-
-                var embed = new CharacterInfoEmbedCreator().CreateInfoEmbed(fightCoreCharacter);
+                var misc = _frameDataService.GetMiscForCharacter(characterEntity.NormalizedName);
+                var embed = _characterInfoEmbedCreator.CreateInfoEmbed(fightCoreCharacter, misc);
 
                 await ReplyAsync(string.Empty, embed: embed);
             }
@@ -53,7 +58,7 @@ namespace FightCore.Bot.Modules
                     return;
                 }
 
-                var embed = new CharacterInfoEmbedCreator().CreateMoveEmbed(characterEntity, attack, fightCoreCharacter);
+                var embed = _characterInfoEmbedCreator.CreateMoveEmbed(characterEntity, attack, fightCoreCharacter);
 
                 await ReplyAsync(string.Empty, embed: embed);
             }
@@ -69,7 +74,7 @@ namespace FightCore.Bot.Modules
 
                 var fightCoreCharacter = await _characterService.GetWithAllByIdAsync(characterEntity.FightCoreId);
 
-                var embed = new CharacterInfoEmbedCreator().CreateMoveListEmbed(characterEntity, moves, fightCoreCharacter);
+                var embed = _characterInfoEmbedCreator.CreateMoveListEmbed(characterEntity, moves, fightCoreCharacter);
                 await ReplyAsync(string.Empty, embed: embed);
             }
         }

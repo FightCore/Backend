@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FightCore.Models.Characters;
+﻿using FightCore.Models.Characters;
 using FightCore.Models.Enums;
 
 namespace FightCore.Backend.ViewModels.Characters.Edits
@@ -20,5 +16,7 @@ namespace FightCore.Backend.ViewModels.Characters.Edits
         public EditType EditType { get; set; }
 
         public Editables Editable { get; set; }
+
+        public long UserId { get; set; }
     }
 }

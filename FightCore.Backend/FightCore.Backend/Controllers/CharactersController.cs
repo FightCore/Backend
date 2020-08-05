@@ -156,17 +156,26 @@ namespace FightCore.Backend.Controllers
 
             if (character.Contributors.Any(contributor => contributor.UserId == userId))
             {
-                edits = await _suggestedEditService.GetAllForCharacter(id);
+                edits = await _suggestedEditService.GetAllOpenForCharacter(id);
 
             }
             else
             {
-                edits = await _suggestedEditService.GetEditsForCharacterAndUser(id, userId.Value);
+                edits = await _suggestedEditService.GetOpenEditsForCharacterAndUser(id, userId.Value);
             }
 
             var editDtos = Mapper.Map<List<SuggestedEditViewModel>>(edits);
             return Ok(editDtos);
 
+        }
+
+        [HttpGet("{id}/edits/history")]
+        public async Task<IActionResult> GetHistory(long id)
+        {
+            var edits = await _suggestedEditService.GetAllDoneForCharacter(id);
+
+            var editViewModels = Mapper.Map<List<SuggestedEditViewModel>>(edits);
+            return Ok(editViewModels);
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace FightCore.Backend.Controllers
             var characterEditsDictionary = new Dictionary<Character, List<SuggestedEdit>>();
             foreach (var character in characters)
             {
-                var edits = await _suggestedEditService.GetEditsForCharacterAndUser(character.Id, userId.Value);
+                var edits = await _suggestedEditService.GetOpenEditsForCharacterAndUser(character.Id, userId.Value);
                 if (edits.Count == 0)
                 {
                     continue;
@@ -73,7 +73,7 @@ namespace FightCore.Backend.Controllers
             return Ok(viewModelList);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("approve/{id}")]
         [Authorize]
         public async Task<IActionResult> ApproveEdit([FromRoute]long id)
         {
@@ -104,6 +104,31 @@ namespace FightCore.Backend.Controllers
 
             _editFacadeService.ApproveEdit(edit, character);
             edit.ApprovedByUserId = userId.Value;
+            await _dbContext.SaveChangesAsync();
+
+            return Accepted();
+        }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSuggestedEdit([FromRoute]long id, [FromBody]SuggestedEditViewModel editViewModel)
+        {
+            var userId = GetUserIdFromClaims(User);
+
+            if (!userId.HasValue)
+            {
+                return Unauthorized();
+            }
+
+            var edit = await _suggestedEditService.GetByIdAsync(id);
+
+            if (edit == null || edit.UserId == userId.Value)
+            {
+                return NotFound();
+            }
+
+            edit.Target = editViewModel.Target;
+            _suggestedEditService.Update(edit);
             await _dbContext.SaveChangesAsync();
 
             return Accepted();

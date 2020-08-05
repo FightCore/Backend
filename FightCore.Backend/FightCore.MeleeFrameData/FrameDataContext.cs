@@ -12,6 +12,8 @@ namespace FightCore.MeleeFrameData
 
         public DbSet<Throw> Throws { get; set; }
 
+        public DbSet<Misc> Misc { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
@@ -24,6 +26,7 @@ namespace FightCore.MeleeFrameData
             modelBuilder.Entity<Dodge>().HasNoKey();
             modelBuilder.Entity<Grab>().HasNoKey();
             modelBuilder.Entity<Throw>().HasNoKey();
+            modelBuilder.Entity<Misc>().HasNoKey();
         }
     }
 }

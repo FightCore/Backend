@@ -11,7 +11,9 @@ namespace FightCore.Repositories.Characters
 {
     public interface ISuggestedEditRepository : IRepository<SuggestedEdit, long>
     {
-        Task<List<SuggestedEdit>> GetAllForCharacter(long characterId);
+        Task<List<SuggestedEdit>> GetAllDoneForCharacter(long characterId);
+
+        Task<List<SuggestedEdit>> GetAllOpenForCharacter(long characterId);
 
         Task<List<SuggestedEdit>> GetEditsForCharacterAndUser(long characterId, long userId);
 
@@ -26,7 +28,15 @@ namespace FightCore.Repositories.Characters
         {
         }
 
-        public Task<List<SuggestedEdit>> GetAllForCharacter(long characterId)
+        public Task<List<SuggestedEdit>> GetAllDoneForCharacter(long characterId)
+        {
+            return Queryable
+                .Include(edit => edit.User)
+                .Where(edit => edit.EntityId == characterId && edit.ApprovedByUserId.HasValue)
+                .ToListAsync();
+        }
+
+        public Task<List<SuggestedEdit>> GetAllOpenForCharacter(long characterId)
         {
             return Queryable
                 .Include(edit => edit.User)

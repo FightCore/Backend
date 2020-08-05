@@ -10,9 +10,11 @@ namespace FightCore.Services.Characters
 {
     public interface ISuggestedEditService : IService<SuggestedEdit, long, ISuggestedEditRepository>
     {
-        Task<List<SuggestedEdit>> GetAllForCharacter(long characterId);
+        Task<List<SuggestedEdit>> GetAllDoneForCharacter(long characterId);
 
-        Task<List<SuggestedEdit>> GetEditsForCharacterAndUser(long characterId, long userId);
+        Task<List<SuggestedEdit>> GetAllOpenForCharacter(long characterId);
+
+        Task<List<SuggestedEdit>> GetOpenEditsForCharacterAndUser(long characterId, long userId);
 
         Task<List<string>> GetContributorsForEntity(long entityId);
 
@@ -25,12 +27,17 @@ namespace FightCore.Services.Characters
         {
         }
 
-        public Task<List<SuggestedEdit>> GetAllForCharacter(long characterId)
+        public Task<List<SuggestedEdit>> GetAllDoneForCharacter(long characterId)
         {
-            return Repository.GetAllForCharacter(characterId);
+            return Repository.GetAllDoneForCharacter(characterId);
         }
 
-        public Task<List<SuggestedEdit>> GetEditsForCharacterAndUser(long characterId, long userId)
+        public Task<List<SuggestedEdit>> GetAllOpenForCharacter(long characterId)
+        {
+            return Repository.GetAllOpenForCharacter(characterId);
+        }
+
+        public Task<List<SuggestedEdit>> GetOpenEditsForCharacterAndUser(long characterId, long userId)
         {
             return Repository.GetEditsForCharacterAndUser(characterId, userId);
         }

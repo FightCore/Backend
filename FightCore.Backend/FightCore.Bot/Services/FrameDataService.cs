@@ -12,6 +12,7 @@ namespace FightCore.Bot.Services
     public class FrameDataService
     {
         private readonly List<WrapperCharacter> _characters;
+        private readonly List<Misc> _miscs;
         private readonly List<NormalizedEntity> _entities;
 
         public FrameDataService()
@@ -33,6 +34,7 @@ namespace FightCore.Bot.Services
                 dodges = frameDataContext.Dodges.ToList();
                 grabs = frameDataContext.Grabs.ToList();
                 throws = frameDataContext.Throws.ToList();
+                _miscs = frameDataContext.Misc.ToList();
             }
 
             foreach (var attack in attacks)
@@ -63,6 +65,13 @@ namespace FightCore.Bot.Services
                 @throw.NormalizedName = SearchHelper.Normalize(@throw.Name);
             }
 
+            foreach (var misc in _miscs)
+            {
+                misc.NormalizedCharacter = SearchHelper.Normalize(misc.Character);
+                misc.NormalizedType = SearchHelper.Normalize(misc.Character);
+                misc.NormalizedName = SearchHelper.Normalize(misc.Character);
+            }
+
             _entities = new List<NormalizedEntity>();
             _entities.AddRange(attacks);
             _entities.AddRange(dodges);
@@ -77,6 +86,11 @@ namespace FightCore.Bot.Services
                 wrapperCharacter.Name.Equals(normalizedName, StringComparison.InvariantCultureIgnoreCase));
 
             return character ?? _characters.FirstOrDefault(wrapperCharacter => wrapperCharacter.Names.Contains(normalizedName));
+        }
+
+        public Misc GetMiscForCharacter(string name)
+        {
+            return _miscs.FirstOrDefault(misc => misc.NormalizedCharacter == SearchHelper.Normalize(name));
         }
 
         public List<NormalizedEntity> GetMoves(string characterName)

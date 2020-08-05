@@ -5,6 +5,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using FightCore.Bot.Configuration;
+using FightCore.Bot.EmbedCreators.Characters;
 using FightCore.Bot.Services;
 using FightCore.Configuration;
 using FightCore.Data;
@@ -15,7 +16,7 @@ using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBui
 
 namespace FightCore.Bot
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
             => new Program().MainAsync().GetAwaiter().GetResult();
@@ -51,6 +52,8 @@ namespace FightCore.Bot
                 .AddSingleton<FrameDataService>()
                 // Extra
                 .AddSingleton(_config)
+                .Configure<EmbedSettings>(_config.GetSection("EmbedSettings"))
+                .AddScoped<CharacterInfoEmbedCreator>()
                 .AddDbContext<ApplicationDbContext>(
                     options =>
                         options.UseSqlServer(_config.GetConnectionString(ConfigurationVariables.DefaultConnection),

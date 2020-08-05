@@ -18,7 +18,7 @@ namespace FightCore.Bot.EmbedCreators.Base
                 return text;
             }
 
-            return text.Substring(0, length);
+            return text.Substring(0, length -3) + "...";
         }
 
         protected string ShortenDescription(string text)

@@ -3,27 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discord;
+using FightCore.Bot.Configuration;
 using FightCore.Bot.EmbedCreators.Base;
 using FightCore.Bot.Helpers;
 using FightCore.Bot.Models.FrameData;
 using FightCore.MeleeFrameData;
 using FightCore.Models.Characters;
+using Microsoft.Extensions.Options;
 
 namespace FightCore.Bot.EmbedCreators.Characters
 {
     public class CharacterInfoEmbedCreator : BaseEmbedCreator
     {
-        public Embed CreateInfoEmbed(Character character)
+        private readonly EmbedSettings _embedSettings;
+
+        public CharacterInfoEmbedCreator(IOptions<EmbedSettings> embedSettings)
+        {
+            _embedSettings = embedSettings.Value;
+        }
+
+        public Embed CreateInfoEmbed(Character character, Misc misc)
         {
             var embedBuilder = new EmbedBuilder {Title = character.Name};
 
-            embedBuilder.AddField("General information",ShortenString(character.GeneralInformation, 300));
-
-            if (character.NotablePlayers.Any())
+            if (_embedSettings.FightCoreInfo)
             {
-                embedBuilder.AddField("Notable players",
-                    string.Join(", ", character.NotablePlayers.Take(6).Select(player => player.Name))
-                );
+                embedBuilder.AddField("General information", ShortenString(character.GeneralInformation, 250));
+
+                if (character.NotablePlayers.Any())
+                {
+                    embedBuilder.AddField("Notable players",
+                        string.Join(", ", character.NotablePlayers.Take(6).Select(player => player.Name))
+                    );
+                }
             }
 
             if (character.StockIcon != null)
@@ -32,8 +44,19 @@ namespace FightCore.Bot.EmbedCreators.Characters
             if (character.CharacterImage != null)
                 embedBuilder.WithImageUrl(character.CharacterImage.Url);
 
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"**Weight:** {misc.Weight}");
+            stringBuilder.AppendLine($"**Gravity:** {misc.Gravity}");
+            stringBuilder.AppendLine($"**Walk speed:** {misc.WalkSpeed}");
+            stringBuilder.AppendLine($"**Run speed:** {misc.RunSpeed}");
+            stringBuilder.AppendLine($"**Wave dash length (rank):** {misc.WaveDashLengthRank}");
+            stringBuilder.AppendLine($"**PLA Intangibility Frames:** {misc.PLAIntangibilityFrames}");
+            stringBuilder.AppendLine($"**Can wall jump:** {misc.CanWallJump}");
+            stringBuilder.AppendLine($"**Jump squad:** {misc.JumpSquat}");
+            embedBuilder.AddField("Frame data", stringBuilder.ToString());
+
             embedBuilder.WithUrl($"https://www.fightcore.gg/character/{character.Id}");
-            embedBuilder = AddFightCoreFooter(embedBuilder);
+            embedBuilder = AddFooter(embedBuilder);
             return embedBuilder.Build();
         }
 
@@ -61,7 +84,7 @@ namespace FightCore.Bot.EmbedCreators.Characters
                 .AddField("Help", "To check out a move use:\n`-character move {CHARACTER NAME} {MOVE NAME}`\n" +
                                           "For example: `-character move Fox u-smash`");
 
-            embedBuilder = AddFightCoreFooter(embedBuilder);
+            embedBuilder = AddFooter(embedBuilder);
             return embedBuilder.Build();
         }
 
@@ -160,9 +183,31 @@ namespace FightCore.Bot.EmbedCreators.Characters
                 .WithImageUrl($"https://i.fightcore.gg/melee/moves/{characterName}/{moveName}.gif");
 
             embedBuilder.Title = $"{character.Name} - {move.Name}";
-            embedBuilder = AddFightCoreFooter(embedBuilder);
+            return AddFooter(embedBuilder);
+        }
 
-            return embedBuilder;
+        private EmbedBuilder AddFooter(EmbedBuilder builder)
+        {
+            switch (_embedSettings.FooterType)
+            {
+                case FooterType.FightCore:
+                    builder = AddFightCoreFooter(builder);
+                    break;
+                case FooterType.MeleeOnline:
+                    builder.WithFooter("Melee Online Frame Data", "https://cdn.discordapp.com/icons/724998978113896508/a_a765306c32c21eca27349539154983a9.webp?size=128")
+                        .WithColor(Color.Green)
+                        .WithCurrentTimestamp();
+                    break;
+                case FooterType.DutchNetplay:
+                    builder.WithFooter("Dutch Melee Discord", "https://cdn.discordapp.com/icons/283580261520769026/df9cab8218c661ebd2ad0c4550969504.webp?size=128")
+                        .WithColor(Color.Red)
+                        .WithCurrentTimestamp();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return builder;
         }
 
         private static EmbedBuilder AddMeleeFrameDataInfo(EmbedBuilder builder)

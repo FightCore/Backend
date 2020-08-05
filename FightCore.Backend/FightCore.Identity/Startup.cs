@@ -90,6 +90,7 @@ namespace FightCore.Identity
             });
 
             app.UseAuthorization();
+            app.UseAuthentication();
             app.UseCors("TestPolicy");
 
             if (Environment.IsDevelopment())
@@ -98,7 +99,7 @@ namespace FightCore.Identity
             }
 
             app.UseStaticFiles();
-
+            app.UseHttpsRedirection();
             app.UseIdentityServer();
 
             app.UseEndpoints(endpoints =>
