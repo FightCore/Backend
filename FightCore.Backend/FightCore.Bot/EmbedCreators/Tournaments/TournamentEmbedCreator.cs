@@ -2,17 +2,22 @@
 using System.Linq;
 using System.Text;
 using Discord;
+using FightCore.Bot.Configuration;
 using FightCore.Bot.EmbedCreators.Base;
-using FightCore.Repositories;
+using Microsoft.Extensions.Options;
 using smashgg.net.Models.Tournaments;
 
 namespace FightCore.Bot.EmbedCreators.Tournaments
 {
     public class TournamentEmbedCreator : BaseEmbedCreator
     {
+        public TournamentEmbedCreator(IOptions<EmbedSettings> embedSettings) : base(embedSettings)
+        {
+        }
+
         public Embed Create(Tournament tournament)
         {
-            var embedBuilder = AddFightCoreFooter(new EmbedBuilder());
+            var embedBuilder = AddFooter(new EmbedBuilder());
             embedBuilder.Title = tournament.Name;
             embedBuilder.Url = $"https://www.smash.gg/{tournament.Slug}";
             if (tournament.Images.Any())

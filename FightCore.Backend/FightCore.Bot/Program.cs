@@ -5,6 +5,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using FightCore.Bot.Configuration;
+using FightCore.Bot.EmbedCreators;
 using FightCore.Bot.EmbedCreators.Characters;
 using FightCore.Bot.Services;
 using FightCore.Configuration;
@@ -53,7 +54,9 @@ namespace FightCore.Bot
                 // Extra
                 .AddSingleton(_config)
                 .Configure<EmbedSettings>(_config.GetSection("EmbedSettings"))
+                .Configure<ModuleSettings>(_config.GetSection("Modules"))
                 .AddScoped<CharacterInfoEmbedCreator>()
+                .AddScoped<NotFoundEmbedCreator>()
                 .AddDbContext<ApplicationDbContext>(
                     options =>
                         options.UseSqlServer(_config.GetConnectionString(ConfigurationVariables.DefaultConnection),

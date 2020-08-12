@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Discord;
+﻿using Discord;
+using FightCore.Bot.Configuration;
 using FightCore.Bot.EmbedCreators.Base;
+using Microsoft.Extensions.Options;
 
 namespace FightCore.Bot.EmbedCreators.Game
 {
     public class GameEmbedCreator : BaseEmbedCreator
     {
+        public GameEmbedCreator(IOptions<EmbedSettings> embedSettings) : base(embedSettings)
+        {
+        }
+
         public Embed CreateGameEmbed(FightCore.Models.Game game)
         {
             var embedBuilder = new EmbedBuilder();

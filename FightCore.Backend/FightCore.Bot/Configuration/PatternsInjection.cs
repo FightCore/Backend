@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FightCore.Data;
+﻿using FightCore.Data;
 using FightCore.Repositories;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;

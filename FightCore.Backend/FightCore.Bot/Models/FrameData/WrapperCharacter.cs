@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using FightCore.Bot.Models.FrameData;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace FightCore.Bot.Models.FrameData
 {

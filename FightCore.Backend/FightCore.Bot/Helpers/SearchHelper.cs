@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using FightCore.Bot.Models.FrameData;
 
 namespace FightCore.Bot.Helpers
 {
@@ -10,7 +7,7 @@ namespace FightCore.Bot.Helpers
     {
         public static string Normalize(string value)
         {
-            var removedChars = new string[] {"-", "_", ".", " ", "(", ")"};
+            var removedChars = new string[] {"-", "_", ".", "@", "`", " ", "(", ")"};
 
             value = removedChars.
                 Aggregate(value, (current, removedChar) =>
