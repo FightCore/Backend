@@ -17,7 +17,7 @@ namespace FightCore.MeleeFrameData
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlite(@"Data Source=C:/Users/bartd/Downloads/characters.db;");
+                .UseSqlite(@"Data Source=Data/characters.db;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

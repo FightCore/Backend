@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightCore.FrameData;
 using FightCore.KuroganeHammer.Services;
 using FightCore.Services.Games;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FightCore.Backend.Controllers
 {
@@ -15,12 +17,15 @@ namespace FightCore.Backend.Controllers
     {
         private readonly IKuroganeHammerService _kuroganeHammerService;
         private readonly ICharacterService _characterService;
+        private readonly FrameDataContext _frameDataContext;
 
         public FrameDataController(IKuroganeHammerService kuroganeHammerService,
-            ICharacterService characterService)
+            ICharacterService characterService,
+            FrameDataContext frameDataContext)
         {
             _kuroganeHammerService = kuroganeHammerService;
             _characterService = characterService;
+            _frameDataContext = frameDataContext;
         }
 
         [HttpGet("{characterId}")]
@@ -33,13 +38,13 @@ namespace FightCore.Backend.Controllers
                 return NotFound();
             }
 
-            switch (character.GameId)
-            {
-                case 6:
-                    return Ok(await _kuroganeHammerService.GetCharacterAttributes(character.Name, "ultimate"));
-                default: 
-                    return NotFound();
-            }
+            var frameData = await _frameDataContext.Characters
+                .Include(@char => @char.CharacterStatistics)
+                .Include(@char => @char.Moves)
+                .ThenInclude(move => move.Hitboxes)
+                .FirstOrDefaultAsync(@char => @char.FightCoreId == characterId);
+
+            return Ok(frameData);
         }
     }
 }

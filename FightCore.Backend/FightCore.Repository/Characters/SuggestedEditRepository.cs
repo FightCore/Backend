@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bartdebever.Patterns.Repositories;
+using FightCore.Models;
 using FightCore.Models.Characters;
+using FightCore.Repositories.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace FightCore.Repositories.Characters
@@ -20,6 +22,8 @@ namespace FightCore.Repositories.Characters
         Task<List<string>> GetContributorsForEntity(long entityId);
 
         Task<List<long>> GetPopularCharacterId();
+
+        Task<List<ContributorDto>> GetTopContributors();
     }
 
     public class SuggestedEditRepository : EntityRepository<SuggestedEdit>, ISuggestedEditRepository
@@ -68,6 +72,21 @@ namespace FightCore.Repositories.Characters
                 .OrderByDescending(entityIds => entityIds.Count())
                 .Take(5)
                 .Select(key => key.Key)
+                .ToListAsync();
+        }
+
+        public Task<List<ContributorDto>> GetTopContributors()
+        {
+            return Queryable.Where(edit => edit.ApprovedByUserId.HasValue)
+                .Include(edit => edit.User)
+                .GroupBy(edit => edit.UserId)
+                .OrderByDescending(grouping => grouping.Count())
+                .Select(grouping => new ContributorDto()
+                {
+                    UserId = grouping.Key,
+                    Edits = grouping.Count()
+                })
+                .Take(5)
                 .ToListAsync();
         }
     }

@@ -15,6 +15,7 @@ namespace FightCore.MeleeFrameData
 
         [NotMapped]
         public string NormalizedCharacter { get; set; }
+
         public string Name { get; set; }
 
         [Column("char")]

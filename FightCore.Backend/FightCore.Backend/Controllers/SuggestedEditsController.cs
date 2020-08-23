@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.Characters.Edits;
+using FightCore.Backend.ViewModels.Edits;
 using FightCore.Models.Characters;
 using FightCore.Services.Characters;
 using FightCore.Services.Games;
+using FightCore.Services.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,7 @@ namespace FightCore.Backend.Controllers
         private readonly ISuggestedEditService _suggestedEditService;
         private readonly ICharacterService _characterService;
         private readonly IEditFacadeService _editFacadeService;
+        private readonly IApplicationUserService _applicationUserService;
         private readonly DbContext _dbContext;
 
         /// <inheritdoc />
@@ -29,12 +32,14 @@ namespace FightCore.Backend.Controllers
             ISuggestedEditService suggestedEditService,
             ICharacterService characterService,
             IEditFacadeService editFacadeService,
+            IApplicationUserService applicationUserService,
             DbContext dbContext
         ) : base(mapper)
         {
             _suggestedEditService = suggestedEditService;
             _editFacadeService = editFacadeService;
             _characterService = characterService;
+            _applicationUserService = applicationUserService;
             _dbContext = dbContext;
         }
 
@@ -71,6 +76,20 @@ namespace FightCore.Backend.Controllers
                 }).ToList();
 
             return Ok(viewModelList);
+        }
+
+        [HttpGet("contributors")]
+        public async Task<IActionResult> GetTopContributors()
+        {
+            var contributorDtos = await _suggestedEditService.GetTopContributors();
+            foreach (var contributorDto in contributorDtos)
+            {
+                contributorDto.User = await _applicationUserService.GetByIdAsync(contributorDto.UserId);
+            }
+
+            var dtos = Mapper.Map<List<TopContributorDto>>(contributorDtos);
+
+            return Ok(dtos);
         }
 
         [HttpPut("approve/{id}")]

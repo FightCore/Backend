@@ -10,6 +10,8 @@ namespace FightCore.MeleeFrameData
 
         public int? Start { get; set; }
 
+        public int? End { get; set; }
+
         public int? Total { get; set; }
 
         public string Notes { get; set; }

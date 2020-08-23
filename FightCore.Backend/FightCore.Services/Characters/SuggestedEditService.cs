@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Bartdebever.Patterns.Services;
+using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Repositories.Characters;
+using FightCore.Repositories.Dtos;
 
 namespace FightCore.Services.Characters
 {
@@ -19,6 +21,8 @@ namespace FightCore.Services.Characters
         Task<List<string>> GetContributorsForEntity(long entityId);
 
         Task<List<long>> GetPopularCharacterIds();
+
+        Task<List<ContributorDto>> GetTopContributors();
     }
 
     public class SuggestedEditService : EntityService<SuggestedEdit, ISuggestedEditRepository>, ISuggestedEditService
@@ -50,6 +54,11 @@ namespace FightCore.Services.Characters
         public Task<List<long>> GetPopularCharacterIds()
         {
             return Repository.GetPopularCharacterId();
+        }
+
+        public Task<List<ContributorDto>> GetTopContributors()
+        {
+            return Repository.GetTopContributors();
         }
     }
 }

@@ -34,5 +34,7 @@ namespace FightCore.MeleeFrameData
 
         [Column("cancel_lag")]
         public int? LCanceledLandingLag { get; set; }
+
+        public string Id => Character + Move;
     }
 }

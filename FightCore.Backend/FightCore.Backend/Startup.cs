@@ -7,6 +7,7 @@ using FightCore.Backend.Middleware;
 using FightCore.Configuration;
 using FightCore.Configuration.Models;
 using FightCore.Data;
+using FightCore.FrameData;
 using FightCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -116,6 +117,7 @@ namespace FightCore.Backend
 
 
             services.AddPatterns(Configuration);
+            services.AddScoped<FrameDataContext>();
 
 
 

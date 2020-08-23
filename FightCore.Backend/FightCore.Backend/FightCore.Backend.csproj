@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Bot\FightCore.Bot\FightCore.FrameData\FightCore.FrameData.csproj" />
     <ProjectReference Include="..\FightCore.Configuration\FightCore.Configuration.csproj" />
     <ProjectReference Include="..\FightCore.Data\FightCore.Data.csproj" />
     <ProjectReference Include="..\FightCore.KuroganeHammer\FightCore.KuroganeHammer.csproj" />
@@ -60,10 +61,6 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Edits\" />
   </ItemGroup>
 
 </Project>

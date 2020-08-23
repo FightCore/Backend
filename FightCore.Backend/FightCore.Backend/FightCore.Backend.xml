@@ -422,7 +422,7 @@
         <member name="T:FightCore.Backend.Controllers.SuggestedEditsController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.SuggestedEditsController.#ctor(AutoMapper.IMapper,FightCore.Services.Characters.ISuggestedEditService,FightCore.Services.Games.ICharacterService,FightCore.Services.Characters.IEditFacadeService,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:FightCore.Backend.Controllers.SuggestedEditsController.#ctor(AutoMapper.IMapper,FightCore.Services.Characters.ISuggestedEditService,FightCore.Services.Games.ICharacterService,FightCore.Services.Characters.IEditFacadeService,FightCore.Services.Users.IApplicationUserService,Microsoft.EntityFrameworkCore.DbContext)">
             <inheritdoc />
         </member>
         <member name="T:FightCore.Backend.Controllers.TournamentsController">
