@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using FightCore.Backend.ViewModels.FrameData;
 using FightCore.FrameData;
 using FightCore.KuroganeHammer.Services;
 using FightCore.Services.Games;
@@ -13,7 +15,7 @@ namespace FightCore.Backend.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class FrameDataController : ControllerBase
+    public class FrameDataController : BaseApiController
     {
         private readonly IKuroganeHammerService _kuroganeHammerService;
         private readonly ICharacterService _characterService;
@@ -21,7 +23,8 @@ namespace FightCore.Backend.Controllers
 
         public FrameDataController(IKuroganeHammerService kuroganeHammerService,
             ICharacterService characterService,
-            FrameDataContext frameDataContext)
+            FrameDataContext frameDataContext,
+            IMapper mapper): base(mapper)
         {
             _kuroganeHammerService = kuroganeHammerService;
             _characterService = characterService;
@@ -33,18 +36,24 @@ namespace FightCore.Backend.Controllers
         {
             var character = await _characterService.GetWithAllByIdAsync(characterId);
 
-            if (character == null)
+            if (character == null || character.GameId != 2)
             {
                 return NotFound();
             }
 
-            var frameData = await _frameDataContext.Characters
-                .Include(@char => @char.CharacterStatistics)
-                .Include(@char => @char.Moves)
-                .ThenInclude(move => move.Hitboxes)
-                .FirstOrDefaultAsync(@char => @char.FightCoreId == characterId);
+            switch (character.GameId)
+            {
+                case 2:
+                    var frameData = await _frameDataContext.Characters
+                        .Include(@char => @char.CharacterStatistics)
+                        .Include(@char => @char.Moves)
+                        .ThenInclude(move => move.Hitboxes)
+                        .FirstOrDefaultAsync(@char => @char.FightCoreId == characterId);
 
-            return Ok(frameData);
+                    return MappedOk<CharacterFrameDataViewModel>(frameData);
+                default:
+                    return NotFound();
+            }
         }
     }
 }
