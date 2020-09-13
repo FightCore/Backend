@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace FightCore.Backend.ViewModels.Posts
@@ -33,5 +34,11 @@ namespace FightCore.Backend.ViewModels.Posts
         public long GameId { get; set; }
 
         public long? CharacterId { get; set; }
+
+        public string Description { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public int Category { get; set; }
     }
 }

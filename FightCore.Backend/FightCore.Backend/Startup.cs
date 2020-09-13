@@ -99,6 +99,12 @@ namespace FightCore.Backend
                         sqlServerOptions =>
                             sqlServerOptions.MigrationsAssembly(ConfigurationVariables.MigrationAssembly)));
 
+            services.AddDbContext<FrameDataContext>(
+                options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("FrameDataContext"),
+                        sqlServerOptions =>
+                            sqlServerOptions.MigrationsAssembly("FightCore.FrameData")));
+
             // Add the Bearer authentication scheme as this is used by Identity Server.
             services.AddAuthentication(options =>
                 {
@@ -117,7 +123,6 @@ namespace FightCore.Backend
 
 
             services.AddPatterns(Configuration);
-            services.AddScoped<FrameDataContext>();
 
 
 

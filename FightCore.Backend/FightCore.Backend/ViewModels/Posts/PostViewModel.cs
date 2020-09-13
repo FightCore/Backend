@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FightCore.Backend.ViewModels.Characters;
 using FightCore.Backend.ViewModels.User;
+using FightCore.Models.Posts;
 
 namespace FightCore.Backend.ViewModels.Posts
 {
@@ -67,5 +68,11 @@ namespace FightCore.Backend.ViewModels.Posts
         /// The character that this post is written about.
         /// </summary>
         public GetCharacterListViewModel Character { get; set; }
+
+        public string Description { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public PostCategory Category { get; set; }
     }
 }

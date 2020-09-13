@@ -16,6 +16,7 @@ namespace FightCore.Backend.Configuration.Mapping
             CreateMap<Move, MoveViewModel>();
             CreateMap<Hitbox, HitboxViewModel>();
             CreateMap<CharacterStatistics, CharacterStatisticsViewModel>();
+            CreateMap<Character, BasicCharacterViewModel>();
         }
     }
 }

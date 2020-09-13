@@ -735,6 +735,12 @@
         <member name="P:FightCore.Backend.ViewModels.Errors.UnauthorizedErrorViewModel.Message">
             <inheritdoc />
         </member>
+        <member name="P:FightCore.Backend.ViewModels.FrameData.BasicCharacterViewModel.NormalizedName">
+            <summary>
+            This is the name, normalized to use upper case and removed the special characters.
+            This is meant to be used for users to search.
+            </summary>
+        </member>
         <member name="P:FightCore.Backend.ViewModels.FrameData.CharacterFrameDataViewModel.NormalizedName">
             <summary>
             This is the name, normalized to use upper case and removed the special characters.

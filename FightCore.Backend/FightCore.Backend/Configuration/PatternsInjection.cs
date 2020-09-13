@@ -1,4 +1,5 @@
 ﻿using FightCore.Data;
+using FightCore.FrameData;
 using FightCore.KuroganeHammer.Services;
 using FightCore.Repositories;
 using FightCore.Repositories.Characters;

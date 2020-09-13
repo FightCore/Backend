@@ -55,5 +55,17 @@ namespace FightCore.Backend.Controllers
                     return NotFound();
             }
         }
+
+        [HttpGet("moves")]
+        public async Task<IActionResult> GetMoves()
+        {
+            var moves = await _frameDataContext.Characters
+                .Include(@char => @char.CharacterStatistics)
+                .Include(@char => @char.Moves)
+                .ThenInclude(move => move.Hitboxes)
+                .ToListAsync();
+
+            return MappedOk<List<CharacterFrameDataViewModel>>(moves);
+        }
     }
 }

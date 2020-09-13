@@ -60,7 +60,7 @@ namespace FightCore.Repositories.Characters
         public Task<List<string>> GetContributorsForEntity(long entityId)
         {
             return Queryable.Include(edit => edit.User)
-                .Where(edit => edit.EntityId == entityId)
+                .Where(edit => edit.EntityId == entityId && edit.ApprovedByUserId.HasValue)
                 .Select(edit => edit.User.UserName)
                 .Distinct()
                 .ToListAsync();
@@ -70,7 +70,7 @@ namespace FightCore.Repositories.Characters
         {
             return Queryable.GroupBy(edit => edit.EntityId)
                 .OrderByDescending(entityIds => entityIds.Count())
-                .Take(5)
+                .Take(3)
                 .Select(key => key.Key)
                 .ToListAsync();
         }

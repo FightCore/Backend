@@ -37,5 +37,11 @@ namespace FightCore.Models.Posts
         public Character Character { get; set; }
 
         public DateTime Posted { get; set; }
+
+        public string Description { get; set; }
+
+        public PostCategory Category { get; set; }
+
+        public string Tags { get; set; }
     }
 }

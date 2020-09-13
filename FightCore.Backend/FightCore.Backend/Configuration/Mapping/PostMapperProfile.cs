@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Linq;
+using AutoMapper;
 using FightCore.Backend.ViewModels.Posts;
 using FightCore.Models.Posts;
 
@@ -18,9 +20,12 @@ namespace FightCore.Backend.Configuration.Mapping
                 .ForMember(viewModel => viewModel.Likes,
                     options => options.MapFrom(post => post.Likes.Count))
                 .ForMember(viewModel => viewModel.GameId,
-                    options => options.MapFrom(post => post.Game.Id));
-
-            CreateMap<CreatePostViewModel, Post>();
+                    options => options.MapFrom(post => post.Game.Id))
+                .ForMember(viewModel => viewModel.Tags, options =>
+                    options.MapFrom(post => post.Tags.Split(",", StringSplitOptions.None).ToList()));
+            CreateMap<CreatePostViewModel, Post>()
+                .ForMember(post => post.Tags, options => options.MapFrom(viewModel =>
+                    string.Join(',', viewModel.Tags)));
         }
     }
 }

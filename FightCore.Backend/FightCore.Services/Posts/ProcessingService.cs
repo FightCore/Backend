@@ -61,8 +61,6 @@ namespace FightCore.Services.Posts
 
             post.Liked = post.Likes.Any(like => like.UserId == userId);
 
-            
-
             return post;
         }
 

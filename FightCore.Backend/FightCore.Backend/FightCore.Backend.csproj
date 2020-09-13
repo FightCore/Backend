@@ -41,9 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Bot\FightCore.Bot\FightCore.FrameData\FightCore.FrameData.csproj" />
     <ProjectReference Include="..\FightCore.Configuration\FightCore.Configuration.csproj" />
     <ProjectReference Include="..\FightCore.Data\FightCore.Data.csproj" />
+    <ProjectReference Include="..\FightCore.FrameData\FightCore.FrameData.csproj" />
     <ProjectReference Include="..\FightCore.KuroganeHammer\FightCore.KuroganeHammer.csproj" />
     <ProjectReference Include="..\FightCore.Services\FightCore.Services.csproj" />
   </ItemGroup>
