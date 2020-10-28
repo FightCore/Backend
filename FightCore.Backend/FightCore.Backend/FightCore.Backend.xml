@@ -366,16 +366,17 @@
             <param name="viewModel"></param>
             <returns></returns>
         </member>
-        <member name="M:FightCore.Backend.Controllers.PostsController.UpdatePost(FightCore.Backend.ViewModels.Posts.UpdatePostViewModel)">
-             <summary>
-             Updates the post for the provided body.
-            
-             TODO Id should be in route not in body.
-             </summary>
-             <param name="viewModel">
-             The new values to update the post with.
-             </param>
-             <returns>If the action went successfully.</returns>
+        <member name="M:FightCore.Backend.Controllers.PostsController.UpdatePost(System.Int64,FightCore.Backend.ViewModels.Posts.CreatePostViewModel)">
+            <summary>
+            Updates the post for the provided body.
+            </summary>
+            <param name="id">
+            The id of the post to be edited.
+            </param>
+            <param name="viewModel">
+            The new values to update the post with.
+            </param>
+            <returns>If the action went successfully.</returns>
         </member>
         <member name="M:FightCore.Backend.Controllers.PostsController.DeletePost(System.Int64)">
             <summary>

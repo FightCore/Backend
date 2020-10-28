@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.Errors;
@@ -13,10 +11,6 @@ using FightCore.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using Serilog;
-using Serilog.Core;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FightCore.Backend.Controllers
@@ -158,20 +152,21 @@ namespace FightCore.Backend.Controllers
 
         /// <summary>
         /// Updates the post for the provided body.
-        ///
-        /// TODO Id should be in route not in body.
         /// </summary>
+        /// <param name="id">
+        /// The id of the post to be edited.
+        /// </param>
         /// <param name="viewModel">
         /// The new values to update the post with.
         /// </param>
         /// <returns>If the action went successfully.</returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize]
         [SwaggerResponse(401, "There is no logged in user or the token is invalid..")]
         [SwaggerResponse(201, "The post was successfully updated.")]
         [SwaggerResponse(404, "The post was not found.", typeof(NotFoundErrorViewModel))]
         [SwaggerResponse(403, "The post is not from the user.")]
-        public async Task<IActionResult> UpdatePost(UpdatePostViewModel viewModel)
+        public async Task<IActionResult> UpdatePost(long id, CreatePostViewModel viewModel)
         {
             var userId = GetUserIdFromClaims(User);
 
@@ -180,11 +175,11 @@ namespace FightCore.Backend.Controllers
                 return Unauthorized(new UnauthorizedErrorViewModel());
             }
 
-            var post = await _postService.GetByIdAsync(viewModel.Id);
+            var post = await _postService.GetByIdAsync(id);
 
             if (post == null)
             {
-                return NotFound(NotFoundErrorViewModel.Create(nameof(Post), viewModel.Id));
+                return NotFound(NotFoundErrorViewModel.Create(nameof(Post), id));
             }
 
             if (post.AuthorId != userId)
@@ -196,6 +191,9 @@ namespace FightCore.Backend.Controllers
             post.Body = viewModel.Body;
             post.GameId = viewModel.GameId;
             post.IsPrivate = viewModel.IsPrivate;
+            post.Tags = string.Join(',', viewModel.Tags);
+            post.Description = viewModel.Description;
+            post.Category = (PostCategory)viewModel.Category;
 
             _postService.Update(post);
             await _context.SaveChangesAsync();
