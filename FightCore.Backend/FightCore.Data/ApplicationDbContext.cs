@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FightCore.Data.Configurations;
+using FightCore.Data.Configurations.Posts;
 using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Models.Posts;
@@ -27,6 +28,7 @@ namespace FightCore.Data
             builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new SuggestedEditConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
             builder.UseOpenIddict();
 
         }
@@ -38,6 +40,8 @@ namespace FightCore.Data
         public DbSet<ApiClient> ApiClients { get; set; }
 
         public DbSet<WebsiteResource> WebsiteResources { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
     }
 }

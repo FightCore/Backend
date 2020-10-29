@@ -74,5 +74,7 @@ namespace FightCore.Backend.ViewModels.Posts
         public List<string> Tags { get; set; }
 
         public PostCategory Category { get; set; }
+
+        public List<CommentViewModel> Comments { get; set; }
     }
 }

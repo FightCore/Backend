@@ -26,6 +26,8 @@ namespace FightCore.Backend.Configuration.Mapping
             CreateMap<CreatePostViewModel, Post>()
                 .ForMember(post => post.Tags, options => options.MapFrom(viewModel =>
                     string.Join(',', viewModel.Tags)));
+
+            CreateMap<Comment, CommentViewModel>();
         }
     }
 }

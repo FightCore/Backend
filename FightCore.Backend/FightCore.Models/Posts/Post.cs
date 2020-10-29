@@ -43,5 +43,7 @@ namespace FightCore.Models.Posts
         public PostCategory Category { get; set; }
 
         public string Tags { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

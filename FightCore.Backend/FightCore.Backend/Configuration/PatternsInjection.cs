@@ -48,6 +48,7 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<ICharacterFacadeService, CharacterFacadeService>()
                 .AddScoped<IWebsiteResourceService, WebsiteResourceService>()
                 .AddScoped<ISuggestedEditService, SuggestedEditService>()
+                .AddScoped<ICommentService, CommentService>()
                 .AddScoped<IEditFacadeService, EditFacadeService>();
 
             // Add the EF Core repositories
@@ -62,6 +63,7 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<IProcessingService, ProcessingService>()
                 .AddScoped<INotablePlayerRepository, NotablePlayerRepository>()
                 .AddScoped<IWebsiteResourceRepository, WebsiteResourceRepository>()
+                .AddScoped<ICommentRepository, CommentRepository>()
                 .AddScoped<ISuggestedEditRepository, SuggestedEditRepository>();
 
             return services;

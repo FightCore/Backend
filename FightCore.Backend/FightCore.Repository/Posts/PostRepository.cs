@@ -97,6 +97,7 @@ namespace FightCore.Repositories.Posts
             .Include(post => post.Game)
             .Include(post => post.Character)
             .ThenInclude(character => character.StockIcon)
-            .Include(post => post.Likes);
+            .Include(post => post.Likes)
+            .Include(post => post.Comments);
     }
 }
