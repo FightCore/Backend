@@ -24,5 +24,11 @@ namespace FightCore.FrameData.Models
         public bool CanWallJump { get; set; }
 
         public string Notes { get; set; }
+
+        public double InitialDash { get; set; }
+
+        public int DashFrames { get; set; }
+
+        public double WaveDashLength { get; set; }
     }
 }

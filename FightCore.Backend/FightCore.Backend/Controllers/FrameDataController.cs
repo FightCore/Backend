@@ -48,6 +48,7 @@ namespace FightCore.Backend.Controllers
                         .Include(@char => @char.CharacterStatistics)
                         .Include(@char => @char.Moves)
                         .ThenInclude(move => move.Hitboxes)
+                        .Include(@char => @char.CharacterInfo)
                         .FirstOrDefaultAsync(@char => @char.FightCoreId == characterId);
 
                     return MappedOk<CharacterFrameDataViewModel>(frameData);
@@ -63,6 +64,7 @@ namespace FightCore.Backend.Controllers
                 .Include(@char => @char.CharacterStatistics)
                 .Include(@char => @char.Moves)
                 .ThenInclude(move => move.Hitboxes)
+                .Include(@char => @char.CharacterInfo)
                 .ToListAsync();
 
             return MappedOk<List<CharacterFrameDataViewModel>>(moves);

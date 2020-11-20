@@ -44,5 +44,7 @@ namespace FightCore.FrameData.Models
         public long CharacterId { get; set; }
 
         public Character Character { get; set; }
+
+        public string Source { get; set; }
     }
 }

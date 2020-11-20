@@ -22,5 +22,7 @@ namespace FightCore.Backend.ViewModels.FrameData
         public List<MoveViewModel> Moves { get; set; }
 
         public CharacterStatisticsViewModel CharacterStatistics { get; set; }
+
+        public CharacterInfoDto CharacterInfo { get; set; }
     }
 }

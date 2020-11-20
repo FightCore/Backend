@@ -39,5 +39,7 @@ namespace FightCore.Backend.ViewModels.FrameData
         public string Notes { get; set; }
 
         public int? Percent { get; set; }
+
+        public string Source { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using FightCore.FrameData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FightCore.FrameData.Migrations
 {
     [DbContext(typeof(FrameDataContext))]
-    partial class FrameDataContextModelSnapshot : ModelSnapshot
+    [Migration("20201120065311_AddNewSpecificFields")]
+    partial class AddNewSpecificFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace FightCore.FrameData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("CharacterInfoId")
-                        .HasColumnType("bigint");
 
                     b.Property<long?>("CharacterStatisticsId")
                         .HasColumnType("bigint");
@@ -43,32 +42,9 @@ namespace FightCore.FrameData.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CharacterInfoId");
-
                     b.HasIndex("CharacterStatisticsId");
 
                     b.ToTable("Characters");
-                });
-
-            modelBuilder.Entity("FightCore.FrameData.Models.CharacterMiscInfo", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Discord")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MeleeFrameData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SsbWiki")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CharacterMiscInfo");
                 });
 
             modelBuilder.Entity("FightCore.FrameData.Models.CharacterStatistics", b =>
@@ -227,10 +203,6 @@ namespace FightCore.FrameData.Migrations
 
             modelBuilder.Entity("FightCore.FrameData.Models.Character", b =>
                 {
-                    b.HasOne("FightCore.FrameData.Models.CharacterMiscInfo", "CharacterInfo")
-                        .WithMany()
-                        .HasForeignKey("CharacterInfoId");
-
                     b.HasOne("FightCore.FrameData.Models.CharacterStatistics", "CharacterStatistics")
                         .WithMany()
                         .HasForeignKey("CharacterStatisticsId");
