@@ -68,10 +68,12 @@ namespace FightCore.Repositories.Characters
 
         public Task<List<long>> GetPopularCharacterId()
         {
-            return Queryable.GroupBy(edit => edit.EntityId)
+            return Queryable
+                .Select(edit => edit.EntityId)
+                .GroupBy(entityId => entityId)
                 .OrderByDescending(entityIds => entityIds.Count())
+                .Select(grouping => grouping.Key)
                 .Take(3)
-                .Select(key => key.Key)
                 .ToListAsync();
         }
 

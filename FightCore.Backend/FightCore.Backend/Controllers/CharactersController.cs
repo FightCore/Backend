@@ -122,7 +122,7 @@ namespace FightCore.Backend.Controllers
         {
             var characterIds = await _suggestedEditService.GetPopularCharacterIds();
 
-            var characters = await _characterService.GetWithAllByIdsAsync(characterIds);
+            var characters = await _characterService.GetWithAllByIdsAsync(characterIds, false);
             var characterViewModels = Mapper.Map<List<GetCharacterListViewModel>>(characters);
             return Ok(characterViewModels);
         }

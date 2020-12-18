@@ -51,7 +51,7 @@ namespace FightCore.Repositories.Games
 
         public Task<List<Character>> GetWithAllByIdsAsync(ICollection<long> id, bool enableTracking = true)
         {
-            var queryable = FullInclude;
+            var queryable = MinimalInclude;
             if (!enableTracking)
             {
                 queryable = queryable.AsNoTracking();
@@ -83,6 +83,7 @@ namespace FightCore.Repositories.Games
                 .Include(character => character.Videos)
                 .Include(character => character.Series)
                 .ThenInclude(gameSeries => gameSeries.GameIcon)
-                .Include(character => character.Websites);
+                .Include(character => character.Websites)
+                .AsSplitQuery();
     }
 }
