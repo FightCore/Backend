@@ -1,6 +1,4 @@
 ﻿using FightCore.Data;
-using FightCore.FrameData;
-using FightCore.KuroganeHammer.Services;
 using FightCore.Repositories;
 using FightCore.Repositories.Characters;
 using FightCore.Repositories.Games;
@@ -44,7 +42,6 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<ICharacterService, CharacterService>()
                 .AddScoped<IEncryptionService, AesEncryptionService>()
                 .AddScoped<ICachingService, CachingService>()
-                .AddScoped<IKuroganeHammerService, KuroganeHammerService>()
                 .AddScoped<ITournamentService, TournamentService>()
                 .AddScoped<INotablePlayerService, NotablePlayerService>()
                 .AddScoped<ICharacterFacadeService, CharacterFacadeService>()

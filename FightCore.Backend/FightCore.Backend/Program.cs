@@ -59,6 +59,8 @@ namespace FightCore.Backend
                 .SetBasePath(Directory.GetCurrentDirectory());
 
             configBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            configBuilder.AddJsonFile("appsettings-local.json", optional: true, reloadOnChange: true);
+
             // foreach (var argument in args)
             // {
             //     configBuilder.AddJsonFile($"appsettings.{argument}.json", false, true);

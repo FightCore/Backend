@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 
 FightCore\.Backend/FightCore\.Identity/identityserver4_log\.txt
+/FightCore.Backend/FightCore.Backend/appsettings-local.json
+/FightCore.Backend/FightCore.Backend/.config/dotnet-tools.json
