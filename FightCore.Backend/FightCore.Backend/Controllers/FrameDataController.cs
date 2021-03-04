@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using FightCore.Backend.ViewModels.FrameData;
 using FightCore.FrameData;
-using FightCore.KuroganeHammer.Services;
 using FightCore.Services.Games;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,16 +13,14 @@ namespace FightCore.Backend.Controllers
     [ApiController]
     public class FrameDataController : BaseApiController
     {
-        private readonly IKuroganeHammerService _kuroganeHammerService;
         private readonly ICharacterService _characterService;
         private readonly FrameDataContext _frameDataContext;
 
-        public FrameDataController(IKuroganeHammerService kuroganeHammerService,
+        public FrameDataController(
             ICharacterService characterService,
             FrameDataContext frameDataContext,
             IMapper mapper): base(mapper)
         {
-            _kuroganeHammerService = kuroganeHammerService;
             _characterService = characterService;
             _frameDataContext = frameDataContext;
         }
@@ -49,6 +43,7 @@ namespace FightCore.Backend.Controllers
                         .Include(@char => @char.Moves)
                         .ThenInclude(move => move.Hitboxes)
                         .Include(@char => @char.CharacterInfo)
+                        .AsSplitQuery()
                         .FirstOrDefaultAsync(@char => @char.FightCoreId == characterId);
 
                     return MappedOk<CharacterFrameDataViewModel>(frameData);
@@ -65,9 +60,33 @@ namespace FightCore.Backend.Controllers
                 .Include(@char => @char.Moves)
                 .ThenInclude(move => move.Hitboxes)
                 .Include(@char => @char.CharacterInfo)
+                .AsSplitQuery()
                 .ToListAsync();
 
             return MappedOk<List<CharacterFrameDataViewModel>>(moves);
+        }
+
+        [HttpGet("moves/{moveId}")]
+        public async Task<IActionResult> GetMove(long moveId)
+        {
+            var move = await _frameDataContext.Move
+                .Include(move => move.Hitboxes)
+                .Include(move => move.Character)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(move => move.Id == moveId);
+
+            return MappedOk<ExtendedMoveViewModel>(move);
+        }
+
+        [HttpGet("characters")]
+        public async Task<IActionResult> GetCharacters()
+        {
+            var characters = await _frameDataContext.Characters
+                .Include(character => character.CharacterStatistics)
+                .Include(character => character.CharacterInfo)
+                .ToListAsync();
+
+            return MappedOk<List<CharacterFrameDataViewModel>>(characters);
         }
     }
 }

@@ -13,6 +13,8 @@ namespace FightCore.Backend.ViewModels.FrameData
 
         public string Name { get; set; }
 
+        public long FightCoreId { get; set; }
+
         /// <summary>
         /// This is the name, normalized to use upper case and removed the special characters.
         /// This is meant to be used for users to search.

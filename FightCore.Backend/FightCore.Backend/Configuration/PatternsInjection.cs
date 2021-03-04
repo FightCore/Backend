@@ -1,16 +1,16 @@
 ﻿using FightCore.Data;
-using FightCore.FrameData;
-using FightCore.KuroganeHammer.Services;
 using FightCore.Repositories;
 using FightCore.Repositories.Characters;
 using FightCore.Repositories.Games;
 using FightCore.Repositories.Posts;
+using FightCore.Repositories.Techniques;
 using FightCore.Repositories.Users;
 using FightCore.Services;
 using FightCore.Services.Characters;
 using FightCore.Services.Encryption;
 using FightCore.Services.Games;
 using FightCore.Services.Posts;
+using FightCore.Services.Techniques;
 using FightCore.Services.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,13 +42,13 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<ICharacterService, CharacterService>()
                 .AddScoped<IEncryptionService, AesEncryptionService>()
                 .AddScoped<ICachingService, CachingService>()
-                .AddScoped<IKuroganeHammerService, KuroganeHammerService>()
                 .AddScoped<ITournamentService, TournamentService>()
                 .AddScoped<INotablePlayerService, NotablePlayerService>()
                 .AddScoped<ICharacterFacadeService, CharacterFacadeService>()
                 .AddScoped<IWebsiteResourceService, WebsiteResourceService>()
                 .AddScoped<ISuggestedEditService, SuggestedEditService>()
                 .AddScoped<ICommentService, CommentService>()
+                .AddScoped<ITechniqueService, TechniqueService>()
                 .AddScoped<IEditFacadeService, EditFacadeService>();
 
             // Add the EF Core repositories
@@ -64,6 +64,7 @@ namespace FightCore.Backend.Configuration
                 .AddScoped<INotablePlayerRepository, NotablePlayerRepository>()
                 .AddScoped<IWebsiteResourceRepository, WebsiteResourceRepository>()
                 .AddScoped<ICommentRepository, CommentRepository>()
+                .AddScoped<ITechniqueRepository, TechniqueRepository>()
                 .AddScoped<ISuggestedEditRepository, SuggestedEditRepository>();
 
             return services;

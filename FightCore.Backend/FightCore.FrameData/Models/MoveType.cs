@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FightCore.FrameData.Models
+﻿namespace FightCore.FrameData.Models
 {
     public enum MoveType
     {
@@ -12,6 +8,11 @@ namespace FightCore.FrameData.Models
         Air = 3,
         Special = 4,
         Dodge = 5,
-        Throw = 6
+        Throw = 6,
+        Tech = 7,
+        EdgeAttack = 8,
+        Grab = 9,
+        Item = 10,
+        Movement = 11
     }
 }

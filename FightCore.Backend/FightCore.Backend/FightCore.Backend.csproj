@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>f2f66cee-726f-499d-832c-93d471591a43</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -37,16 +38,15 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.6.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FightCore.Configuration\FightCore.Configuration.csproj" />
     <ProjectReference Include="..\FightCore.Data\FightCore.Data.csproj" />
     <ProjectReference Include="..\FightCore.FrameData\FightCore.FrameData.csproj" />
-    <ProjectReference Include="..\FightCore.KuroganeHammer\FightCore.KuroganeHammer.csproj" />
     <ProjectReference Include="..\FightCore.Services\FightCore.Services.csproj" />
   </ItemGroup>
 

@@ -3,7 +3,6 @@ using AutoMapper;
 using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
 using FightCore.Backend.Configuration.Seeds;
-using FightCore.Backend.Middleware;
 using FightCore.Configuration;
 using FightCore.Configuration.Models;
 using FightCore.Data;
@@ -23,7 +22,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
-using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
 using IdentityConstants = FightCore.Backend.Configuration.IdentityConstants;
 
 namespace FightCore.Backend
@@ -191,8 +189,11 @@ namespace FightCore.Backend
             app.UseStaticFiles();
 
             app.UseSwagger();
-            app.UseReDoc(configuration =>
-                configuration.RoutePrefix = "swagger");
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FightCore API V1");
+                c.RoutePrefix = string.Empty;
+            });
         }
     }
 }
