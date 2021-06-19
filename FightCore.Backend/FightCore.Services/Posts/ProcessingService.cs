@@ -46,7 +46,10 @@ namespace FightCore.Services.Posts
 
         public Post ProcessPost(Post post, long? userId)
         {
-            post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+            if (!string.IsNullOrWhiteSpace(post.Iv))
+            {
+                post.Body = _encryptionService.Decrypt(post.Body, post.Iv);
+            }
 
             if (post.IsPrivate && (!userId.HasValue || post.AuthorId != userId))
             {

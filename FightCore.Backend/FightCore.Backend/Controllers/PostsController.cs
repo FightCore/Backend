@@ -144,7 +144,7 @@ namespace FightCore.Backend.Controllers
                 }
             };
             post.Posted = DateTime.Now;
-            post = await _postService.EncryptAndAddAsync(post);
+            _postService.Add(post);
             await _context.SaveChangesAsync();
 
             return CreatedAtRoute(new { id = post.Id }, null);
@@ -188,7 +188,8 @@ namespace FightCore.Backend.Controllers
             }
 
             post.Title = viewModel.Title;
-            post.Body = viewModel.Body;
+            post.Body = viewModel.Markdown;
+            post.HTMLContent = viewModel.HTML;
             post.GameId = viewModel.GameId;
             post.IsPrivate = viewModel.IsPrivate;
             post.Tags = string.Join(',', viewModel.Tags);

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bartdebever.Patterns.Services;
 using FightCore.Models.Posts;
 using FightCore.Repositories.Posts;
-using FightCore.Services.Encryption;
 
 namespace FightCore.Services.Posts
 {
@@ -24,22 +21,13 @@ namespace FightCore.Services.Posts
         Task<List<Post>> GetFeaturedPosts();
 
         Task<List<Post>> GetPostsByGameId(long gameId);
-
-        Task<Post> EncryptAndAddAsync(Post entity);
     }
 
     public class PostService : EntityService<Post, IPostRepository>, IPostService
     {
-        private readonly IEncryptionService _encryptionService;
-        private readonly IProcessingService _processingService;
-
         public PostService(
-            IPostRepository repository,
-            IEncryptionService encryptionService,
-            IProcessingService processingService) : base(repository)
+            IPostRepository repository) : base(repository)
         {
-            _encryptionService = encryptionService;
-            _processingService = processingService;
         }
 
         public Task<List<Post>> GetFeaturedPosts()
@@ -75,53 +63,6 @@ namespace FightCore.Services.Posts
         public Task<List<Post>> GetLatestPosts()
         {
             return Repository.GetLatestPosts();
-        }
-
-        public override Post Add(Post entity)
-        {
-            entity = EncryptPost(entity);
-
-            return base.Add(entity);
-        }
-
-        public async Task<Post> EncryptAndAddAsync(Post entity)
-        {
-            entity = await EncryptPostAsync(entity);
-
-            return base.Add(entity);
-        }
-
-        public override Post Update(Post entity)
-        {
-            entity = EncryptPost(entity);
-
-            return base.Update(entity);
-        }
-
-        private Post EncryptPost(Post post)
-        {
-            post = _processingService.ProcessPostLinks(post);
-            if (string.IsNullOrWhiteSpace(post.Iv))
-            {
-                post.Iv = _encryptionService.GetIV();
-            }
-
-            post.Body = _encryptionService.Encrypt(post.Body, post.Iv);
-
-            return post;
-        }
-
-        private async Task<Post> EncryptPostAsync(Post post)
-        {
-            post = await _processingService.ProcessPostLinksAsync(post);
-            if (string.IsNullOrWhiteSpace(post.Iv))
-            {
-                post.Iv = _encryptionService.GetIV();
-            }
-            
-            post.Body = _encryptionService.Encrypt(post.Body, post.Iv);
-
-            return post;
         }
     }
 }

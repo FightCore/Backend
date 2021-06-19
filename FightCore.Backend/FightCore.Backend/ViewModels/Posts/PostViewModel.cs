@@ -26,7 +26,12 @@ namespace FightCore.Backend.ViewModels.Posts
         /// <summary>
         /// The unparsed, unfiltered markdown body of the post.
         /// </summary>
-        public string Body { get; set; }
+        public string Markdown { get; set; }
+
+        /// <summary>
+        /// The HTML body of the post to be made
+        /// </summary>
+        public string HTML { get; set; }
 
         /// <summary>
         /// The author's name who wrote the post.

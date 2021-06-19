@@ -14,7 +14,12 @@ namespace FightCore.Backend.ViewModels.Posts
         /// <summary>
         /// The Markdown body of the post to be made.
         /// </summary>
-        public string Body { get; set; }
+        public string Markdown { get; set; }
+
+        /// <summary>
+        /// The HTML body of the post to be made
+        /// </summary>
+        public string HTML { get; set; }
 
         /// <summary>
         /// The title of the post to be made.

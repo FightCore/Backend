@@ -840,9 +840,14 @@
             ViewModel to create a post.
             </summary>
         </member>
-        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Body">
+        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Markdown">
             <summary>
             The Markdown body of the post to be made.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.HTML">
+            <summary>
+            The HTML body of the post to be made
             </summary>
         </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.CreatePostViewModel.Title">
@@ -877,9 +882,14 @@
             The title of the post.
             </summary>
         </member>
-        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Body">
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Markdown">
             <summary>
             The unparsed, unfiltered markdown body of the post.
+            </summary>
+        </member>
+        <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.HTML">
+            <summary>
+            The HTML body of the post to be made
             </summary>
         </member>
         <member name="P:FightCore.Backend.ViewModels.Posts.PostViewModel.Author">

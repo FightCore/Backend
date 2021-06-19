@@ -9,7 +9,16 @@ namespace FightCore.Models.Posts
 {
     public class Post : BaseEntity
     {
+        /// <summary>
+        /// Content of the post written within Markdown.
+        /// </summary>
+        [Column("Body")]
         public string Body { get; set; }
+
+        /// <summary>
+        /// Content of the post written within the Quill format.
+        /// </summary>
+        public string HTMLContent { get; set; }
 
         public string Title { get; set; }
 
