@@ -11,7 +11,7 @@ namespace FightCore.Backend.Configuration.Mapping
         public EditMapperProfile()
         {
             CreateMap<SuggestedEdit, SuggestedEditViewModel>()
-                .ForMember(editDto => editDto.UserName, options => options.MapFrom(edit => edit.User.UserName));
+                .ForMember(editDto => editDto.UserName, options => options.MapFrom(edit => edit.User.Username));
 
             CreateMap<ContributorDto, TopContributorDto>();
         }

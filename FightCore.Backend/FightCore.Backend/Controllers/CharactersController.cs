@@ -139,7 +139,7 @@ namespace FightCore.Backend.Controllers
         public async Task<IActionResult> GetCharacterPosts(long id)
         {
             var posts = await _postService.GetForCharacterIdAsync(id);
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             posts = _processingService.ProcessPosts(posts, userId);
 
@@ -150,7 +150,7 @@ namespace FightCore.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> GetEditsForCharacter(long id)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
             var character = await _characterService.GetWithAllByIdAsync(id);
             List<SuggestedEdit> edits = null;
 
@@ -223,7 +223,7 @@ namespace FightCore.Backend.Controllers
                 return NotFound(NotFoundErrorViewModel.Create(nameof(Character), id));
             }
 
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (!userId.HasValue)
             {

@@ -1,37 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190725092654_AddedGame.cs" />
-    <Compile Remove="Migrations\20190725092654_AddedGame.Designer.cs" />
-    <Compile Remove="Migrations\20190810103546_Seed.cs" />
-    <Compile Remove="Migrations\20190810103546_Seed.Designer.cs" />
-    <Compile Remove="Migrations\20190920062127_RenamedTables.cs" />
-    <Compile Remove="Migrations\20190920062127_RenamedTables.Designer.cs" />
-    <Compile Remove="Migrations\20191010063530_CharacterInPost.cs" />
-    <Compile Remove="Migrations\20191010063530_CharacterInPost.Designer.cs" />
-    <Compile Remove="Migrations\20191010064423_Cascades.cs" />
-    <Compile Remove="Migrations\20191010064423_Cascades.Designer.cs" />
-    <Compile Remove="Migrations\20191010064530_NotRequired.cs" />
-    <Compile Remove="Migrations\20191010064530_NotRequired.Designer.cs" />
-    <Compile Remove="Migrations\20200620210126_TestMig.cs" />
-    <Compile Remove="Migrations\20200620210126_TestMig.Designer.cs" />
-    <Compile Remove="Migrations\20200620210734_TestMig.cs" />
-    <Compile Remove="Migrations\20200620210734_TestMig.Designer.cs" />
-    <Compile Remove="Migrations\20201028152838_AddedCommentEntity.cs" />
-    <Compile Remove="Migrations\20201028152838_AddedCommentEntity.Designer.cs" />
-    <Compile Remove="Migrations\20201028153015_AddedCommentEntity.cs" />
-    <Compile Remove="Migrations\20201028153015_AddedCommentEntity.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Bartdebever.Patterns" Version="1.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>

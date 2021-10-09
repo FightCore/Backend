@@ -43,13 +43,8 @@ namespace FightCore.Backend
                 .UseConfiguration(configuration)
                 .UseSerilog((context, serilogConfiguration) =>
                 {
-                    serilogConfiguration
-                        .MinimumLevel.Information()
-                        .Enrich.FromLogContext()
-                        .WriteTo.Console(
-                            outputTemplate:
-                            "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
-                            theme: AnsiConsoleTheme.Literate);
+	                serilogConfiguration
+		                .ReadFrom.Configuration(configuration);
                 });
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Security.Claims;
 using AutoMapper;
-using IdentityModel;
+using FightCore.Backend.Middleware;
+using FightCore.Models;
 using Jil;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,28 +43,13 @@ namespace FightCore.Backend.Controllers
         }
 
         /// <summary>
-        /// Gets the currently logged in user's Id based on the given <paramref name="claimsPrincipal"/>.
+        /// Gets the currently logged in user's id.
         /// </summary>
-        /// <param name="claimsPrincipal">
-        /// The claims from the user parsed from the JWT.
-        /// </param>
         /// <returns>The id of the user or throws an exception if not parsed.</returns>
-        protected long? GetUserIdFromClaims(ClaimsPrincipal claimsPrincipal)
+        protected long? GetUserId()
         {
-            // Finds the id of the user in it's subject claim.
-            // Note that this is stored in ClaimTypes.NameIdentifier.
-            // This is note because of Identity Server but rather because of the
-            // default way that ASP.NET Core handles JWT (Microsoft standard)
-            var subject = claimsPrincipal.FindFirst(claim =>
-                claim.Type.Equals(ClaimTypes.NameIdentifier)
-                || claim.Type.Equals(JwtClaimTypes.Subject))?.Value;
-            
-            if (subject == null)
-            {
-                return null;
-            }
-
-            return Convert.ToInt64(subject);
+	        var user = GetUser();
+	        return user?.Id;
         }
 
         /// <summary>
@@ -89,6 +76,23 @@ namespace FightCore.Backend.Controllers
         protected string Serialize<TEntity>(TEntity entity)
         {
             return JSON.Serialize(entity);
+        }
+
+        public ApplicationUser GetUser()
+        {
+	        if (!HttpContext.Items.ContainsKey(UserMiddleware.UserKey))
+	        {
+		        return null;
+	        }
+
+	        try
+	        {
+		        return (ApplicationUser) HttpContext.Items[UserMiddleware.UserKey];
+	        }
+	        catch
+	        {
+		        return null;
+	        }
         }
     }
 }

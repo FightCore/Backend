@@ -32,14 +32,14 @@ namespace FightCore.Backend.Configuration.Seeds
                 context.SaveChanges();
             }
 
-            if (!context.Users.Any())
-            {
-                foreach (var user in ApplicationUserSeed.GetSeedUsers())
-                {
-                    userManager.CreateAsync(user, "Welcome1!").GetAwaiter().GetResult();
-                    context.SaveChanges();
-                }
-            }
+            //if (!context.Users.Any())
+            //{
+            //    foreach (var user in ApplicationUserSeed.GetSeedUsers())
+            //    {
+            //        userManager.CreateAsync(user, "Welcome1!").GetAwaiter().GetResult();
+            //        context.SaveChanges();
+            //    }
+            //}
         }
     }
 }

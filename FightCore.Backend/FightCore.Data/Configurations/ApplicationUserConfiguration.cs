@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FightCore.Configuration.Seeds;
-using FightCore.Models;
+﻿using FightCore.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,6 +19,11 @@ namespace FightCore.Data.Configurations
             builder.HasMany(user => user.Contributors)
                 .WithOne(contributor => contributor.User)
                 .HasForeignKey(contributor => contributor.UserId);
+
+            builder.Property(user => user.FirebaseUserId)
+	            .IsRequired();
+
+            builder.HasAlternateKey(user => user.FirebaseUserId);
         }
     }
 }

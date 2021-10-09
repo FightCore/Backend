@@ -61,7 +61,7 @@ namespace FightCore.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             var posts = await _postService.GetPublicPostsAsync(userId);
 
@@ -85,7 +85,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(404, "The post is not found.")]
         public async Task<IActionResult> GetPost(long id)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             var cacheKey = $"{nameof(Post)}{id}";
 
@@ -126,7 +126,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(201, "The post was successfully created.")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel viewModel)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (userId == null)
             {
@@ -168,7 +168,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(403, "The post is not from the user.")]
         public async Task<IActionResult> UpdatePost(long id, CreatePostViewModel viewModel)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (userId == null)
             {
@@ -215,7 +215,7 @@ namespace FightCore.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> DeletePost(long id)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
             var post = await _postService.GetByIdAsync(id);
 
             if (post.AuthorId != userId)
@@ -257,7 +257,7 @@ namespace FightCore.Backend.Controllers
         [SwaggerResponse(401, "There is no logged in user or the token is invalid..")]
         public async Task<IActionResult> LikePost(long id)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (userId == null)
             {
@@ -294,7 +294,7 @@ namespace FightCore.Backend.Controllers
         {
             var posts = await _postService.GetLatestPosts();
 
-            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserId());
 
             return MappedOk<List<PostViewModel>>(posts);
         }
@@ -304,7 +304,7 @@ namespace FightCore.Backend.Controllers
         {
             var posts = await _postService.GetFeaturedPosts();
 
-            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserId());
 
             return MappedOk<List<PostViewModel>>(posts);
         }

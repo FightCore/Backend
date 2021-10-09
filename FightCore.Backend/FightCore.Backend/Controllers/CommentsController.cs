@@ -55,7 +55,7 @@ namespace FightCore.Backend.Controllers
                 return NotFound();
             }
 
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (!userId.HasValue)
             {
@@ -83,7 +83,7 @@ namespace FightCore.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteComment(long postId, long commentId)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (!userId.HasValue)
             {
