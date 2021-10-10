@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FightCore.Data.Configurations;
+﻿using FightCore.Data.Configurations;
 using FightCore.Data.Configurations.Posts;
 using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Models.Posts;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FightCore.Data
@@ -28,7 +23,6 @@ namespace FightCore.Data
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new SuggestedEditConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
-            builder.UseOpenIddict();
 
         }
 

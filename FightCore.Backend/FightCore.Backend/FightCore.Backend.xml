@@ -436,17 +436,12 @@
             <summary>
             Creates the web host that will run the 
             </summary>
-            <param name="args"></param>
-            <returns></returns>
         </member>
         <member name="T:FightCore.Backend.Startup">
             <summary>
             The class executed to start the application.
             Configures most of the DI and other services.
             </summary>
-        </member>
-        <member name="M:FightCore.Backend.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
-            <inheritdoc />
         </member>
         <member name="P:FightCore.Backend.Startup.Configuration">
             <summary>
