@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using FightCore.Backend.Configuration.Authentication;
 using FightCore.Data;
 using FightCore.Models;
-using FightCore.Services;
+using FightCore.Models.Enums;
 using FightCore.Services.Users;
-using Jil;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace FightCore.Backend.Middleware
 {
@@ -44,6 +42,15 @@ namespace FightCore.Backend.Middleware
 
 			// Get the user from the database.
 			var user = await userService.GetUserForFirebaseId(userId);
+			var firebaseClaim = context.User?.Claims?.FirstOrDefault(claim => claim.Type == "firebase");
+			if (firebaseClaim == null)
+			{
+				await _next(context);
+				return;
+			}
+
+			var firebaseObject = JsonConvert.DeserializeObject<FirebaseAuthenticationClaim>(firebaseClaim.Value);
+			_logger.LogInformation(firebaseObject.SignInProvider);
 
 			// If the user is not found, create a new user.
 			if (user == null)
@@ -51,7 +58,8 @@ namespace FightCore.Backend.Middleware
 				user = new ApplicationUser()
 				{
 					Username = "TempNewUser",
-					FirebaseUserId = userId
+					FirebaseUserId = userId,
+					UserType = ConvertClaimToUserType(firebaseObject)
 				};
 
 				// Use a global try catch to ensure the request goes through. An exception that might happen here could be concurrency.
@@ -79,6 +87,16 @@ namespace FightCore.Backend.Middleware
 
 			// Continue executing.
 			await _next(context);
+		}
+
+		private static UserType ConvertClaimToUserType(FirebaseAuthenticationClaim claim)
+		{
+			return claim.SignInProvider switch
+			{
+				"google.com" => UserType.Google,
+				"password" => UserType.EmailPassword,
+				_ => UserType.Invalid
+			};
 		}
 	}
 
