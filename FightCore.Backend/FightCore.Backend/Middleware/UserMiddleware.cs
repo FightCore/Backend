@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Bogus;
 using FightCore.Backend.Configuration.Authentication;
 using FightCore.Data;
 using FightCore.Models;
@@ -18,6 +19,22 @@ namespace FightCore.Backend.Middleware
 	{
 		private readonly RequestDelegate _next;
 		private readonly ILogger<UserMiddleware> _logger;
+
+        private static readonly string[] _characterNames = new[]
+        {
+            "Marth", "Falco", "ICs", "Ganondorf", "Falcon", "Fox", "Mario", "Luigi", "Puff", "Doc", "Link", "YLink",
+            "DK"
+        };
+
+        private static readonly string[] _moveStrings = new[]
+        {
+			"bair", "fair", "dair", "nair", "fsmash", "dsmash", "usmash", "jab", "sideb", "upb", "downb", "grab", "tilt"
+        };
+
+        private static readonly string[] _postFixes = new[]
+        {
+            "lover", "hater", "spammer", "user", "enjoyer"
+        };
 
 		public const string UserKey = "User";
 
@@ -54,10 +71,11 @@ namespace FightCore.Backend.Middleware
 
 			// If the user is not found, create a new user.
 			if (user == null)
-			{
+            {
+                var faker = new Faker();
 				user = new ApplicationUser()
 				{
-					Username = "TempNewUser",
+					Username = $"{faker.PickRandom(_characterNames)}_{faker.PickRandom(_moveStrings)}_{faker.PickRandom(_postFixes)}#{faker.Random.Int(1, 10000)}",
 					FirebaseUserId = userId,
 					UserType = ConvertClaimToUserType(firebaseObject)
 				};

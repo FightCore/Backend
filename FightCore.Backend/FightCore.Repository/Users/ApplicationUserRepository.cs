@@ -7,7 +7,9 @@ namespace FightCore.Repositories.Users
 {
     public interface IApplicationUserRepository : IRepository<ApplicationUser, long>
     {
-	    Task<ApplicationUser> GetUserForFirebaseId(string firebaseId);
+        Task<ApplicationUser> GetUserForFirebaseId(string firebaseId);
+
+        Task<bool> IsUsernameTaken(string username);
     }
 
     public class ApplicationUserRepository : BaseRepository<ApplicationUser, long>, IApplicationUserRepository
@@ -19,6 +21,11 @@ namespace FightCore.Repositories.Users
         public Task<ApplicationUser> GetUserForFirebaseId(string firebaseId)
         {
 	        return Queryable.FirstOrDefaultAsync(user => user.FirebaseUserId == firebaseId);
+        }
+
+        public Task<bool> IsUsernameTaken(string username)
+        {
+            return Queryable.AnyAsync(user => user.Username.ToLower() == username);
         }
     }
 }

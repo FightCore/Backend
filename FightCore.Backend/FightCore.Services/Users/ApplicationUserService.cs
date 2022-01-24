@@ -8,6 +8,8 @@ namespace FightCore.Services.Users
     public interface IApplicationUserService : IService<ApplicationUser, long, IApplicationUserRepository>
     {
 	    Task<ApplicationUser> GetUserForFirebaseId(string firebaseId);
+
+        Task<bool> IsUsernameTaken(string username);
     }
 
     public class ApplicationUserService : BaseService<ApplicationUser, long, IApplicationUserRepository>, IApplicationUserService
@@ -19,6 +21,11 @@ namespace FightCore.Services.Users
         public Task<ApplicationUser> GetUserForFirebaseId(string firebaseId)
         {
 	        return string.IsNullOrWhiteSpace(firebaseId) ? null : Repository.GetUserForFirebaseId(firebaseId);
+        }
+
+        public Task<bool> IsUsernameTaken(string username)
+        {
+            return Repository.IsUsernameTaken(username);
         }
     }
 }
