@@ -61,7 +61,7 @@ namespace FightCore.Repositories.Characters
         {
             return Queryable.Include(edit => edit.User)
                 .Where(edit => edit.EntityId == entityId && edit.ApprovedByUserId.HasValue)
-                .Select(edit => edit.User.UserName)
+                .Select(edit => edit.User.Username)
                 .Distinct()
                 .ToListAsync();
         }

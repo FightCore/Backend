@@ -115,7 +115,7 @@
         <member name="T:FightCore.Backend.Controllers.AccountsController">
             <inheritdoc />
         </member>
-        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Identity.UserManager{FightCore.Models.ApplicationUser},Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService)">
+        <member name="M:FightCore.Backend.Controllers.AccountsController.#ctor(AutoMapper.IMapper,Microsoft.EntityFrameworkCore.DbContext,FightCore.Services.Users.IApplicationUserService,FightCore.Services.Posts.IPostService,FightCore.Services.Posts.IProcessingService)">
             <inheritdoc />
         </member>
         <member name="M:FightCore.Backend.Controllers.AccountsController.GetUser(System.Int64)">
@@ -124,25 +124,6 @@
             </summary>
             <param name="id">The id of the user.</param>
             <returns>The gotten user.</returns>
-        </member>
-        <member name="M:FightCore.Backend.Controllers.AccountsController.UpdateUser">
-            <summary>
-            Updates the user using the data provided in the body.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:FightCore.Backend.Controllers.AccountsController.CreateUser(FightCore.Backend.ViewModels.User.CreateUserViewModel)">
-            <summary>
-            Creates a new user for the provided body.
-            </summary>
-            <param name="viewModel">The body containing the data for the new user.</param>
-            <returns></returns>
-        </member>
-        <member name="M:FightCore.Backend.Controllers.AccountsController.DeleteUser">
-            <summary>
-            Deletes the user based on the provided id.
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:FightCore.Backend.Controllers.AccountsController.GetPostsFromUser(System.Int32)">
             <summary>
@@ -177,13 +158,10 @@
             </param>
             <returns>The mapped <paramref name="model"/> in an 200 result.</returns>
         </member>
-        <member name="M:FightCore.Backend.Controllers.BaseApiController.GetUserIdFromClaims(System.Security.Claims.ClaimsPrincipal)">
+        <member name="M:FightCore.Backend.Controllers.BaseApiController.GetUserId">
             <summary>
-            Gets the currently logged in user's Id based on the given <paramref name="claimsPrincipal"/>.
+            Gets the currently logged in user's id.
             </summary>
-            <param name="claimsPrincipal">
-            The claims from the user parsed from the JWT.
-            </param>
             <returns>The id of the user or throws an exception if not parsed.</returns>
         </member>
         <member name="M:FightCore.Backend.Controllers.BaseApiController.Deserialize``1(System.String)">
@@ -458,17 +436,12 @@
             <summary>
             Creates the web host that will run the 
             </summary>
-            <param name="args"></param>
-            <returns></returns>
         </member>
         <member name="T:FightCore.Backend.Startup">
             <summary>
             The class executed to start the application.
             Configures most of the DI and other services.
             </summary>
-        </member>
-        <member name="M:FightCore.Backend.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
-            <inheritdoc />
         </member>
         <member name="P:FightCore.Backend.Startup.Configuration">
             <summary>

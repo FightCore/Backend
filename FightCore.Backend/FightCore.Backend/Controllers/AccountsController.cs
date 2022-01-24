@@ -22,8 +22,7 @@ namespace FightCore.Backend.Controllers
     [Produces(HttpContentTypes.ApplicationJson)]
     public class AccountsController : BaseApiController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly DbContext _dbContext;
+	    private readonly DbContext _dbContext;
         private readonly IApplicationUserService _applicationUserService;
         private readonly IPostService _postService;
         private readonly IProcessingService _processingService;
@@ -31,14 +30,12 @@ namespace FightCore.Backend.Controllers
         /// <inheritdoc />
         public AccountsController(
             IMapper mapper,
-            UserManager<ApplicationUser> userManager,
             DbContext context,
             IApplicationUserService applicationUserService,
             IPostService postService,
             IProcessingService processingService) : base(mapper)
         {
-            _userManager = userManager;
-            _applicationUserService = applicationUserService;
+	        _applicationUserService = applicationUserService;
             _dbContext = context;
             _postService = postService;
             _processingService = processingService;
@@ -65,65 +62,6 @@ namespace FightCore.Backend.Controllers
         }
 
         /// <summary>
-        /// Updates the user using the data provided in the body.
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser()
-        {
-            return StatusCode(StatusCodes.Status501NotImplemented);
-
-#pragma warning disable 162
-            var userId = GetUserIdFromClaims(User);
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-            var user = await _applicationUserService.GetByIdAsync(userId.Value);
-
-            // Update with ViewModel
-
-            await _userManager.UpdateAsync(user);
-
-            return Ok();
-#pragma warning restore 162
-        }
-
-        /// <summary>
-        /// Creates a new user for the provided body.
-        /// </summary>
-        /// <param name="viewModel">The body containing the data for the new user.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateUserViewModel viewModel)
-        {
-            var user = new ApplicationUser()
-            {
-                UserName = viewModel.UserName,
-                Email = viewModel.Email
-            };
-
-            await _userManager.CreateAsync(user, viewModel.Password);
-            await _dbContext.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Deletes the user based on the provided id.
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser()
-        {
-            await Task.Delay(1);
-            return StatusCode(StatusCodes.Status501NotImplemented);
-        }
-
-        /// <summary>
         /// Gets all posts for the provided user <paramref name="id"/>.
         /// If the authorized user is the provided user, private and unapproved
         /// posts are also gathered.
@@ -133,13 +71,13 @@ namespace FightCore.Backend.Controllers
         [HttpGet("{id}/posts")]
         public async Task<IActionResult> GetPostsFromUser(int id)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
-            var isUser = userId.HasValue && id == userId.Value;
+            var isUser = id == userId;
 
             var posts = await _postService.GetForUserIdAsync(id, isUser);
 
-            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserId());
 
             return MappedOk<List<PostViewModel>>(posts);
         }

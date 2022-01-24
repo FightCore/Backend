@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FightCore.Data.Configurations;
+﻿using FightCore.Data.Configurations;
 using FightCore.Data.Configurations.Posts;
 using FightCore.Models;
 using FightCore.Models.Characters;
 using FightCore.Models.Posts;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FightCore.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<long>, long>
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -24,14 +19,14 @@ namespace FightCore.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new PostConfiguration());
+	        builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new SuggestedEditConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
-            builder.UseOpenIddict();
 
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public DbSet<Post> Posts { get; set; }
 

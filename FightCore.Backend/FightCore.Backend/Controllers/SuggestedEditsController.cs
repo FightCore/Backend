@@ -47,7 +47,7 @@ namespace FightCore.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> GetAllEditsForUser()
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (userId == null)
             {
@@ -103,7 +103,7 @@ namespace FightCore.Backend.Controllers
                 return BadRequest();
             }
 
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
             if (!userId.HasValue)
             {
                 return Unauthorized();
@@ -132,7 +132,7 @@ namespace FightCore.Backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSuggestedEdit([FromRoute]long id, [FromBody]SuggestedEditViewModel editViewModel)
         {
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
 
             if (!userId.HasValue)
             {
@@ -165,7 +165,7 @@ namespace FightCore.Backend.Controllers
 
             var character = await _characterService.GetWithAllByIdAsync(edit.EntityId);
 
-            var userId = GetUserIdFromClaims(User);
+            var userId = GetUserId();
             if (!userId.HasValue || character.Contributors.All(contributor => contributor.UserId != userId.Value) && edit.UserId != userId)
             {
                 return Unauthorized();

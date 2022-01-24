@@ -1,24 +1,22 @@
 ﻿using System.IO;
-using AutoMapper;
 using FightCore.Backend.Configuration;
 using FightCore.Backend.Configuration.Mapping;
-using FightCore.Backend.Configuration.Seeds;
+using FightCore.Backend.Middleware;
 using FightCore.Configuration;
 using FightCore.Configuration.Models;
 using FightCore.Data;
 using FightCore.FrameData;
-using FightCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
@@ -32,9 +30,9 @@ namespace FightCore.Backend
     /// </summary>
     public class Startup
     {
-        /// <inheritdoc />
         public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
             FightCore.Configuration.ConfigurationBuilder.Build(Configuration);
             _customConfigurationObject = FightCore.Configuration.ConfigurationBuilder.Configuration;
             Log.Information("Launching FightCore API.");
@@ -48,7 +46,7 @@ namespace FightCore.Backend
         /// </summary>
         public static IConfiguration Configuration { get; set; }
 
-        private ConfigurationObject _customConfigurationObject;
+        private readonly ConfigurationObject _customConfigurationObject;
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
@@ -73,8 +71,6 @@ namespace FightCore.Backend
                 options.Configuration = _customConfigurationObject.Caching.Server;
                 options.InstanceName = _customConfigurationObject.Caching.Instance;
             });
-
-            services.AddIdentity<ApplicationUser, IdentityRole<long>>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddSwaggerGen(configuration =>
             {
@@ -103,36 +99,34 @@ namespace FightCore.Backend
                         sqlServerOptions =>
                             sqlServerOptions.MigrationsAssembly("FightCore.FrameData")));
 
-            // Add the Bearer authentication scheme as this is used by Identity Server.
             services.AddAuthentication(options =>
                 {
-                    // For some bizarre reason, if this isn't added, it doesn't work on Linux but does work on Windows.
-                    // Please don't remove this line or it's another 7 hours of sadness.
                     options.DefaultAuthenticateScheme = IdentityConstants.AuthenticateScheme;
-                    options.DefaultChallengeScheme = IdentityConstants.ChallengeScheme;
                 })
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = Configuration["IdentityServer"];
-                    options.RequireHttpsMetadata = false;
-
-                    options.Audience = "fightcore-backend";
+                    options.Authority = "https://securetoken.google.com/fightcore";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/fightcore",
+                        ValidateAudience = true,
+                        ValidAudience = "fightcore",
+                        ValidateLifetime = true
+                    };
                 });
-
 
             services.AddPatterns(Configuration);
 
+            //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
 
-
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString(ConfigurationVariables.DefaultConnection));
-
-            using (var context = new ApplicationDbContext(optionsBuilder.Options))
-            {
-                //context.Database.Migrate();
-                var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
-                BackendSeed.ExecuteSeed(context, userManager);
-            }
+            //using (var context = new ApplicationDbContext(optionsBuilder.Options))
+            //{
+            //	//context.Database.Migrate();
+            //	var userManager = services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
+            //	BackendSeed.ExecuteSeed(context, userManager);
+            //}
         }
 
         /// <summary>
@@ -157,6 +151,8 @@ namespace FightCore.Backend
             app.UseRouting();
             app.UseCors("TestPolicy");
 
+            app.UseSerilogRequestLogging();
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -165,7 +161,7 @@ namespace FightCore.Backend
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHttpsRedirection();
-            //app.UseApiKey();
+            app.UseUserMiddleware();
 
             app.UseExceptionHandler(applicationBuilder => applicationBuilder.Run(async context =>
             {

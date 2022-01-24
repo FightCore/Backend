@@ -55,7 +55,7 @@ namespace FightCore.Repositories.Posts
                     post.AuthorId == userId
                     && getPrivate
                     ? getPrivate
-                    : post.IsPrivate)
+                    : post.IsPrivate == false)
                 .ToListAsync();
         }
 

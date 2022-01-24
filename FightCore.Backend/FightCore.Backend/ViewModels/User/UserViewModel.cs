@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FightCore.Backend.ViewModels.User
+﻿namespace FightCore.Backend.ViewModels.User
 {
     /// <summary>
     /// ViewModel for the user model.
@@ -19,7 +14,5 @@ namespace FightCore.Backend.ViewModels.User
         /// The name of the user.
         /// </summary>
         public string Name { get; set; }
-
-        public string GravatarMd5 { get; set; }
     }
 }

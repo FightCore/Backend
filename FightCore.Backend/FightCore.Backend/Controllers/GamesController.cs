@@ -14,6 +14,7 @@ using FightCore.Services;
 using FightCore.Services.Encryption;
 using FightCore.Services.Games;
 using FightCore.Services.Posts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -221,7 +222,7 @@ namespace FightCore.Backend.Controllers
         {
             var posts = await _postService.GetPostsByGameId(gameId);
 
-            posts = _processingService.ProcessPosts(posts, GetUserIdFromClaims(User));
+            posts = _processingService.ProcessPosts(posts, GetUserId());
 
             return MappedOk<List<PostViewModel>>(posts);
         }
